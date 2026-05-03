@@ -75,7 +75,7 @@ function App() {
       canvas.style.height = rect.height + 'px';
       ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       const s = stateRef.current;
-      s.w = rect.width; s.h = rect.height; s.battleH = rect.height * .75;
+      s.w = rect.width; s.h = rect.height; s.battleH = rect.height * .82;
     };
     resize(); window.addEventListener('resize', resize);
 
@@ -257,11 +257,14 @@ function App() {
 
     function render() {
       const s=stateRef.current; ctx.clearRect(0,0,s.w,s.h);
-      const g=ctx.createLinearGradient(0,0,0,s.battleH); g.addColorStop(0,'#407a38'); g.addColorStop(1,'#65a950'); ctx.fillStyle=g; ctx.fillRect(0,0,s.w,s.battleH);
-      ctx.fillStyle='rgba(255,255,255,.08)'; for(let y=24;y<s.battleH;y+=36) for(let x=(Math.floor(y/36)%2)*18;x<s.w;x+=36) ctx.fillRect(x,y,18,18);
-      ctx.fillStyle=s.berserkActive ? 'rgba(150,35,25,.55)' : 'rgba(80,30,30,.35)'; ctx.fillRect(0,0,s.w,42); ctx.fillStyle='#ffd6d6'; ctx.font='bold 15px system-ui'; ctx.textAlign='center'; ctx.fillText(s.waveState === 'rest' ? `休息中：${Math.max(0,Math.ceil(s.restTime))} 秒` : `第 ${s.wave} 波  剩餘 ${Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length)}${s.berserkActive ? '  狂暴中' : ''}`,s.w/2,28);
-      ctx.fillStyle='#245cab'; ctx.fillRect(0,s.battleH-42,s.w,36); ctx.fillStyle='#dff4ff'; ctx.fillText(`我方基地 HP ${Math.max(0,Math.ceil(s.allyHp))}`,s.w/2,s.battleH-18);
-      ctx.fillStyle='rgba(255,255,255,.18)'; ctx.fillRect(0,s.battleH/2-1,s.w,2);
+      const g=ctx.createLinearGradient(0,0,0,s.battleH); g.addColorStop(0,'#2f6e35'); g.addColorStop(.52,'#4f9142'); g.addColorStop(1,'#6caf55'); ctx.fillStyle=g; ctx.fillRect(0,0,s.w,s.battleH);
+      const rg=ctx.createRadialGradient(s.w/2,s.battleH*.45,20,s.w/2,s.battleH*.45,s.battleH*.72); rg.addColorStop(0,'rgba(255,255,255,.10)'); rg.addColorStop(1,'rgba(0,0,0,.18)'); ctx.fillStyle=rg; ctx.fillRect(0,0,s.w,s.battleH);
+      ctx.fillStyle='rgba(255,255,255,.07)'; for(let y=22;y<s.battleH;y+=34) for(let x=(Math.floor(y/34)%2)*17;x<s.w;x+=34) ctx.fillRect(x,y,17,17);
+      ctx.fillStyle='rgba(25,70,30,.18)'; for(let y=50;y<s.battleH-60;y+=78){ ctx.beginPath(); ctx.ellipse(s.w*.22,y,34,10,.1,0,Math.PI*2); ctx.ellipse(s.w*.78,y+26,42,12,-.1,0,Math.PI*2); ctx.fill(); }
+      ctx.fillStyle='rgba(255,255,255,.10)'; ctx.fillRect(s.w*.08,42,s.w*.012,s.battleH-92); ctx.fillRect(s.w*.91,42,s.w*.012,s.battleH-92);
+      ctx.fillStyle=s.berserkActive ? 'rgba(150,35,25,.62)' : 'rgba(80,30,30,.40)'; ctx.fillRect(0,0,s.w,42); ctx.fillStyle='#ffd6d6'; ctx.font='bold 15px system-ui'; ctx.textAlign='center'; ctx.fillText(s.waveState === 'rest' ? `休息中：${Math.max(0,Math.ceil(s.restTime))} 秒` : `第 ${s.wave} 波  剩餘 ${Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length)}${s.berserkActive ? '  狂暴中' : ''}`,s.w/2,28);
+      const baseG=ctx.createLinearGradient(0,s.battleH-52,0,s.battleH); baseG.addColorStop(0,'#2d70c9'); baseG.addColorStop(1,'#17458f'); ctx.fillStyle=baseG; ctx.fillRect(0,s.battleH-46,s.w,40); ctx.fillStyle='rgba(255,255,255,.16)'; ctx.fillRect(0,s.battleH-46,s.w,5); ctx.fillStyle='#dff4ff'; ctx.fillText(`我方基地 HP ${Math.max(0,Math.ceil(s.allyHp))}`,s.w/2,s.battleH-20);
+      ctx.fillStyle='rgba(255,255,255,.15)'; ctx.fillRect(0,s.battleH/2-1,s.w,2);
       s.enemies.forEach(e=>{ if(e.boss){ ctx.save(); ctx.translate(e.x,e.y); ctx.scale(1.8,1.8); drawPixelPerson(ctx,0,0,e.flash>0?'#fff':'#8f2cff','enemy',0,e.frozen); ctx.restore(); ctx.fillStyle='#2b102e'; ctx.fillRect(e.x-28,e.y-34,56,6); ctx.fillStyle='#ffdf6e'; ctx.fillRect(e.x-28,e.y-34,56*Math.max(0,e.hp/e.maxHp),6); } else drawPixelPerson(ctx,e.x,e.y,'#e34a38','enemy',e.flash,e.frozen); });
       for(const w of s.weapons){ const base=WEAPONS[w.type]; ctx.save(); for(const t of w.trail){ ctx.globalAlpha=t.life/.35*.35; ctx.fillStyle=base.color; ctx.beginPath(); ctx.arc(t.x,t.y,w.radius*.45,0,Math.PI*2); ctx.fill(); } ctx.globalAlpha=.17; ctx.fillStyle=base.color; ctx.beginPath(); ctx.arc(w.x,w.y,w.radius,0,Math.PI*2); ctx.fill(); ctx.globalAlpha=1; ctx.shadowColor=base.color; ctx.shadowBlur=18; ctx.font='30px serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(base.icon,w.x,w.y); ctx.restore(); }
       if(s.path.length>1){ ctx.strokeStyle='#ffffff'; ctx.lineWidth=4; ctx.lineCap='round'; ctx.beginPath(); s.path.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.stroke(); }
