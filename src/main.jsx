@@ -4,6 +4,7 @@ import './styles.css';
 import monSheetUrl from './assets/mon.png';
 import zomSheetUrl from './assets/zom.png';
 import bossSheetUrl from './assets/boss.png';
+import finalBossSheetUrl from './assets/v-boss.png';
 import battleBgUrl from './assets/background.png';
 import swordIconUrl from './assets/sword-icon.png';
 import bombIconUrl from './assets/bomb-icon.png';
@@ -13,19 +14,23 @@ import swordSheetUrl from './assets/sword-sheet.png';
 import bombSheetUrl from './assets/bomb-sheet.png';
 import lightningSheetUrl from './assets/lightning-sheet.png';
 import iceSheetUrl from './assets/ice-sheet.png';
+import swordHitSheetUrl from './assets/sword-hit-sheet.png';
+import iceHitSheetUrl from './assets/ice-hit-sheet.png';
+import lightningHitSheetUrl from './assets/lightning-hit-sheet.png';
+import bombHitSheetUrl from './assets/bomb-hit-sheet.png';
 
 const WEAPON_ASSETS = {
-  sword: { icon: swordIconUrl, sheet: swordSheetUrl },
-  bomb: { icon: bombIconUrl, sheet: bombSheetUrl },
-  lightning: { icon: lightningIconUrl, sheet: lightningSheetUrl },
-  ice: { icon: iceIconUrl, sheet: iceSheetUrl },
+  sword: { icon: swordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl },
+  bomb: { icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl },
+  lightning: { icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl },
+  ice: { icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl },
 };
 
 const WEAPONS = {
-  sword: { name: '旋轉劍', icon: swordIconUrl, sheet: swordSheetUrl, color: '#f0c040', radius: 40, speed: 720, damage: 24, label: '雙劍連斬！', triple: '三連旋斬！', effectScale: 1.18, rotate360: true },
-  bomb: { name: '爆破彈', icon: bombIconUrl, sheet: bombSheetUrl, color: '#ff6644', radius: 75, speed: 330, damage: 38, label: '雙重爆破！', triple: '三連爆破！', effectScale: 1.55 },
-  ice: { name: '冰霜束', icon: iceIconUrl, sheet: iceSheetUrl, color: '#88ddff', radius: 30, speed: 500, damage: 16, freeze: 3, label: '雙重冰封！', triple: '三連冰霜！', effectScale: .95 },
-  lightning: { name: '閃電鏈', icon: lightningIconUrl, sheet: lightningSheetUrl, color: '#ccaaff', radius: 55, speed: 920, damage: 20, label: '雙重閃電！', triple: '三連雷鏈！', effectScale: 1.25 },
+  sword: { name: '旋轉劍', icon: swordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#f0c040', radius: 40, speed: 720, damage: 24, label: '雙劍連斬！', triple: '三連旋斬！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34 },
+  bomb: { name: '火焰法杖', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#ff6644', radius: 75, speed: 330, damage: 38, label: '雙重火焰！', triple: '三連烈焰！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
+  ice: { name: '冰霜束', icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl, color: '#88ddff', radius: 30, speed: 500, damage: 16, freeze: 3, label: '雙重冰封！', triple: '三連冰霜！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
+  lightning: { name: '閃電鏈', icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ccaaff', radius: 55, speed: 920, damage: 20, label: '雙重閃電！', triple: '三連雷鏈！', frames: 8, fps: 22, rotateToPath: true, hitFrames: 6, hitSize: 34 },
 };
 const TYPES = Object.keys(WEAPONS);
 const rand = (a, b) => a + Math.random() * (b - a);
@@ -121,7 +126,7 @@ function App() {
       w: 390, h: 780, battleH: 585, last: performance.now(), autoWeapon: 0,
       wave: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0, bannerLife: 1.5,
       berserkActive: false, berserkScheduled: false, berserkTriggered: false, berserkAt: 0, waveElapsed: 0,
-      allies: [], enemies: [], weapons: [], particles: [], floatTexts: [], path: [], isDrawing: false, drawTime: 0,
+      allies: [], enemies: [], weapons: [], hitEffects: [], particles: [], floatTexts: [], path: [], isDrawing: false, drawTime: 0,
       allyHp: 100, kills: 0, gameOver: '', pointerId: null, animTime: 0,
     };
     for (let i = 0; i < 4; i++) addWeapon();
@@ -146,18 +151,25 @@ function App() {
     zomImg.src = zomSheetUrl;
     const bossImg = new Image();
     bossImg.src = bossSheetUrl;
+    const finalBossImg = new Image();
+    finalBossImg.src = finalBossSheetUrl;
     const battleBgImg = new Image();
     battleBgImg.src = battleBgUrl;
     const weaponSheetImgs = {};
+    const weaponHitSheetImgs = {};
     for (const type of TYPES) {
       weaponSheetImgs[type] = new Image();
       weaponSheetImgs[type].src = WEAPONS[type].sheet;
+      if (WEAPONS[type].hitSheet) {
+        weaponHitSheetImgs[type] = new Image();
+        weaponHitSheetImgs[type].src = WEAPONS[type].hitSheet;
+      }
     }
 
     function drawEnemySprite(ctx, s, e) {
       const frameCount = 4;
       const frame = Math.floor((s.animTime * (e.boss ? 6 : e.type === 'MON' ? 10 : 7) + e.animSeed) % frameCount);
-      const img = e.boss ? bossImg : e.type === 'MON' ? monImg : zomImg;
+      const img = e.finalBoss ? finalBossImg : e.boss ? bossImg : e.type === 'MON' ? monImg : zomImg;
       const srcSize = e.boss ? 96 : 64;
       const size = e.boss ? 96 : e.type === 'MON' ? 42 : 46;
       const bob = Math.sin((s.animTime * (e.type === 'MON' ? 12 : 8)) + e.animSeed) * (e.boss ? 1.2 : 2);
@@ -258,9 +270,9 @@ function App() {
     function waveConfig(wave) {
       const boss = wave === 5 || wave === 10;
       return {
-        total: boss ? 26 + wave * 3 : 28 + wave * 8,
+        total: Math.ceil((boss ? 26 + wave * 3 : 28 + wave * 8) * 1.5),
         interval: Math.max(0.16, 0.42 - wave * 0.025),
-        hp: 16 + wave * 4,
+        hp: Math.ceil((16 + wave * 4) * 1.5),
         speed: (s => (s.battleH - 86) / Math.max(7.5, 16 - wave * 0.45)),
         boss,
       };
@@ -298,18 +310,18 @@ function App() {
     function spawnEnemy(s) {
       const cfg = waveConfig(s.wave);
       const isBoss = cfg.boss && s.waveSpawned === cfg.total - 1;
-      const hp = isBoss ? 280 + s.wave * 35 : cfg.hp;
+      const hp = isBoss ? (280 + s.wave * 35) * 5 : cfg.hp;
       const enemyType = isBoss ? 'BOSS' : (Math.random() < 0.45 ? 'MON' : 'ZOM');
       const speedMul = enemyType === 'MON' ? 1.45 : 1;
       s.enemies.push({
         id: uid(), type: enemyType, x: rand(s.w*.12, s.w*.88), y: isBoss ? 30 : 42,
         hp, maxHp: hp, atk: isBoss ? 25 : 5 + s.wave, cd: 0,
         speed: isBoss ? (s.battleH-86)/34 : cfg.speed(s) * speedMul, flash:0, frozen:0, animSeed: Math.random() * 4,
-        boss: isBoss, radius: isBoss ? 30 : enemyType === 'MON' ? 11 : 13,
+        boss: isBoss, finalBoss: isBoss && s.wave === 10, radius: isBoss ? 30 : enemyType === 'MON' ? 11 : 13,
       });
       s.waveSpawned++;
     }
-    function damageEnemy(s, e, dmg, color) {
+    function damageEnemy(s, e, dmg, color, weapon = null) {
       e.hp -= dmg; e.flash = .08;
       const isTierColor = color === '#c084fc' || color === '#ffd76a';
       s.floatTexts.push({
@@ -318,6 +330,17 @@ function App() {
         size: (e.boss ? 20 : 16) + (color === '#ffd76a' ? 6 : color === '#c084fc' ? 3 : 0),
         glow: isTierColor
       });
+      if (weapon?.type && WEAPONS[weapon.type]?.hitSheet) {
+        s.hitEffects.push({
+          id: uid(),
+          type: weapon.type,
+          x: e.x,
+          y: e.y,
+          age: 0,
+          life: .34,
+          combo: weapon.combo || 1,
+        });
+      }
       const count = (e.boss ? 12 : 7) + (color === '#ffd76a' ? 8 : color === '#c084fc' ? 4 : 0);
       for (let i=0;i<count;i++) s.particles.push({
         id: uid(), x:e.x, y:e.y, vx:rand(-90,90), vy:rand(-90,90),
@@ -392,12 +415,14 @@ function App() {
           const hitKey = String(e.id);
           if((w.hitCd[hitKey] || 0) <= 0 && Math.hypot(e.x-w.x,e.y-w.y)<=w.radius + (e.boss ? 10 : 0)){
             w.hitCd[hitKey] = 0.12;
-            damageEnemy(s,e,w.damage,w.damageColor || base.color);
+            damageEnemy(s,e,w.damage,w.damageColor || base.color,w);
             if(base.freeze) e.frozen=Math.max(e.frozen,base.freeze);
           }
         }
       }
       s.weapons = s.weapons.filter(w=>!w.done);
+      s.hitEffects.forEach(h=>{ h.age += dt; h.life -= dt; });
+      s.hitEffects = s.hitEffects.filter(h=>h.life>0);
       s.particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;}); s.particles=s.particles.filter(p=>p.life>0);
       s.floatTexts.forEach(f=>{f.y+=f.vy*dt;f.life-=dt;}); s.floatTexts=s.floatTexts.filter(f=>f.life>0);
       if(s.allyHp<=0) s.gameOver='我方基地陷落';
@@ -463,20 +488,26 @@ function App() {
         // 武器發動後不再額外墊彩色圓圈或彩色殘影，避免蓋住 sprite 本身。
         ctx.globalAlpha = 1;
         const sheet = weaponSheetImgs[w.type];
-        const frame = Math.floor(s.animTime * 12) % 3;
-        const size = Math.max(86, Math.min(180, w.radius * 2.25 * (base.effectScale || 1)));
+        const frameCount = base.frames || 3;
+        const fps = base.fps || 12;
+        const frame = Math.floor(s.animTime * fps) % frameCount;
+        // 攻擊動畫尺寸直接對齊目前判定直徑：一階=原半徑*2，二/三階跟著強化後半徑放大。
+        const size = Math.max(18, w.radius * 2);
         ctx.shadowColor=base.color;
         ctx.shadowBlur=10;
         ctx.imageSmoothingEnabled = false;
         if (sheet && sheet.complete && sheet.naturalWidth) {
-          const fw = sheet.naturalWidth / 3;
+          const fw = sheet.naturalWidth / frameCount;
           const fh = sheet.naturalHeight;
           const drawW = size;
           const drawH = size * (fh / fw);
-          if (base.rotate360) {
-            // 劍類武器：沿軌跡移動時額外做 360 度高速旋轉，保留原本 3-frame 斬擊動畫。
+          if (base.rotateToPath) {
+            // 火焰法杖：用細長火焰彈沿玩家軌跡方向飛行。
+            const p0 = w.path[w.seg] || { x: w.x, y: w.y };
+            const p1 = w.path[w.seg + 1] || p0;
+            const angle = Math.atan2(p1.y - p0.y, p1.x - p0.x);
             ctx.translate(w.x, w.y);
-            ctx.rotate((s.animTime * Math.PI * 2 * 2.2) + (w.seg * 0.35));
+            ctx.rotate(angle);
             ctx.drawImage(sheet, frame * fw, 0, fw, fh, -drawW/2, -drawH/2, drawW, drawH);
           } else {
             ctx.drawImage(sheet, frame * fw, 0, fw, fh, w.x - drawW/2, w.y - drawH/2, drawW, drawH);
@@ -484,6 +515,29 @@ function App() {
         } else {
           ctx.font='30px serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('✦',w.x,w.y);
         }
+        ctx.restore();
+      }
+
+      // 武器命中特效：火焰法杖命中時播放專用爆裂 sprite sheet。
+      for (const h of s.hitEffects) {
+        const base = WEAPONS[h.type];
+        const sheet = weaponHitSheetImgs[h.type];
+        if (!sheet || !sheet.complete || !sheet.naturalWidth) continue;
+        const frames = base.hitFrames || 3;
+        const fw = sheet.naturalWidth / frames;
+        const fh = sheet.naturalHeight;
+        const progress = clamp(h.age / Math.max(.01, h.age + h.life), 0, .999);
+        const frame = Math.min(frames - 1, Math.floor(progress * frames));
+        // 命中特效維持比小怪略小，避免遮住怪物本體；高階只微幅放大。
+        const target = (base.hitSize || 34) * (h.combo >= 3 ? 1.18 : h.combo >= 2 ? 1.08 : 1);
+        const drawW = target;
+        const drawH = target * (fh / fw);
+        ctx.save();
+        ctx.imageSmoothingEnabled = false;
+        ctx.globalAlpha = clamp(h.life * 4, 0, 1);
+        ctx.shadowColor = base.color;
+        ctx.shadowBlur = h.combo >= 3 ? 26 : h.combo >= 2 ? 18 : 12;
+        ctx.drawImage(sheet, frame * fw, 0, fw, fh, h.x - drawW / 2, h.y - drawH / 2, drawW, drawH);
         ctx.restore();
       }
       if(s.path.length>1){
