@@ -5,11 +5,17 @@ import monSheetUrl from './assets/mon.png';
 import zomSheetUrl from './assets/zom.png';
 import bossSheetUrl from './assets/boss.png';
 import finalBossSheetUrl from './assets/v-boss.png';
+import finalBossSummonSheetUrl from './assets/v-boss-summon.png';
+import finalBossHurtSheetUrl from './assets/v-boss-hurt.png';
+import vBatSheetUrl from './assets/v-bat.png';
+import dBossFireSheetUrl from './assets/d-boss-fire.png';
 import battleBgUrl from './assets/background.png';
 import swordIconUrl from './assets/sword-icon.png';
 import bombIconUrl from './assets/bomb-icon.png';
 import lightningIconUrl from './assets/lightning-icon.png';
 import iceIconUrl from './assets/ice-icon.png';
+import shieldIconUrl from './assets/shield-icon.svg';
+import bowIconUrl from './assets/bow-icon.svg';
 import swordSheetUrl from './assets/sword-sheet.png';
 import bombSheetUrl from './assets/bomb-sheet.png';
 import lightningSheetUrl from './assets/lightning-sheet.png';
@@ -24,20 +30,27 @@ const WEAPON_ASSETS = {
   bomb: { icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl },
   lightning: { icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl },
   ice: { icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl },
+  shield: { icon: shieldIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl },
+  bow: { icon: bowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl },
 };
 
 const WEAPONS = {
-  sword: { name: '旋轉劍', icon: swordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#f0c040', radius: 40, speed: 720, damage: 24, label: '雙劍連斬！', triple: '三連旋斬！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34 },
-  bomb: { name: '火焰法杖', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#ff6644', radius: 75, speed: 330, damage: 38, label: '雙重火焰！', triple: '三連烈焰！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
-  ice: { name: '冰霜束', icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl, color: '#88ddff', radius: 30, speed: 500, damage: 16, freeze: 3, label: '雙重冰封！', triple: '三連冰霜！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
-  lightning: { name: '閃電鏈', icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ccaaff', radius: 55, speed: 920, damage: 20, label: '雙重閃電！', triple: '三連雷鏈！', frames: 8, fps: 22, rotateToPath: true, hitFrames: 6, hitSize: 34 },
+  sword: { name: '劍', icon: swordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#f0c040', radius: 40, speed: 720, formula: '4 × STR', label: '二階劍！', triple: '三階劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34 },
+  bomb: { name: '火焰法杖', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#ff6644', radius: 75, speed: 330, formula: '5 × INT', label: '二階火焰！', triple: '三階烈焰！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
+  ice: { name: '冰霜法杖', icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl, color: '#88ddff', radius: 30, speed: 500, formula: '4 × INT + 1 × DEX', freeze: 3, label: '二階冰霜！', triple: '三階冰霜！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
+  lightning: { name: '雷電法杖', icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ccaaff', radius: 55, speed: 920, formula: '3 × INT', label: '二階雷電！', triple: '三階雷鏈！', frames: 8, fps: 22, rotateToPath: true, hitFrames: 6, hitSize: 34 },
+  shield: { name: '盾', icon: shieldIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#9ca3af', radius: 40, speed: 300, formula: '5 × VIT', knockback: 42, label: '二階盾擊！', triple: '三階盾擊！', frames: 8, fps: 14, hitFrames: 6, hitSize: 34 },
+  bow: { name: '弓箭', icon: bowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#84cc16', radius: 50, speed: 0, formula: '5 × DEX', aim: true, label: '二階箭雨！', triple: '三階箭雨！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34 },
 };
 const TYPES = Object.keys(WEAPONS);
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const uid = (() => { let n = 1; return () => n++; })();
 
-function randomWeapon() { return TYPES[Math.floor(Math.random() * TYPES.length)]; }
+function randomWeapon(pool = TYPES) {
+  const usable = (pool && pool.length ? pool : TYPES).filter(Boolean);
+  return usable[Math.floor(Math.random() * usable.length)] || 'sword';
+}
 function normalizeWeaponQueue(queue) {
   // 每次隊列變動都立刻反覆檢查相鄰方塊。
   // 例如 A / X / A，當 X 被消耗後，兩個 A 會在同一個更新循環內馬上合成。
@@ -75,6 +88,20 @@ function tierEffectColor(type, tier = 1) {
   if (tier >= 2) return '#c084fc';
   return WEAPONS[type]?.color || '#ffffff';
 }
+function weaponBaseDamage(type, stats = {}) {
+  const STR = stats.STR || 0, DEX = stats.DEX || 0, INT = stats.INT || 0, VIT = stats.VIT || 0;
+  if (type === 'sword') return 4 * STR;
+  if (type === 'bomb') return 5 * INT;
+  if (type === 'ice') return 4 * INT + DEX;
+  if (type === 'lightning') return 3 * INT;
+  if (type === 'shield') return 5 * VIT;
+  if (type === 'bow') return 5 * DEX;
+  return 1;
+}
+function weaponDamageText(type, stats = {}, tier = 1) {
+  const mul = tier === 3 ? 2 : tier === 2 ? 1.5 : 1;
+  return `${Math.round(weaponBaseDamage(type, stats) * mul)}（${WEAPONS[type]?.formula || ''}${tier > 1 ? ` × ${mul}` : ''}）`;
+}
 function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 function lerp(a, b, t) { return a + (b - a) * t; }
 function drawPixelPerson(ctx, x, y, color, team, flash = 0, frozen = 0) {
@@ -99,15 +126,17 @@ function App() {
   const canvasRef = useRef(null);
   const wrapRef = useRef(null);
   const stateRef = useRef(null);
-  const [ui, setUi] = useState({ queue: [], selected: null, kills: 0, allyHp: 100, wave: 0, waveState: 'rest', rest: 5, enemiesLeft: 0, banner: '準備開始', drawing: false, timer: 0, gameOver: '' });
+  const WARRIOR = { name: '戰士', stats: { STR: 5, DEX: 3, INT: 1, VIT: 3 }, bagCapacity: 3, initialBag: ['sword', 'shield', 'bow'] };
+  const [ui, setUi] = useState({ queue: [], selected: null, kills: 0, allyHp: 100, wave: 0, waveState: 'rest', rest: 5, enemiesLeft: 0, banner: '準備開始', drawing: false, timer: 0, gameOver: '', level: 1, exp: 0, expNeed: 80, upgrading: false, upgradeOptions: [], classChosen: false, playerClass: null, stats: WARRIOR.stats, bag: [], bagCapacity: WARRIOR.bagCapacity, showBag: false, selectedBagIndex: 0 });
   const selectedRef = useRef(null);
   const queueRef = useRef([]);
+  const bagRef = useRef([]);
 
   const addWeapon = (reason = '') => {
     // 武器列滿 7 格時暫停生成；不再自動擠掉最前面的武器。
     if (queueRef.current.length >= 7) return false;
     // 新武器進隊列的同一瞬間就合併相鄰同類武器，避免玩家看到兩格短暫停留後才合成。
-    queueRef.current = normalizeWeaponQueue([...queueRef.current, { id: uid(), type: randomWeapon(), tier: 1, born: Date.now() }]);
+    queueRef.current = normalizeWeaponQueue([...queueRef.current, { id: uid(), type: randomWeapon(bagRef.current), tier: 1, born: Date.now() }]);
     if (selectedRef.current && !queueRef.current.some(x => x.id === selectedRef.current.id)) selectedRef.current = null;
     setUi(v => ({ ...v, queue: queueRef.current, selected: selectedRef.current?.id ?? null }));
     if (reason && stateRef.current) stateRef.current.floatTexts.push({ id: uid(), text: reason, x: rand(80, stateRef.current.w - 80), y: stateRef.current.h * .77, vy: -34, life: 1, color: '#fff6a8', size: 18 });
@@ -119,6 +148,114 @@ function App() {
     setUi(v => ({ ...v, selected: item?.id ?? null }));
   };
 
+  const startWarrior = () => {
+    const s = stateRef.current;
+    bagRef.current = [...WARRIOR.initialBag];
+    queueRef.current = normalizeWeaponQueue([
+      { id: uid(), type: 'sword', tier: 1, born: Date.now() },
+      { id: uid(), type: 'sword', tier: 1, born: Date.now() },
+    ]);
+    selectedRef.current = null;
+    if (s) {
+      s.classChosen = true;
+      s.playerClass = WARRIOR.name;
+      s.stats = { ...WARRIOR.stats };
+      s.bag = [...bagRef.current];
+      s.bagCapacity = WARRIOR.bagCapacity;
+      s.floatTexts.push({ id: uid(), text: '戰士出擊！', x: s.w / 2, y: 120, vy: -10, life: 1, color: '#fff3a3', size: 30, glow: true });
+    }
+    setUi(v => ({
+      ...v, classChosen: true, playerClass: WARRIOR.name, stats: { ...WARRIOR.stats },
+      bag: [...bagRef.current], bagCapacity: WARRIOR.bagCapacity, queue: queueRef.current, selected: null
+    }));
+  };
+
+  const toggleBag = () => {
+    const s = stateRef.current;
+    if (s) s.showBag = !s.showBag;
+    setUi(v => ({ ...v, showBag: s ? s.showBag : !v.showBag, bag: [...bagRef.current] }));
+  };
+  const selectBagWeapon = (idx) => {
+    setUi(v => ({ ...v, selectedBagIndex: idx }));
+  };
+
+  const STAT_KEYS = ['STR', 'DEX', 'VIT', 'INT'];
+  const STAT_LABEL = { STR: '力量 STR', DEX: '敏捷 DEX', VIT: '體魄 VIT', INT: '智力 INT' };
+  const WARRIOR_STAT_WEIGHTS = [
+    ['STR', 0.40], ['DEX', 0.30], ['VIT', 0.20], ['INT', 0.10],
+  ];
+
+  const rollWeightedStat = () => {
+    const r = Math.random();
+    let acc = 0;
+    for (const [key, weight] of WARRIOR_STAT_WEIGHTS) {
+      acc += weight;
+      if (r <= acc) return key;
+    }
+    return 'INT';
+  };
+
+  const makeStatOption = () => {
+    const boost = { STR: 0, DEX: 0, INT: 0, VIT: 0 };
+    for (let i = 0; i < 5; i++) boost[rollWeightedStat()] += 1;
+    const signature = STAT_KEYS.map(k => `${k}${boost[k]}`).join('-');
+    return { id: uid(), boost, signature };
+  };
+
+  const drawUpgradeOptions = () => {
+    const result = [];
+    const seen = new Set();
+    let guard = 0;
+    while (result.length < 3 && guard++ < 80) {
+      const opt = makeStatOption();
+      if (seen.has(opt.signature)) continue;
+      seen.add(opt.signature);
+      result.push(opt);
+    }
+    while (result.length < 3) result.push(makeStatOption());
+    return result;
+  };
+
+
+  const statUpgradeRank = (value = 0) => {
+    if (value >= 5) return { cls: 'gold', arrows: 3 };
+    if (value >= 3) return { cls: 'purple', arrows: 2 };
+    return { cls: 'blue', arrows: 1 };
+  };
+
+  const topUpgradeStats = (boost = {}) => {
+    return STAT_KEYS
+      .map(key => ({ key, value: boost[key] || 0 }))
+      .filter(item => item.value > 0)
+      .sort((a, b) => b.value - a.value || STAT_KEYS.indexOf(a.key) - STAT_KEYS.indexOf(b.key))
+      .slice(0, 2);
+  };
+
+  const renderUpgradeSummary = (boost = {}) => {
+    const top = topUpgradeStats(boost);
+    return top.map(({ key, value }) => {
+      const rank = statUpgradeRank(value);
+      return <div key={key} className={`upgradeMajor ${rank.cls}`}>
+        <span className="upgradeStatName">{key}</span>
+        <span className={`upgradeArrows arrows${rank.arrows}`}>{Array.from({ length: rank.arrows }).map((_, i) => <i key={i}>^</i>)}</span>
+      </div>;
+    });
+  };
+
+  const continueAfterUpgrade = (option = null) => {
+    const s = stateRef.current;
+    if (s && option?.boost) {
+      for (const key of STAT_KEYS) s.stats[key] = (s.stats[key] || 0) + (option.boost[key] || 0);
+      s.floatTexts.push({ id: uid(), text: '素質提升！', x: s.w / 2, y: s.battleH * .45, vy: -10, life: 1.1, color: '#fff3a3', size: 28, glow: true });
+    }
+    if (s) {
+      s.upgrading = false;
+      s.upgradeOptions = [];
+      setUi(v => ({ ...v, upgrading: false, upgradeOptions: [], level: s.level, exp: s.exp, expNeed: s.level * 80, stats: { ...s.stats } }));
+    }
+  };
+
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -127,9 +264,10 @@ function App() {
       wave: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0, bannerLife: 1.5,
       berserkActive: false, berserkScheduled: false, berserkTriggered: false, berserkAt: 0, waveElapsed: 0,
       allies: [], enemies: [], weapons: [], hitEffects: [], particles: [], floatTexts: [], path: [], isDrawing: false, drawTime: 0,
-      allyHp: 100, kills: 0, gameOver: '', pointerId: null, animTime: 0,
+      allyHp: 100, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', pointerId: null, animTime: 0,
+      classChosen: false, playerClass: null, stats: { ...WARRIOR.stats }, bag: [], bagCapacity: WARRIOR.bagCapacity, showBag: false,
     };
-    for (let i = 0; i < 4; i++) addWeapon();
+    // 等玩家選職業後，才預載初始武器序列。
 
     const resize = () => {
       const wrap = wrapRef.current;
@@ -153,6 +291,14 @@ function App() {
     bossImg.src = bossSheetUrl;
     const finalBossImg = new Image();
     finalBossImg.src = finalBossSheetUrl;
+    const finalBossSummonImg = new Image();
+    finalBossSummonImg.src = finalBossSummonSheetUrl;
+    const finalBossHurtImg = new Image();
+    finalBossHurtImg.src = finalBossHurtSheetUrl;
+    const vBatImg = new Image();
+    vBatImg.src = vBatSheetUrl;
+    const dBossFireImg = new Image();
+    dBossFireImg.src = dBossFireSheetUrl;
     const battleBgImg = new Image();
     battleBgImg.src = battleBgUrl;
     const weaponSheetImgs = {};
@@ -167,35 +313,76 @@ function App() {
     }
 
     function drawEnemySprite(ctx, s, e) {
-      const frameCount = 4;
-      const frame = Math.floor((s.animTime * (e.boss ? 6 : e.type === 'MON' ? 10 : 7) + e.animSeed) % frameCount);
-      const img = e.finalBoss ? finalBossImg : e.boss ? bossImg : e.type === 'MON' ? monImg : zomImg;
-      const srcSize = e.boss ? 96 : 64;
-      const size = e.boss ? 96 : e.type === 'MON' ? 42 : 46;
-      const bob = Math.sin((s.animTime * (e.type === 'MON' ? 12 : 8)) + e.animSeed) * (e.boss ? 1.2 : 2);
+      let img = null;
+      let frameCount = 4;
+      let srcW = 64;
+      let srcH = 64;
+      let size = 46;
+      let fps = 7;
+
+      if (e.type === 'BAT') {
+        img = vBatImg; frameCount = 4; srcW = 32; srcH = 32; size = 30; fps = 12;
+      } else if (e.type === 'FIREBALL') {
+        img = dBossFireImg; frameCount = 6; srcW = 32; srcH = 32; size = 34; fps = 14;
+      } else if (e.finalBoss) {
+        if (e.skillState === 'summoning') {
+          img = finalBossSummonImg; frameCount = 4; srcW = 96; srcH = 96; fps = 8;
+        } else if (e.hurtAnim > 0) {
+          img = finalBossHurtImg; frameCount = 2; srcW = 96; srcH = 96; fps = 12;
+        } else {
+          img = finalBossImg; frameCount = 4; srcW = 96; srcH = 96; fps = 6;
+        }
+        size = 96;
+      } else if (e.boss) {
+        img = bossImg; frameCount = 4; srcW = 96; srcH = 96; size = 96; fps = 6;
+      } else if (e.type === 'MON') {
+        img = monImg; frameCount = 4; srcW = 64; srcH = 64; size = 42; fps = 10;
+      } else {
+        img = zomImg; frameCount = 4; srcW = 64; srcH = 64; size = 46; fps = 7;
+      }
+
+      const frame = Math.floor((s.animTime * fps + e.animSeed) % frameCount);
+      const bob = Math.sin((s.animTime * (e.type === 'MON' || e.type === 'BAT' ? 12 : 8)) + e.animSeed) * (e.boss ? 1.2 : 2);
       ctx.save();
       ctx.imageSmoothingEnabled = false;
       ctx.globalAlpha = .30;
-      ctx.fillStyle = e.boss ? '#321006' : e.type === 'MON' ? '#1c1130' : '#102116';
+      ctx.fillStyle = e.boss ? '#321006' : e.type === 'BAT' ? '#190825' : e.type === 'FIREBALL' ? '#341106' : e.type === 'MON' ? '#1c1130' : '#102116';
       ctx.beginPath();
       ctx.ellipse(e.x, e.y + size * .34, size * .32, size * .10, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.globalAlpha = 1;
-      if (e.boss) {
-        ctx.shadowColor = '#ff6a1a';
-        ctx.shadowBlur = 18;
-      } else if (e.type === 'MON') {
-        ctx.shadowColor = '#c084fc';
-        ctx.shadowBlur = 6;
-      }
+      if (e.boss) { ctx.shadowColor = e.finalBoss ? '#d56bff' : '#ff6a1a'; ctx.shadowBlur = 18; }
+      else if (e.type === 'BAT') { ctx.shadowColor = '#d56bff'; ctx.shadowBlur = 8; }
+      else if (e.type === 'FIREBALL') { ctx.shadowColor = '#ff9a2e'; ctx.shadowBlur = 10; }
+      else if (e.type === 'MON') { ctx.shadowColor = '#c084fc'; ctx.shadowBlur = 6; }
+
       if (e.flash > 0) ctx.filter = 'brightness(2.5) saturate(.25)';
-      if (img.complete && img.naturalWidth) {
-        ctx.drawImage(img, frame * srcSize, 0, srcSize, srcSize, e.x - size / 2, e.y - size / 2 + bob, size, size);
+      if (img && img.complete && img.naturalWidth) {
+        ctx.drawImage(img, frame * srcW, 0, srcW, srcH, e.x - size / 2, e.y - size / 2 + bob, size, size);
       } else {
-        drawPixelPerson(ctx, e.x, e.y, e.boss ? '#ff6a1a' : e.type === 'MON' ? '#b084ff' : '#75d36a', 'enemy', e.flash, e.frozen);
+        drawPixelPerson(ctx, e.x, e.y, e.boss ? '#ff6a1a' : e.type === 'BAT' ? '#c084fc' : e.type === 'FIREBALL' ? '#ff9a2e' : e.type === 'MON' ? '#b084ff' : '#75d36a', 'enemy', e.flash, e.frozen);
       }
       ctx.filter = 'none';
       ctx.shadowBlur = 0;
+
+      if (e.boss && (e.shielded || e.skillState === 'summoning' || e.skillState === 'fire')) {
+        const shieldColor = e.finalBoss ? '#d56bff' : '#ffb257';
+        const shieldFill = e.finalBoss ? '#b45cff' : '#ff7a18';
+        ctx.globalAlpha = .65 + Math.sin(s.animTime * 8) * .15;
+        ctx.strokeStyle = shieldColor;
+        ctx.lineWidth = 4;
+        ctx.shadowColor = shieldColor;
+        ctx.shadowBlur = 18;
+        ctx.beginPath();
+        ctx.arc(e.x, e.y + bob, size * .55, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.globalAlpha = .13;
+        ctx.fillStyle = shieldFill;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.globalAlpha = 1;
+      }
+
       if (e.frozen > 0) {
         ctx.strokeStyle = '#bdf6ff';
         ctx.lineWidth = e.boss ? 5 : 3;
@@ -205,9 +392,9 @@ function App() {
       }
       if (!e.boss) {
         const hpRatio = Math.max(0, e.hp / e.maxHp);
-        const barW = 34;
+        const barW = e.type === 'BAT' ? 24 : e.type === 'FIREBALL' ? 26 : 34;
         const barH = 5;
-        const barY = e.y - 30;
+        const barY = e.y - size * .52;
         ctx.shadowBlur = 0;
         ctx.globalAlpha = 1;
         ctx.fillStyle = 'rgba(18, 10, 12, .82)';
@@ -228,24 +415,31 @@ function App() {
     const startDraw = e => {
       const s = stateRef.current, p = toPoint(e);
       if (!selectedRef.current || p.y > s.battleH || s.gameOver) return;
-      e.preventDefault(); canvas.setPointerCapture(e.pointerId); s.pointerId = e.pointerId;
-      s.path = [p]; s.isDrawing = true; s.drawTime = 1;
+      e.preventDefault();
+      const selectedWeapon = WEAPONS[selectedRef.current.type];
+      if (s.isDrawing && selectedWeapon?.aim) {
+        s.path.push(p);
+        s.floatTexts.push({ id: uid(), text: '標記', x: p.x, y: p.y - 12, vy: -18, life: .45, color: '#d9ff99', size: 13, glow: true });
+        return;
+      }
+      canvas.setPointerCapture(e.pointerId); s.pointerId = e.pointerId;
+      s.path = [p]; s.isDrawing = true; s.drawTime = 1; s.aimMode = selectedWeapon?.aim ? 'bow' : 'trace';
+      if (selectedWeapon?.aim) s.floatTexts.push({ id: uid(), text: '點擊地圖標記目標！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#d9ff99', size: 20, glow: true });
       setUi(v => ({ ...v, drawing: true, timer: 1 }));
     };
     const moveDraw = e => {
-      const s = stateRef.current; if (!s.isDrawing || e.pointerId !== s.pointerId) return;
+      const s = stateRef.current; if (!s.isDrawing || e.pointerId !== s.pointerId || s.aimMode === 'bow') return;
       const p = toPoint(e); if (p.y <= s.battleH && p.y >= 0) {
         const last = s.path[s.path.length - 1];
-        if (!last || dist(last, p) > 5) {
-          // 玩家畫線時只留下能量軌跡本身；不再噴粒子，讓期待感集中在手繪線的發光與蓄力感。
-          s.path.push(p);
-        }
+        if (!last || dist(last, p) > 5) s.path.push(p);
       }
     };
     const endDraw = e => {
       const s = stateRef.current; if (!s.isDrawing || e.pointerId !== s.pointerId) return;
-      launchWeapon(); s.isDrawing = false; s.drawTime = 0; s.pointerId = null;
-      setUi(v => ({ ...v, drawing: false, timer: 0 }));
+      if (s.aimMode !== 'bow') {
+        launchWeapon(); s.isDrawing = false; s.drawTime = 0; s.pointerId = null; s.aimMode = '';
+        setUi(v => ({ ...v, drawing: false, timer: 0 }));
+      }
     };
     canvas.addEventListener('pointerdown', startDraw); canvas.addEventListener('pointermove', moveDraw); canvas.addEventListener('pointerup', endDraw); canvas.addEventListener('pointercancel', endDraw);
 
@@ -253,19 +447,40 @@ function App() {
       const tier = item?.tier || 1;
       return { tier, power: tier === 3 ? 2 : tier === 2 ? 1.5 : 1 };
     }
-    function launchWeapon() {
-      const s = stateRef.current, item = selectedRef.current; if (!item || s.path.length < 2) return;
-      const base = WEAPONS[item.type]; const tierInfo = getTierInfo(item);
-      const weaponPath = [...s.path];
-      s.path = [];
-      s.weapons.push({ id: uid(), type: item.type, path: weaponPath, seg: 0, t: 0, x: weaponPath[0].x, y: weaponPath[0].y, radius: base.radius * tierInfo.power, damage: base.damage * tierInfo.power, hitCd: {}, trail: [], combo: tierInfo.tier, trailColor: tierTrailColor(item.type, tierInfo.tier), damageColor: tierEffectColor(item.type, tierInfo.tier) });
-      // 任何武器被消耗後，都立刻重新正規化隊列。
-      // 這樣因為空格產生的新相鄰同武器會立即合併，不會等下一次生成才合成。
+    function consumeSelectedWeapon(item, tierInfo) {
       queueRef.current = normalizeWeaponQueue(queueRef.current.filter(x => x.id !== item.id));
       selectedRef.current = null;
-      if (tierInfo.tier >= 2) s.floatTexts.push({ id: uid(), text: tierInfo.tier === 3 ? base.triple : base.label, x: s.w / 2, y: s.battleH / 2, vy: -10, life: 1.2, color: tierInfo.tier === 3 ? '#ffd76a' : '#d38cff', size: tierInfo.tier === 3 ? 34 : 26 });
+      const base = WEAPONS[item.type];
+      if (tierInfo.tier >= 2) stateRef.current.floatTexts.push({ id: uid(), text: tierInfo.tier === 3 ? base.triple : base.label, x: stateRef.current.w / 2, y: stateRef.current.battleH / 2, vy: -10, life: 1.2, color: tierInfo.tier === 3 ? '#ffd76a' : '#d38cff', size: tierInfo.tier === 3 ? 34 : 26 });
       setUi(v => ({ ...v, queue: queueRef.current, selected: null }));
     }
+    function launchBowAttack(s, item, tierInfo) {
+      const base = WEAPONS[item.type];
+      const points = s.path.length ? [...s.path] : [{ x: s.w / 2, y: s.battleH / 2 }];
+      const dmg = weaponBaseDamage(item.type, s.stats) * tierInfo.power;
+      for (const p of points) {
+        s.hitEffects.push({ id: uid(), type: 'bow', x: p.x, y: p.y, age: 0, life: .34, combo: tierInfo.tier });
+        for (const e of s.enemies) {
+          if (Math.hypot(e.x - p.x, e.y - p.y) <= base.radius + (e.boss ? 10 : 0)) {
+            damageEnemy(s, e, dmg, tierEffectColor(item.type, tierInfo.tier), { type: item.type, combo: tierInfo.tier });
+          }
+        }
+        s.floatTexts.push({ id: uid(), text: '箭雨！', x: p.x, y: p.y - 20, vy: -28, life: .55, color: tierEffectColor(item.type, tierInfo.tier), size: 16, glow: tierInfo.tier >= 2 });
+      }
+      s.path = [];
+      consumeSelectedWeapon(item, tierInfo);
+    }
+    function launchWeapon() {
+      const s = stateRef.current, item = selectedRef.current; if (!item || s.path.length < 1) return;
+      const base = WEAPONS[item.type]; const tierInfo = getTierInfo(item);
+      if (base.aim) { launchBowAttack(s, item, tierInfo); return; }
+      if (s.path.length < 2) return;
+      const weaponPath = [...s.path];
+      s.path = [];
+      s.weapons.push({ id: uid(), type: item.type, path: weaponPath, seg: 0, t: 0, x: weaponPath[0].x, y: weaponPath[0].y, radius: base.radius, damage: weaponBaseDamage(item.type, s.stats) * tierInfo.power, hitCd: {}, trail: [], combo: tierInfo.tier, trailColor: tierTrailColor(item.type, tierInfo.tier), damageColor: tierEffectColor(item.type, tierInfo.tier) });
+      consumeSelectedWeapon(item, tierInfo);
+    }
+
 
     function waveConfig(wave) {
       const boss = wave === 5 || wave === 10;
@@ -307,6 +522,52 @@ function App() {
       s.floatTexts.push({ id: uid(), text: `休息 ${s.restDuration} 秒`, x: s.w/2, y: 100, vy: -8, life: 1.2, color: '#d9ecff', size: 26 });
       setUi(v => ({ ...v, waveState: 'rest', rest: Math.ceil(s.restTime), enemiesLeft: 0, banner: `休息 ${s.restDuration} 秒` }));
     }
+    function spawnBat(s, boss, index) {
+      const cfg = waveConfig(s.wave);
+      const hp = cfg.hp;
+      const startX = boss.x + rand(-42, 42);
+      const startY = boss.y + rand(8, 35);
+      s.enemies.push({
+        id: uid(), type: 'BAT', x: startX, y: startY,
+        hp, maxHp: hp, atk: 5, cd: 0,
+        speed: cfg.speed(s) * 1.45,
+        flash: 0, frozen: 0, animSeed: Math.random() * 4,
+        boss: false, finalBoss: false, radius: 10,
+        targetX: rand(s.w * .10, s.w * .90), driftPhase: Math.random() * Math.PI * 2,
+        driftAmp: rand(14, 42), summonOwner: boss.id,
+      });
+    }
+
+    function spawnBossFireball(s, boss, index) {
+      const cfg = waveConfig(s.wave);
+      const hp = cfg.hp;
+      s.enemies.push({
+        id: uid(), type: 'FIREBALL', x: boss.x + (index - 1) * 34, y: boss.y + 28,
+        hp, maxHp: hp, atk: 5, cd: 0,
+        speed: cfg.speed(s) * 1.45,
+        flash: 0, frozen: 0, animSeed: Math.random() * 4,
+        boss: false, finalBoss: false, radius: 11,
+        targetX: rand(s.w * .12, s.w * .88), driftPhase: Math.random() * Math.PI * 2,
+        driftAmp: rand(8, 24), fireball: true, summonOwner: boss.id,
+      });
+    }
+
+    function beginFinalBossSummon(s, boss) {
+      boss.skillState = 'summoning';
+      boss.skillTimer = 0;
+      boss.skillDuration = 0.72;
+      boss.shielded = true;
+      s.floatTexts.push({ id: uid(), text: 'BOSS 召喚蝙蝠！', x: s.w/2, y: 96, vy: -8, life: 1.1, color:'#d56bff', size:28, glow:true });
+    }
+
+    function castDBossFire(s, boss) {
+      boss.skillState = 'fire';
+      boss.skillTimer = 0;
+      boss.skillDuration = 0.48;
+      boss.fireSpawned = 0;
+      s.floatTexts.push({ id: uid(), text: 'BOSS 火球術！', x: s.w/2, y: 96, vy: -8, life: .9, color:'#ffb257', size:26, glow:true });
+    }
+
     function spawnEnemy(s) {
       const cfg = waveConfig(s.wave);
       const isBoss = cfg.boss && s.waveSpawned === cfg.total - 1;
@@ -316,13 +577,37 @@ function App() {
       s.enemies.push({
         id: uid(), type: enemyType, x: rand(s.w*.12, s.w*.88), y: isBoss ? 30 : 42,
         hp, maxHp: hp, atk: isBoss ? 25 : 5 + s.wave, cd: 0,
-        speed: isBoss ? (s.battleH-86)/34 : cfg.speed(s) * speedMul, flash:0, frozen:0, animSeed: Math.random() * 4,
+        speed: isBoss ? (s.battleH * .25 - 30) / 2.2 : cfg.speed(s) * speedMul, flash:0, frozen:0, animSeed: Math.random() * 4,
         boss: isBoss, finalBoss: isBoss && s.wave === 10, radius: isBoss ? 30 : enemyType === 'MON' ? 11 : 13,
+        bossCenterX: s.w / 2, bossMovePhase: Math.random() * Math.PI * 2, bossMoveAmp: s.w * .25,
+        skillCd: isBoss ? 5 : 0, skillState: '', skillTimer: 0, skillDuration: 0, shielded: false, hurtAnim: 0, fireSpawned: 0,
       });
       s.waveSpawned++;
     }
+    function gainExp(s, amount) {
+      if (s.gameOver || s.upgrading) return;
+      s.exp += amount;
+      let need = s.level * 80;
+      if (s.exp >= need) {
+        s.exp -= need;
+        s.level += 1;
+        s.upgrading = true;
+        s.upgradeOptions = drawUpgradeOptions();
+        s.floatTexts.push({ id: uid(), text: 'Level Up！', x: s.w / 2, y: s.battleH * .45, vy: -6, life: 1.1, color: '#fff4b8', size: 34, glow: true });
+        setUi(v => ({ ...v, level: s.level, exp: s.exp, expNeed: s.level * 80, upgrading: true, upgradeOptions: s.upgradeOptions }));
+      } else {
+        setUi(v => ({ ...v, exp: s.exp, expNeed: s.level * 80, level: s.level }));
+      }
+    }
+
     function damageEnemy(s, e, dmg, color, weapon = null) {
+      if (e.boss && e.shielded) {
+        s.floatTexts.push({ id: uid(), text: '無效', x: e.x, y: e.y - 42, vy: -38, life: .55, color:'#d56bff', size:18, glow:true });
+        for (let i=0;i<5;i++) s.particles.push({ id: uid(), x:e.x+rand(-28,28), y:e.y+rand(-36,36), vx:rand(-40,40), vy:rand(-40,40), life:.35, color:'#d56bff', size:3, glow:true });
+        return;
+      }
       e.hp -= dmg; e.flash = .08;
+      if (e.finalBoss) e.hurtAnim = .18;
       const isTierColor = color === '#c084fc' || color === '#ffd76a';
       s.floatTexts.push({
         id: uid(), text: Math.round(dmg).toString(), x: e.x + rand(-8,8), y: e.y - (e.boss ? 34 : 18),
@@ -350,6 +635,7 @@ function App() {
     }
     function killEnemy(s, e) {
       s.kills++;
+      gainExp(s, e.boss ? 100 : 10);
       const n = e.boss ? 36 : 14;
       for (let i=0;i<n;i++) s.particles.push({ id: uid(), x:e.x, y:e.y, vx:rand(-160,160), vy:rand(-160,160), life:.65, color:e.boss ? '#ffdf6e' : '#ffcc99' });
       if (e.boss) s.floatTexts.push({ id: uid(), text: 'BOSS 擊破！', x: e.x, y: e.y - 40, vy: -22, life: 1.2, color:'#ffdf6e', size:28 });
@@ -358,12 +644,25 @@ function App() {
     function update(dt) {
       const s = stateRef.current; if (s.gameOver) return;
       s.animTime += dt;
+      if (!s.classChosen) {
+        setUi(v => ({ ...v, classChosen: false, stats: { ...WARRIOR.stats }, bagCapacity: WARRIOR.bagCapacity }));
+        return;
+      }
+      if (s.upgrading) {
+        setUi(v => ({ ...v, level: s.level, exp: s.exp, expNeed: s.level * 80, upgrading: true, upgradeOptions: s.upgradeOptions }));
+        return;
+      }
+      if (s.showBag) {
+        setUi(v => ({ ...v, showBag: true, stats: { ...s.stats }, bag: [...bagRef.current] }));
+        return;
+      }
       if (s.isDrawing) {
         s.drawTime -= dt;
         setUi(v => ({ ...v, timer: Math.max(0, s.drawTime) }));
         if (s.drawTime <= 0) {
           launchWeapon();
           s.isDrawing = false;
+          s.aimMode = '';
           setUi(v => ({ ...v, drawing:false, timer:0 }));
         }
         return;
@@ -397,9 +696,75 @@ function App() {
       }
 
       for (const e of s.enemies) {
-        e.flash=Math.max(0,e.flash-dt); e.cd-=dt; e.frozen=Math.max(0,e.frozen-dt);
-        if(e.frozen<=0) e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
-        if(e.y>s.battleH-28){s.allyHp-= e.boss ? 20 : 1; e.hp=0;}
+        e.flash = Math.max(0, e.flash - dt);
+        e.hurtAnim = Math.max(0, (e.hurtAnim || 0) - dt);
+        e.cd -= dt;
+        e.frozen = Math.max(0, e.frozen - dt);
+
+        if (e.boss) {
+          const activeSummons = s.enemies.some(x => x.summonOwner === e.id && x.hp > 0);
+          if (e.finalBoss) {
+            e.shielded = activeSummons || e.skillState === 'summoning';
+            e.skillCd -= dt;
+            if (e.skillState === 'summoning') {
+              e.skillTimer += dt;
+              if (e.skillTimer >= e.skillDuration) {
+                e.skillState = '';
+                e.skillTimer = 0;
+                for (let i = 0; i < 8; i++) spawnBat(s, e, i);
+                e.shielded = true;
+              }
+            } else if (e.skillCd <= 0 && !activeSummons) {
+              beginFinalBossSummon(s, e);
+              e.skillCd = 5;
+            }
+          } else if (s.wave === 5) {
+            const activeFireballs = s.enemies.some(x => x.summonOwner === e.id && x.hp > 0);
+            e.shielded = activeFireballs || e.skillState === 'fire';
+            e.skillCd -= dt;
+            if (e.skillState === 'fire') {
+              e.skillTimer += dt;
+              while (e.fireSpawned < 3 && e.skillTimer >= e.fireSpawned * 0.16) {
+                spawnBossFireball(s, e, e.fireSpawned);
+                e.fireSpawned += 1;
+              }
+              if (e.skillTimer >= e.skillDuration) {
+                e.skillState = '';
+                e.skillTimer = 0;
+                e.shielded = s.enemies.some(x => x.summonOwner === e.id && x.hp > 0);
+              }
+            } else if (e.skillCd <= 0 && !activeFireballs) {
+              castDBossFire(s, e);
+              e.skillCd = 5;
+            }
+          }
+        }
+
+        if (e.frozen <= 0) {
+          if (e.boss) {
+            // 第 5 / 第 10 波 BOSS 不再一路往基地衝。
+            // 先進場到戰場上方 1/4 附近，之後左右巡航並持續施放技能。
+            const targetY = s.battleH * .25;
+            if (e.y < targetY) {
+              e.y = Math.min(targetY, e.y + e.speed * dt);
+            } else {
+              e.y = targetY;
+              e.x = clamp((e.bossCenterX || s.w / 2) + Math.sin(s.animTime * 1.15 + (e.bossMovePhase || 0)) * (e.bossMoveAmp || s.w * .25), 56, s.w - 56);
+            }
+          } else if (e.type === 'BAT' || e.type === 'FIREBALL') {
+            const dy = Math.max(1, (s.battleH - 28) - e.y);
+            const dx = ((e.targetX || e.x) - e.x) / dy;
+            e.x += dx * e.speed * dt + Math.sin(s.animTime * 5 + (e.driftPhase || 0)) * (e.driftAmp || 0) * dt;
+            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
+          } else {
+            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
+          }
+        }
+        if (!e.boss && e.y > s.battleH - 28) {
+          s.allyHp -= e.type === 'BAT' ? 5 : e.type === 'FIREBALL' ? 5 : 1;
+          e.hp = 0;
+          e.reachedBase = true;
+        }
       }
       s.enemies = s.enemies.filter(e=>{ if(e.hp<=0){ if(e.y<=s.battleH-28) killEnemy(s,e); return false;} return true; });
       for (const w of s.weapons) {
@@ -417,6 +782,7 @@ function App() {
             w.hitCd[hitKey] = 0.12;
             damageEnemy(s,e,w.damage,w.damageColor || base.color,w);
             if(base.freeze) e.frozen=Math.max(e.frozen,base.freeze);
+            if(base.knockback && !e.boss) e.y = Math.max(34, e.y - base.knockback);
           }
         }
       }
@@ -426,7 +792,7 @@ function App() {
       s.particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;}); s.particles=s.particles.filter(p=>p.life>0);
       s.floatTexts.forEach(f=>{f.y+=f.vy*dt;f.life-=dt;}); s.floatTexts=s.floatTexts.filter(f=>f.life>0);
       if(s.allyHp<=0) s.gameOver='我方基地陷落';
-      setUi(v => ({ ...v, kills:s.kills, allyHp:Math.max(0,Math.ceil(s.allyHp)), wave:s.wave, waveState:s.waveState, rest:Math.max(0,Math.ceil(s.restTime)), enemiesLeft:Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length), gameOver:s.gameOver }));
+      setUi(v => ({ ...v, kills:s.kills, allyHp:Math.max(0,Math.ceil(s.allyHp)), wave:s.wave, waveState:s.waveState, rest:Math.max(0,Math.ceil(s.restTime)), enemiesLeft:Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length), level:s.level, exp:s.exp, expNeed:s.level * 80, upgrading:s.upgrading, upgradeOptions:s.upgradeOptions, gameOver:s.gameOver, classChosen:s.classChosen, playerClass:s.playerClass, stats:s.stats || WARRIOR.stats, bag:[...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: s.showBag || false }));
     }
 
     function render() {
@@ -474,7 +840,8 @@ function App() {
         ctx.textBaseline = 'middle';
         ctx.strokeStyle = 'rgba(0,0,0,.75)';
         ctx.lineWidth = 4;
-        const label = `BOSS HP  ${Math.ceil(boss.hp)} / ${boss.maxHp}`;
+        const shieldText = boss.shielded ? '  防護罩啟動' : '';
+        const label = `BOSS HP  ${Math.ceil(boss.hp)} / ${boss.maxHp}${shieldText}`;
         ctx.strokeText(label, s.w / 2, barY + barH / 2 + 1);
         ctx.fillText(label, s.w / 2, barY + barH / 2 + 1);
         ctx.restore();
@@ -540,7 +907,15 @@ function App() {
         ctx.drawImage(sheet, frame * fw, 0, fw, fh, h.x - drawW / 2, h.y - drawH / 2, drawW, drawH);
         ctx.restore();
       }
-      if(s.path.length>1){
+      if(s.path.length>0 && selectedRef.current?.type === 'bow'){
+        const tier = selectedRef.current?.tier || 1;
+        const markerColor = tier >= 3 ? '#ffd76a' : tier >= 2 ? '#c084fc' : '#ffffff';
+        for (const p of s.path) {
+          ctx.save(); ctx.strokeStyle = markerColor; ctx.lineWidth = 3; ctx.shadowColor = markerColor; ctx.shadowBlur = tier >= 3 ? 24 : tier >= 2 ? 16 : 6; ctx.globalAlpha = .92;
+          ctx.beginPath(); ctx.arc(p.x, p.y, 18 + Math.sin(s.animTime * 10) * 2, 0, Math.PI * 2); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(p.x - 24, p.y); ctx.lineTo(p.x + 24, p.y); ctx.moveTo(p.x, p.y - 24); ctx.lineTo(p.x, p.y + 24); ctx.stroke(); ctx.restore();
+        }
+      } else if(s.path.length>1){
         const tier = selectedRef.current?.tier || 1;
         const drawColor = tier >= 3 ? '#ffd76a' : tier >= 2 ? '#c084fc' : '#ffffff';
         const pulse = 0.65 + Math.sin(s.animTime * (tier >= 3 ? 14 : 10)) * 0.35;
@@ -604,17 +979,65 @@ function App() {
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); canvas.removeEventListener('pointerdown', startDraw); canvas.removeEventListener('pointermove', moveDraw); canvas.removeEventListener('pointerup', endDraw); canvas.removeEventListener('pointercancel', endDraw); };
   }, []);
 
-  return <div className="page"><div className="phone" ref={wrapRef}>
+  const expRatio = Math.max(0, Math.min(1, (ui.exp || 0) / Math.max(1, ui.expNeed || 80)));
+
+  return <div className="page"><div className={`phone ${(ui.upgrading || ui.showBag) ? 'isPaused' : ''}`} ref={wrapRef}>
     <canvas ref={canvasRef} />
+    {!ui.classChosen && <div className="classOverlay">
+      <div className="classCard">
+        <div className="classEyebrow">選擇職業</div>
+        <h1>戰士</h1>
+        <div className="classWeapon"><img src={WEAPONS.sword.icon} alt="長劍" /> 初始武器：長劍</div>
+        <div className="statGrid">
+          <span>STR <b>5</b></span><span>DEX <b>3</b></span><span>INT <b>1</b></span><span>VIT <b>3</b></span>
+        </div>
+        <div className="classNote">包包容量：3 格｜初始包包：劍 / 盾 / 弓箭｜開局序列預載 2 把劍</div>
+        <button className="startClassBtn" onClick={startWarrior}>開始遊戲</button>
+      </div>
+    </div>}
     <div className="hud"><div className="title">武器軌跡割草</div><div className="wave">第 {ui.wave || 1}/10 波</div><div className="kills">擊殺：{ui.kills}</div></div>
+    <div className="expHud">
+      <div className="expText">Lv.{ui.level}　EXP {Math.floor(ui.exp || 0)} / {ui.expNeed || 80}</div>
+      <div className="expTrack"><div className="expFill" style={{ width: `${expRatio * 100}%` }} /></div>
+    </div>
     {ui.drawing && <div className="timer">畫軌跡：{ui.timer.toFixed(1)}s</div>}
+    {ui.upgrading && <div className="levelOverlay">
+      <div className="levelCard">
+        <h2>Level Up！</h2>
+        <div className="upgradeChoices">
+          {(ui.upgradeOptions?.length ? ui.upgradeOptions : [{id:'a'}, {id:'b'}, {id:'c'}]).slice(0,3).map((opt, idx) =>
+            <button key={opt.id || idx} className="upgradeChoice" onClick={() => continueAfterUpgrade(opt)} aria-label={`upgrade option ${idx + 1}`}>
+              <span className="choiceIndex">{idx + 1}</span>
+              <div className="upgradeStats">{renderUpgradeSummary(opt.boost || {})}</div>
+            </button>
+          )}
+        </div>
+        <button className="skipUpgrade" onClick={continueAfterUpgrade}>跳過選擇</button>
+      </div>
+    </div>}
     {ui.gameOver && <div className="gameOver"><b>{ui.gameOver}</b><button onClick={()=>location.reload()}>重新開始</button></div>}
     <div className="queue">
       <div className="blocks">{ui.queue.map((item) => {
         const w=WEAPONS[item.type]; const tier=item.tier || 1;
         return <button key={item.id} onClick={()=>selectBlock(item)} className={`block ${ui.selected===item.id?'selected':''} tier${tier} ${item.mergedAt ? 'merged' : ''} mergeTier${item.mergeTier || tier}`} style={{'--c':w.color}}><span><img className="weaponIcon" src={w.icon} alt={w.name} /></span>{tier>=2 && <em>{tier}階</em>}</button>
       })}</div>
+      <button className="bagToggle" onClick={toggleBag}>包包 / 角色</button>
     </div>
+    {ui.showBag && <div className="bagPanel">
+      <div className="bagCard">
+        <div className="bagHeader"><b>{ui.playerClass || '戰士'}</b><button onClick={toggleBag}>×</button></div>
+        <div className="bagStats">
+          <span>STR <b>{ui.stats?.STR ?? 5}</b></span><span>DEX <b>{ui.stats?.DEX ?? 3}</b></span><span>INT <b>{ui.stats?.INT ?? 1}</b></span><span>VIT <b>{ui.stats?.VIT ?? 3}</b></span>
+        </div>
+        <div className="bagTitle">武器包包 {ui.bag?.length || 0}/{ui.bagCapacity || 3}</div>
+        <div className="bagSlots">{Array.from({length: ui.bagCapacity || 3}).map((_, idx) => {
+          const type = ui.bag?.[idx]; const w = type ? WEAPONS[type] : null;
+          return <button key={idx} className={`bagSlot ${ui.selectedBagIndex === idx ? 'active' : ''}`} onClick={() => selectBagWeapon(idx)}>{w ? <><img src={w.icon} alt={w.name}/><small>{w.name}</small><small className="bagDamage">傷害 {weaponDamageText(type, ui.stats || WARRIOR.stats)}</small><small className="bagFormula">半徑 {w.radius}｜{w.aim ? '點擊標記' : w.knockback ? '擊退' : w.freeze ? '凍結' : '軌跡'}</small></> : <small>空格</small>}</button>;
+        })}</div>
+        {ui.bag?.[ui.selectedBagIndex ?? 0] && (() => { const type = ui.bag[ui.selectedBagIndex ?? 0]; const w = WEAPONS[type]; return <div className="weaponDetail"><b>{w.name}</b><span>傷害：{weaponDamageText(type, ui.stats || WARRIOR.stats)}</span><span>半徑：{w.radius}</span><span>速度：{w.aim ? '指定地點打擊' : w.speed < 350 ? '慢' : w.speed > 800 ? '最快' : w.speed > 600 ? '快' : '中'}</span><span>特效：{w.knockback ? '擊中後怪物往後退' : w.freeze ? '凍結 3 秒' : w.aim ? '1 秒內點擊地圖標記，時間到後打擊標記地點' : '沿軌跡多段命中'}</span></div> })()}
+        <p className="bagHint">序列生成會從包包武器隨機抽取。商店替換功能下一版實裝。</p>
+      </div>
+    </div>}
   </div></div>;
 }
 

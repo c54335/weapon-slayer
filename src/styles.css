@@ -73,3 +73,233 @@ canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelate
 @keyframes mergeBurstPurple{0%{opacity:1;transform:scale(.35)}70%{opacity:.55;transform:scale(1.25)}100%{opacity:0;transform:scale(1.55)}}
 @keyframes mergeBurstGold{0%{opacity:1;transform:scale(.32)}65%{opacity:.7;transform:scale(1.35)}100%{opacity:0;transform:scale(1.75)}}
 @keyframes mergeText{0%{opacity:0;transform:translateX(-50%) translateY(8px) scale(.8)}30%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.12)}100%{opacity:0;transform:translateX(-50%) translateY(-16px) scale(1)}}
+
+/* 經驗值 / 等級 UI */
+.expHud{
+  position:absolute;
+  top:42px;
+  left:12px;
+  right:12px;
+  height:26px;
+  z-index:4;
+  pointer-events:none;
+  color:#fff;
+  text-shadow:0 2px 0 #000;
+  font-weight:1000;
+}
+.expText{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:14px;
+  font-size:12px;
+  letter-spacing:.2px;
+  margin-bottom:3px;
+}
+.expTrack{
+  height:9px;
+  border:2px solid rgba(255,255,255,.55);
+  background:rgba(5,10,18,.78);
+  border-radius:999px;
+  overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.55),0 2px 0 rgba(0,0,0,.4);
+}
+.expFill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#53d7ff,#7bff9f,#fff36a);
+  box-shadow:0 0 12px #7bff9f;
+  transition:width .18s ease-out;
+}
+.phone.isPaused canvas{
+  filter:blur(4px) brightness(.72) saturate(.82);
+}
+.levelOverlay{
+  position:absolute;
+  inset:0;
+  z-index:8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  background:rgba(4,8,16,.48);
+  backdrop-filter:blur(4px);
+}
+.levelCard{
+  width:min(92%,360px);
+  border-radius:22px;
+  padding:20px 16px 16px;
+  background:linear-gradient(180deg,rgba(34,42,70,.96),rgba(13,18,32,.98));
+  border:2px solid rgba(255,245,180,.65);
+  box-shadow:0 0 28px rgba(255,215,106,.28),0 16px 40px rgba(0,0,0,.55),inset 0 0 18px rgba(255,255,255,.06);
+  text-align:center;
+  color:#fff;
+  animation:levelPop .22s cubic-bezier(.2,1.25,.35,1);
+}
+.levelCard h2{
+  margin:0 0 16px;
+  font-size:34px;
+  line-height:1;
+  color:#fff3a3;
+  text-shadow:0 3px 0 #000,0 0 18px #ffd76a;
+  letter-spacing:.5px;
+}
+.upgradeChoices{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:14px;
+}
+.upgradeChoice{
+  height:112px;
+  border:2px solid rgba(255,255,255,.32);
+  border-radius:16px;
+  background:linear-gradient(180deg,rgba(37,49,78,.95),rgba(17,24,39,.95));
+  box-shadow:inset 0 0 0 2px rgba(0,0,0,.38),0 5px 0 rgba(0,0,0,.45);
+  color:#fff;
+  position:relative;
+  touch-action:manipulation;
+}
+.upgradeChoice::after{
+  content:"";
+  position:absolute;
+  left:15%;right:15%;top:50%;
+  height:2px;
+  background:rgba(255,255,255,.16);
+  box-shadow:0 14px 0 rgba(255,255,255,.10),0 -14px 0 rgba(255,255,255,.10);
+}
+.upgradeChoice:active{transform:translateY(3px);box-shadow:inset 0 0 0 2px rgba(0,0,0,.38),0 2px 0 rgba(0,0,0,.45)}
+.choiceIndex{
+  position:absolute;
+  top:8px;
+  left:8px;
+  width:22px;
+  height:22px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  font-size:12px;
+  font-weight:1000;
+  color:#15100a;
+  background:#fff3a3;
+  box-shadow:0 0 10px rgba(255,215,106,.6);
+}
+.skipUpgrade{
+  border:0;
+  border-radius:999px;
+  padding:10px 22px;
+  background:#e5e7eb;
+  color:#111827;
+  font-size:16px;
+  font-weight:1000;
+  box-shadow:0 4px 0 #7d8796;
+  touch-action:manipulation;
+}
+.skipUpgrade:active{transform:translateY(3px);box-shadow:0 1px 0 #7d8796}
+@keyframes levelPop{0%{opacity:0;transform:scale(.82) translateY(12px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+
+/* 職業選擇 */
+.classOverlay{
+  position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;
+  padding:22px;background:rgba(5,9,18,.72);backdrop-filter:blur(5px);color:#fff;
+}
+.classCard{
+  width:min(90%,360px);border-radius:24px;padding:22px 18px 18px;text-align:center;
+  background:linear-gradient(180deg,rgba(42,51,78,.98),rgba(13,18,32,.99));
+  border:2px solid rgba(255,239,170,.7);box-shadow:0 18px 50px rgba(0,0,0,.6),0 0 32px rgba(255,215,106,.25),inset 0 0 18px rgba(255,255,255,.06);
+}
+.classEyebrow{font-weight:1000;color:#fff3a3;letter-spacing:4px;font-size:14px;margin-bottom:8px;text-shadow:0 2px 0 #000}
+.classCard h1{margin:0 0 12px;font-size:42px;color:#fff;text-shadow:0 3px 0 #000,0 0 18px #ffd76a}
+.classWeapon{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px auto 14px;font-size:18px;font-weight:1000;color:#e9f4ff;text-shadow:0 2px 0 #000}
+.classWeapon img{width:46px;height:46px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 0 12px #f0c040)}
+.statGrid,.bagStats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}
+.statGrid span,.bagStats span{border:1px solid rgba(255,255,255,.22);border-radius:12px;background:rgba(0,0,0,.25);padding:8px 4px;font-size:13px;font-weight:900;color:#dbeafe}
+.statGrid b,.bagStats b{display:block;color:#fff3a3;font-size:19px;margin-top:2px;text-shadow:0 2px 0 #000}
+.classNote{font-size:13px;color:#cbd5e1;margin:8px 0 16px;font-weight:800}
+.startClassBtn{border:0;border-radius:999px;padding:12px 26px;background:linear-gradient(180deg,#fff3a3,#f0c040);color:#1b1300;font-size:20px;font-weight:1000;box-shadow:0 5px 0 #8e6200,0 0 18px rgba(255,215,106,.5);touch-action:manipulation}
+.startClassBtn:active{transform:translateY(3px);box-shadow:0 2px 0 #8e6200}
+
+/* 包包 / 角色資訊 */
+.bagToggle{align-self:center;margin:0 0 7px;border:0;border-radius:999px;padding:5px 14px;background:linear-gradient(180deg,#334155,#111827);color:#e5e7eb;font-size:13px;font-weight:1000;border:1px solid rgba(255,255,255,.25);box-shadow:0 3px 0 #050814;pointer-events:auto;touch-action:manipulation}
+.bagToggle:active{transform:translateY(2px);box-shadow:0 1px 0 #050814}
+.bagPanel{position:absolute;inset:0;z-index:12;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.38);padding:0 12px 18%;pointer-events:auto}
+.bagCard{width:100%;max-width:390px;border-radius:20px;padding:14px;background:linear-gradient(180deg,rgba(30,41,59,.98),rgba(15,23,42,.98));border:2px solid rgba(255,255,255,.25);box-shadow:0 12px 35px rgba(0,0,0,.55),inset 0 0 16px rgba(255,255,255,.05);color:#fff;animation:bagPop .18s cubic-bezier(.2,1.2,.35,1)}
+.bagHeader{display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:1000;text-shadow:0 2px 0 #000;margin-bottom:8px}
+.bagHeader button{width:32px;height:32px;border:0;border-radius:999px;background:#e5e7eb;color:#111827;font-size:22px;font-weight:1000;line-height:1}
+.bagTitle{font-size:14px;font-weight:1000;color:#fff3a3;margin:10px 0 8px;text-shadow:0 2px 0 #000}
+.bagSlots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bagSlot{height:82px;border-radius:16px;border:2px solid rgba(255,255,255,.2);background:radial-gradient(circle at center,rgba(59,130,246,.18),rgba(15,23,42,.92));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:inset 0 0 0 2px rgba(0,0,0,.35)}
+.bagSlot img{width:44px;height:44px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 2px 0 #000)}
+.bagSlot small{font-size:12px;font-weight:900;color:#dbeafe;text-shadow:0 2px 0 #000}
+.bagHint{margin:10px 2px 0;color:#cbd5e1;font-size:12px;line-height:1.35;text-align:center;font-weight:700}
+@keyframes bagPop{0%{opacity:0;transform:translateY(18px) scale(.96)}100%{opacity:1;transform:translateY(0) scale(1)}}
+/* v33：武器列下方放包包按鈕，包包開啟時暫停並顯示武器細節 */
+.queue{height:20%;padding:7px 10px 8px;justify-content:flex-start;gap:6px}
+.blocks{order:1;min-height:64px;align-items:center}
+.bagToggle{order:2;margin:0 auto;padding:6px 18px;background:linear-gradient(180deg,#475569,#111827);color:#fff}
+.bagPanel{padding:0 12px 14px;align-items:flex-end;background:rgba(0,0,0,.52);backdrop-filter:blur(3px)}
+.bagCard{max-height:74%;overflow:auto}
+.bagSlot{border:2px solid rgba(255,255,255,.2);color:#fff;font-family:inherit;touch-action:manipulation}
+.bagSlot.active{border-color:#fff3a3;box-shadow:0 0 16px rgba(255,215,106,.55),inset 0 0 12px rgba(255,215,106,.2)}
+.bagDamage{color:#fff3a3;font-size:11px!important}
+.bagFormula{color:#bae6fd!important;font-size:10px!important}
+.weaponDetail{margin:10px 0 0;padding:10px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.18);display:grid;gap:4px;color:#e5e7eb;font-size:13px;font-weight:800}
+.weaponDetail b{font-size:17px;color:#fff3a3;text-shadow:0 2px 0 #000}.weaponDetail span{text-align:left}.upgradeStats{position:absolute;inset:34px 8px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:15px;color:#fff3a3;text-shadow:0 2px 0 #000}.upgradeStats b{display:block}.upgradeChoice::after{display:none}
+
+/* v34：升級三選一只顯示主要兩個屬性，隱藏詳細加點數值 */
+.upgradeStats{
+  position:absolute;
+  inset:34px 8px 8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-shadow:0 2px 0 #000;
+}
+.upgradeMajor{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:28px;
+  font-size:18px;
+  font-weight:1000;
+  letter-spacing:.4px;
+}
+.upgradeStatName{
+  min-width:42px;
+  text-align:right;
+}
+.upgradeArrows{
+  position:relative;
+  width:22px;
+  height:26px;
+  display:inline-block;
+  line-height:1;
+  filter:drop-shadow(0 2px 0 #000);
+}
+.upgradeArrows i{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-style:normal;
+  font-size:24px;
+  font-weight:1000;
+  line-height:1;
+}
+.upgradeArrows i:nth-child(1){ top:9px; }
+.upgradeArrows i:nth-child(2){ top:3px; }
+.upgradeArrows i:nth-child(3){ top:-3px; }
+.upgradeMajor.gold{
+  color:#ffd76a;
+  text-shadow:0 2px 0 #000,0 0 12px rgba(255,215,106,.95),0 0 24px rgba(255,166,0,.5);
+}
+.upgradeMajor.purple{
+  color:#c084fc;
+  text-shadow:0 2px 0 #000,0 0 12px rgba(192,132,252,.9),0 0 22px rgba(126,34,206,.45);
+}
+.upgradeMajor.blue{
+  color:#60a5fa;
+  text-shadow:0 2px 0 #000,0 0 10px rgba(96,165,250,.8),0 0 18px rgba(37,99,235,.35);
+}
