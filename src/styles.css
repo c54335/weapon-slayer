@@ -303,3 +303,115 @@ canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelate
   color:#60a5fa;
   text-shadow:0 2px 0 #000,0 0 10px rgba(96,165,250,.8),0 0 18px rgba(37,99,235,.35);
 }
+
+/* v35：強制新手教學 */
+.phone.tutorialMode.highlight-battle canvas{
+  box-shadow:inset 0 0 0 4px rgba(255,243,163,.85), inset 0 0 30px rgba(255,215,106,.38);
+}
+.phone.tutorialMode.highlight-queue .queue{
+  z-index:15;
+  box-shadow:0 -4px 0 rgba(255,243,163,.75),0 -16px 34px rgba(255,215,106,.34),inset 0 0 18px rgba(255,215,106,.12);
+  border-top-color:rgba(255,243,163,.8);
+}
+.phone.tutorialMode.highlight-queue .block{
+  animation:slideIn .22s cubic-bezier(.2,1.25,.35,1), tutorialPulse 1s infinite;
+}
+.phone.tutorialMode.highlight-bagButton .bagToggle{
+  position:relative;
+  z-index:16;
+  animation:tutorialPulse 1s infinite;
+  box-shadow:0 0 20px rgba(255,215,106,.75),0 3px 0 #050814;
+  border-color:#fff3a3;
+}
+.phone.tutorialMode.highlight-bagPanel .bagPanel{
+  z-index:16;
+}
+.tutorialBox{
+  position:absolute;
+  left:14px;
+  right:14px;
+  top:78px;
+  z-index:18;
+  padding:13px 13px 12px;
+  border-radius:18px;
+  color:#fff;
+  background:linear-gradient(180deg,rgba(24,31,50,.96),rgba(8,13,24,.96));
+  border:2px solid rgba(255,243,163,.7);
+  box-shadow:0 12px 28px rgba(0,0,0,.45),0 0 22px rgba(255,215,106,.28),inset 0 0 14px rgba(255,255,255,.06);
+  pointer-events:auto;
+}
+.tutorialBox.step1{top:auto;bottom:142px;left:18px;right:18px;}
+.tutorialBox.step2{top:118px;}
+.tutorialBox.step3,.tutorialBox.step8,.tutorialBox.step9{top:82px;}
+.tutorialBox.step10{top:50%;transform:translateY(-50%);text-align:center;}
+.tutorialTitle{
+  display:inline-block;
+  margin-bottom:6px;
+  padding:2px 9px;
+  border-radius:999px;
+  color:#1b1300;
+  background:#fff3a3;
+  font-size:12px;
+  font-weight:1000;
+  box-shadow:0 2px 0 #8e6200;
+}
+.tutorialText{
+  font-size:15px;
+  line-height:1.45;
+  font-weight:900;
+  text-shadow:0 2px 0 #000;
+  white-space:pre-line;
+}
+.tutorialStatsIntro{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:7px;
+  margin:10px 0 2px;
+}
+.tutorialStatsIntro span{
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:10px;
+  padding:7px 6px;
+  background:rgba(0,0,0,.22);
+  font-size:12px;
+  font-weight:900;
+  color:#dbeafe;
+}
+.tutorialStatsIntro b{color:#fff3a3;}
+.tutorialActions{
+  display:flex;
+  justify-content:flex-end;
+  gap:9px;
+  margin-top:10px;
+}
+.tutorialPrimary,.tutorialSkip{
+  border:0;
+  border-radius:999px;
+  padding:8px 14px;
+  font-weight:1000;
+  touch-action:manipulation;
+}
+.tutorialPrimary{
+  color:#1b1300;
+  background:linear-gradient(180deg,#fff3a3,#f0c040);
+  box-shadow:0 4px 0 #8e6200,0 0 15px rgba(255,215,106,.42);
+}
+.tutorialSkip{
+  color:#e5e7eb;
+  background:rgba(15,23,42,.92);
+  border:1px solid rgba(255,255,255,.28);
+}
+.tutorialPrimary:active,.tutorialSkip:active{transform:translateY(2px)}
+@keyframes tutorialPulse{50%{filter:brightness(1.25);transform:translateY(-3px) scale(1.03)}}
+/* v38：升級教學說明恢復，但放在上方，不遮住三選一選項 */
+.tutorialBox.step5{
+  top:54px;
+  left:16px;
+  right:16px;
+  padding:10px 12px;
+  transform:scale(.94);
+  transform-origin:top center;
+}
+.tutorialBox.step5 .tutorialText{font-size:13px;line-height:1.32;}
+.tutorialBox.step5 .tutorialStatsIntro{gap:5px;margin-top:7px;}
+.tutorialBox.step5 .tutorialStatsIntro span{padding:5px 5px;font-size:11px;}
