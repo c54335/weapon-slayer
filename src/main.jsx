@@ -16,6 +16,15 @@ import lightningIconUrl from './assets/lightning-icon.png';
 import iceIconUrl from './assets/ice-icon.png';
 import shieldIconUrl from './assets/shield-icon.svg';
 import bowIconUrl from './assets/bow-icon.svg';
+import greatswordIconUrl from './assets/greatsword-icon.svg';
+import katanaIconUrl from './assets/katana-icon.svg';
+import kingswordIconUrl from './assets/kingsword-icon.svg';
+import greatshieldIconUrl from './assets/greatshield-icon.svg';
+import gianthammerIconUrl from './assets/gianthammer-icon.svg';
+import holyshieldIconUrl from './assets/holyshield-icon.svg';
+import crossbowIconUrl from './assets/crossbow-icon.svg';
+import boomerangIconUrl from './assets/boomerang-icon.svg';
+import giantbowIconUrl from './assets/giantbow-icon.svg';
 import swordSheetUrl from './assets/sword-sheet.png';
 import bombSheetUrl from './assets/bomb-sheet.png';
 import lightningSheetUrl from './assets/lightning-sheet.png';
@@ -30,7 +39,7 @@ const WEAPON_ASSETS = {
   bomb: { icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl },
   lightning: { icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl },
   ice: { icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl },
-  shield: { icon: shieldIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl },
+  shield: { icon: shieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl },
   bow: { icon: bowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl },
 };
 
@@ -39,10 +48,33 @@ const WEAPONS = {
   bomb: { name: '火焰法杖', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#ff6644', radius: 75, speed: 330, formula: '5 × INT', label: '二階火焰！', triple: '三階烈焰！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
   ice: { name: '冰霜法杖', icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl, color: '#88ddff', radius: 30, speed: 500, formula: '4 × INT + 1 × DEX', freeze: 3, label: '二階冰霜！', triple: '三階冰霜！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
   lightning: { name: '雷電法杖', icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ccaaff', radius: 55, speed: 920, formula: '3 × INT', label: '二階雷電！', triple: '三階雷鏈！', frames: 8, fps: 22, rotateToPath: true, hitFrames: 6, hitSize: 34 },
-  shield: { name: '盾', icon: shieldIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#9ca3af', radius: 40, speed: 300, formula: '5 × VIT', knockback: 42, label: '二階盾擊！', triple: '三階盾擊！', frames: 8, fps: 14, hitFrames: 6, hitSize: 34 },
+  shield: { name: '盾', icon: shieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#9ca3af', radius: 40, speed: 300, formula: '5 × VIT', knockback: 42, label: '二階盾擊！', triple: '三階盾擊！', frames: 1, fps: 1, spin: true, spinSpeed: 12, hitFrames: 6, hitSize: 34 },
   bow: { name: '弓箭', icon: bowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#84cc16', radius: 50, speed: 0, formula: '5 × DEX', aim: true, label: '二階箭雨！', triple: '三階箭雨！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34 },
+
+  greatsword: { name: '大劍', quality: '藍色', icon: greatswordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 350, formula: '4.5 × STR', label: '二階大劍！', triple: '三階大劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: 'STR>15 追加 2×VIT；STR>30 獲得 DEX/100 爆擊率' },
+  katana: { name: '武士刀', quality: '紫色', icon: katanaIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#c084fc', radius: 40, speed: 500, formula: '4 × STR + 1 × DEX', multiLine: true, label: '二階武士刀！', triple: '三階武士刀！', frames: 8, fps: 22, hitFrames: 6, hitSize: 34, desc: '時間內可畫多條線；STR+DEX>25 造成流血；>50 攻擊流血目標強化' },
+  kingsword: { name: '王者之劍', quality: '金色', icon: kingswordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#ffd76a', radius: 60, speed: 0, formula: '6 × STR', aim: true, label: '二階王者之劍！', triple: '三階王者之劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: 'STR>35 攻擊造成兩次；STR>50 攻擊後全場追加 2×STR 傷害' },
+  greatshield: { name: '巨盾', quality: '藍色', icon: greatshieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 300, formula: '5.5 × VIT', spin: true, spinSpeed: 14, label: '二階巨盾！', triple: '三階巨盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, desc: 'VIT>15 暈眩2秒；VIT>30 命中暈眩目標時拖曳目標跟隨盾牌' },
+  gianthammer: { name: '巨槌', quality: '紫色', icon: gianthammerIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#c084fc', radius: 45, speed: 0, formula: '6 × VIT + 2 × STR', aim: true, label: '二階巨槌！', triple: '三階巨槌！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, desc: 'VIT>25 目標受傷+30% 3秒；VIT+STR>55 暴露弱點，下次受傷必定爆擊' },
+  holyshield: { name: '黃金聖盾', quality: '金色', icon: holyshieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#ffd76a', radius: 50, speed: 350, formula: '6 × VIT', spin: true, spinSpeed: 15, label: '二階聖盾！', triple: '三階聖盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, desc: 'VIT>30 聖光標記緩速50%；VIT+STR>55 命中標記目標造成小範圍 2×VIT 傷害' },
+  crossbow: { name: '弩箭', quality: '藍色', icon: crossbowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#60a5fa', radius: 55, speed: 0, formula: '5 × DEX', aim: true, label: '二階弩箭！', triple: '三階弩箭！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: 'DEX>15 附帶 DEX/100 爆擊率；DEX>30 爆擊傷害300%' },
+  boomerang: { name: '迴力鏢', quality: '紫色', icon: boomerangIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#c084fc', radius: 35, speed: 500, formula: '3 × DEX', returnPath: true, label: '二階迴力鏢！', triple: '三階迴力鏢！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34, desc: 'DEX>20 跑完軌跡後反向回來；DEX>40 爆擊傷害300%' },
+  giantbow: { name: '巨人弓', quality: '金色', icon: giantbowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ffd76a', radius: 60, speed: 0, formula: '5 × DEX + 2 × STR', aim: true, label: '二階巨人弓！', triple: '三階巨人弓！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: 'DEX+STR>35 點擊位置持續3秒每秒50%傷害；>60 半徑85' },
 };
 const TYPES = Object.keys(WEAPONS);
+const INITIAL_WEAPONS = ['sword', 'shield', 'bow'];
+const ADVENTURE_NODES = [
+  { type: 'wave', wave: 1 },
+  { type: 'wave', wave: 3 },
+  { type: 'wave', wave: 5 },
+  { type: 'shop' },
+  { type: 'wave', wave: 7 },
+  { type: 'wave', wave: 8 },
+  { type: 'wave', wave: 9 },
+  { type: 'shop' },
+  { type: 'wave', wave: 10 },
+];
+const SHOP_WEAPON_POOL = TYPES.filter(t => !INITIAL_WEAPONS.includes(t));
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const uid = (() => { let n = 1; return () => n++; })();
@@ -96,7 +128,23 @@ function weaponBaseDamage(type, stats = {}) {
   if (type === 'lightning') return 3 * INT;
   if (type === 'shield') return 5 * VIT;
   if (type === 'bow') return 5 * DEX;
+  if (type === 'greatsword') return 4.5 * STR + (STR > 15 ? 2 * VIT : 0);
+  if (type === 'katana') return 4 * STR + DEX;
+  if (type === 'kingsword') return 6 * STR;
+  if (type === 'greatshield') return 5.5 * VIT;
+  if (type === 'gianthammer') return 6 * VIT + 2 * STR;
+  if (type === 'holyshield') return 6 * VIT;
+  if (type === 'crossbow') return 5 * DEX;
+  if (type === 'boomerang') return 3 * DEX;
+  if (type === 'giantbow') return 5 * DEX + 2 * STR;
   return 1;
+}
+function critSpec(type, stats = {}) {
+  const STR = stats.STR || 0, DEX = stats.DEX || 0;
+  if (type === 'greatsword' && STR > 30) return { chance: Math.min(.85, DEX / 100), mult: 2 };
+  if (type === 'crossbow' && DEX > 15) return { chance: Math.min(.85, DEX / 100), mult: DEX > 30 ? 3 : 2 };
+  if (type === 'boomerang' && DEX > 40) return { chance: Math.min(.65, DEX / 100), mult: 3 };
+  return { chance: 0, mult: 2 };
 }
 function weaponDamageText(type, stats = {}, tier = 1) {
   const mul = tier === 3 ? 2 : tier === 2 ? 1.5 : 1;
@@ -127,7 +175,7 @@ function App() {
   const wrapRef = useRef(null);
   const stateRef = useRef(null);
   const WARRIOR = { name: '戰士', stats: { STR: 5, DEX: 3, INT: 1, VIT: 3 }, bagCapacity: 3, initialBag: ['sword', 'shield', 'bow'] };
-  const [ui, setUi] = useState({ queue: [], selected: null, kills: 0, allyHp: 100, wave: 0, waveState: 'tutorial', rest: 0, enemiesLeft: 0, banner: '新手教學', drawing: false, timer: 0, gameOver: '', level: 1, exp: 0, expNeed: 80, upgrading: false, upgradeOptions: [], classChosen: true, playerClass: '戰士', stats: WARRIOR.stats, bag: [...WARRIOR.initialBag], bagCapacity: WARRIOR.bagCapacity, showBag: false, selectedBagIndex: 0, tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialText: '怪物已經出現在村莊外！時間暫停。這些怪物要襲擊村莊了，玩家必須挺身而出！' });
+  const [ui, setUi] = useState({ queue: [], selected: null, kills: 0, allyHp: 100, wave: 0, waveState: 'tutorial', rest: 0, enemiesLeft: 0, banner: '新手教學', drawing: false, timer: 0, gameOver: '', level: 1, exp: 0, expNeed: 80, weaponEnergy: 0, upgrading: false, upgradeOptions: [], showDev: false, classChosen: true, playerClass: '戰士', stats: WARRIOR.stats, bag: [...WARRIOR.initialBag], bagCapacity: WARRIOR.bagCapacity, showBag: false, selectedBagIndex: 0, tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialText: '怪物已經出現在村莊外！時間暫停。這些怪物要襲擊村莊了，玩家必須挺身而出！', nodeIndex: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0 });
   const selectedRef = useRef(null);
   const queueRef = useRef([]);
   const bagRef = useRef([]);
@@ -204,15 +252,17 @@ function App() {
 
   const tutorialTexts = {
     0: { text: '怪物已經出現在村莊外！時間暫停。這些怪物要襲擊村莊了，玩家必須挺身而出！', highlight: 'battle', button: '' },
-    1: { text: '勇者快拿上你的武器應戰吧！請點擊下方發光的劍。', highlight: 'queue', button: '' },
-    2: { text: '在戰場上畫線揮動武器擊敗怪物。按住戰場拖曳，放手後武器會沿著軌跡攻擊。', highlight: 'battle', button: '' },
+    1: { text: '勇者，請點擊下方發光的劍圖標，拿起武器準備戰鬥！', highlight: 'queue', button: '' },
+    2: { text: '現在對怪物畫線攻擊！按住戰場拖曳，畫出你想攻擊的路線。\n你畫出的軌跡，就是武器飛行的軌跡！', highlight: 'battle', button: '' },
     3: { text: '第一波：怪物開始移動了！用劍把這 8 隻零星怪物全部擊倒，殺光後會進入升級教學。', highlight: 'battle', button: '' },
     5: { text: '經驗值滿了就會升級！選一個強化方向，這些素質會影響武器能力，某些武器未來也會需要達到門檻才會發動效果。STR 影響劍類傷害，DEX 影響投擲與弓箭，INT 影響法術，VIT 影響防禦。', highlight: 'level', button: '' },
     6: { text: '現在認識你的包包。請點開下方「包包 / 角色」，裡面可以看到角色素質、目前攜帶武器、武器傷害、半徑、速度與特效。', highlight: 'bagButton', button: '' },
     7: { text: '包包裡的武器會決定序列會生成哪些武器。目前你攜帶：劍、盾、弓箭。接著來練習盾牌。', highlight: 'bagPanel', button: '開始盾牌練習' },
     8: { text: '第二波：選擇盾牌並畫線攻擊。盾牌會擊退怪物，並且會被 VIT 增傷。這一段序列只會出現盾。', highlight: 'queue', button: '' },
     9: { text: '第三波：選擇弓箭後，在 1 秒內快速點擊多個目標位置。時間到後會針對標記地點打擊，弓箭會被 DEX 增傷。', highlight: 'battle', button: '' },
-    10: { text: '完成新手教學！你現在已經是有能力的勇者，可以守護村莊了。', highlight: 'none', button: '開始冒險' },
+    10: { text: '武器充能條在玩家血條上方。擊殺怪物會充能 +10，充到 100 會歸零並立刻獲得一個武器方塊。現在先幫你充到 90，下一波怪物殺掉一隻就能體驗補方塊。', highlight: 'battle', button: '開始充能練習' },
+    11: { text: '充能練習開始！擊殺任一怪物，讓藍色能量條充滿並獲得新的武器方塊。', highlight: 'battle', button: '' },
+    12: { text: '完成新手教學！你現在已經是有能力的勇者，可以守護村莊了。', highlight: 'none', button: '開始冒險' },
   };
 
   const syncTutorialUi = (step) => {
@@ -237,14 +287,14 @@ function App() {
     if (s) {
       Object.assign(s, {
         tutorialActive: false, tutorialStep: 0, tutorialWeaponPicked: false, tutorialPracticeType: '', tutorialSpawned: false,
-        wave: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0,
+        wave: 0, nodeIndex: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0,
         enemies: [], weapons: [], hitEffects: [], particles: [], floatTexts: [], path: [], isDrawing: false, drawTime: 0,
-        allyHp: 100, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', autoWeapon: 0,
+        allyHp: 100, weaponEnergy: 0, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', autoWeapon: 0,
         classChosen: true, playerClass: WARRIOR.name, stats: { ...WARRIOR.stats }, bag: [...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: false,
       });
       s.floatTexts.push({ id: uid(), text: '冒險開始！', x: s.w / 2, y: 110, vy: -10, life: 1.2, color: '#fff3a3', size: 30, glow: true });
     }
-    setUi(v => ({ ...v, tutorialActive: false, tutorialStep: 0, tutorialWeaponPicked: false, tutorialText: '', tutorialHighlight: 'none', queue: queueRef.current, selected: null, classChosen: true, playerClass: WARRIOR.name, stats: { ...WARRIOR.stats }, bag: [...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: false, wave: 0, waveState: 'rest', rest: 5, enemiesLeft: 0, kills: 0, allyHp: 100, level: 1, exp: 0, expNeed: 80, upgrading: false, upgradeOptions: [], gameOver: '' }));
+    setUi(v => ({ ...v, tutorialActive: false, tutorialStep: 0, tutorialWeaponPicked: false, tutorialText: '', tutorialHighlight: 'none', queue: queueRef.current, selected: null, classChosen: true, playerClass: WARRIOR.name, stats: { ...WARRIOR.stats }, bag: [...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: false, wave: 0, nodeIndex: 0, waveState: 'rest', rest: 5, enemiesLeft: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0, kills: 0, allyHp: 100, weaponEnergy: 0, level: 1, exp: 0, expNeed: 80, upgrading: false, upgradeOptions: [], gameOver: '' }));
   };
 
   const startTutorialPractice = (type, step) => {
@@ -271,7 +321,38 @@ function App() {
     const s = stateRef.current;
     const step = ui.tutorialStep;
     if (step === 7) { if (s) s.showBag = false; setUi(v => ({ ...v, showBag: false })); startTutorialPractice('shield', 8); return; }
-    if (step === 10) { resetForAdventure(); return; }
+    if (step === 10) {
+      if (s) {
+        s.weaponEnergy = 90;
+        s.tutorialStep = 11;
+        s.tutorialPracticeType = 'sword';
+        s.tutorialSpawned = false;
+        s.tutorialWeaponPicked = true;
+        s.enemies = [];
+        s.weapons = [];
+        s.path = [];
+        s.isDrawing = false;
+        s.waveState = 'tutorial';
+        s.wave = 3;
+        tutorialSetQueue('sword', 1);
+        const hp = Math.ceil(18 * 1.5);
+        for (let i = 0; i < 4; i++) {
+          const fast = i % 2 === 1;
+          s.enemies.push({
+            id: uid(), type: fast ? 'MON' : 'ZOM', x: rand(s.w * .15, s.w * .85), y: 42 + rand(-8, 8),
+            hp, maxHp: hp, atk: 3, cd: 0,
+            speed: (s.battleH - 86) / 18 * (fast ? 1.25 : 1),
+            flash: 0, frozen: 0, animSeed: Math.random() * 4,
+            boss: false, finalBoss: false, radius: fast ? 11 : 13,
+          });
+        }
+        s.tutorialSpawned = true;
+        s.floatTexts.push({ id: uid(), text: '能量 90/100！擊殺怪物取得方塊', x: s.w / 2, y: 110, vy: -8, life: 1.4, color: '#7dd3fc', size: 22, glow: true });
+      }
+      setUi(v => ({ ...v, tutorialStep: 11, tutorialText: tutorialTexts[11].text, tutorialHighlight: tutorialTexts[11].highlight, weaponEnergy: 90, queue: queueRef.current }));
+      return;
+    }
+    if (step === 12) { resetForAdventure(); return; }
   };
 
   const skipTutorial = () => resetForAdventure();
@@ -339,6 +420,120 @@ function App() {
     });
   };
 
+
+  const weaponQualityMeta = (type) => {
+    const q = WEAPONS[type]?.quality || '普通';
+    if (q.includes('金')) return { key: 'gold', label: '金色', price: 150 };
+    if (q.includes('紫')) return { key: 'purple', label: '紫色', price: 100 };
+    if (q.includes('藍')) return { key: 'blue', label: '藍色', price: 50 };
+    return { key: 'blue', label: '藍色', price: 50 };
+  };
+
+  const rollShopItems = () => {
+    const byQ = (q) => SHOP_WEAPON_POOL.filter(t => (WEAPONS[t]?.quality || '藍色').includes(q));
+    const blue = byQ('藍');
+    const purple = byQ('紫');
+    const all = SHOP_WEAPON_POOL;
+    const pick = (arr, used = new Set()) => {
+      const candidates = arr.filter(t => !used.has(t));
+      return candidates[Math.floor(Math.random() * candidates.length)] || arr[0] || 'greatsword';
+    };
+    const used = new Set();
+    const b = pick(blue, used); used.add(b);
+    const p = pick(purple, used); used.add(p);
+    const r = pick(all, used);
+    return [b, p, r].map(type => ({ id: uid(), type, ...weaponQualityMeta(type), bought: false }));
+  };
+
+  const openShopNode = (s) => {
+    s.shopOpen = true;
+    s.waveState = 'shop';
+    s.shopItems = rollShopItems();
+    s.shopMessage = '';
+    s.replaceOffer = null;
+    s.shopBoughtFx = 0;
+    setUi(v => ({ ...v, shopOpen: true, waveState: 'shop', shopItems: s.shopItems, shopMessage: '', replaceOffer: null, shopBoughtFx: 0, nodeIndex: s.nodeIndex }));
+  };
+
+  const leaveShop = () => {
+    const s = stateRef.current;
+    if (!s) return;
+    s.shopOpen = false;
+    s.shopItems = [];
+    s.shopMessage = '';
+    s.replaceOffer = null;
+    s.shopBoughtFx = 0;
+    s.nodeIndex = Math.min((s.nodeIndex || 0) + 1, ADVENTURE_NODES.length - 1);
+    s.waveState = 'rest';
+    s.restTime = s.restDuration || 5;
+    s.floatTexts.push({ id: uid(), text: '離開商店', x: s.w / 2, y: 110, vy: -8, life: 1, color: '#fff6a8', size: 24, glow: true });
+    setUi(v => ({ ...v, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0, nodeIndex: s.nodeIndex, waveState: 'rest', rest: Math.ceil(s.restTime) }));
+  };
+
+  const buyShopWeapon = (offer) => {
+    const s = stateRef.current;
+    if (!s || !offer || offer.bought) return;
+    const price = offer.price || weaponQualityMeta(offer.type).price;
+    if ((s.kills || 0) < price) {
+      s.shopMessage = '擊殺數不足';
+      setUi(v => ({ ...v, shopMessage: '擊殺數不足', shopItems: [...(s.shopItems || [])] }));
+      return;
+    }
+    if (bagRef.current.length < (s.bagCapacity || 3)) {
+      s.kills -= price;
+      bagRef.current = [...bagRef.current, offer.type];
+      s.bag = [...bagRef.current];
+      offer.bought = true;
+      s.shopMessage = `購入 ${WEAPONS[offer.type].name}！`;
+      s.shopBoughtFx = Date.now();
+      setUi(v => ({ ...v, kills: s.kills, bag: [...bagRef.current], shopItems: [...s.shopItems], shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
+      return;
+    }
+    s.replaceOffer = offer;
+    s.shopMessage = '包包已滿，請選擇要替換的武器';
+    setUi(v => ({ ...v, replaceOffer: offer, shopMessage: s.shopMessage }));
+  };
+
+  const replaceBagWeapon = (idx) => {
+    const s = stateRef.current;
+    if (!s?.replaceOffer) return;
+    const offer = s.replaceOffer;
+    const price = offer.price || weaponQualityMeta(offer.type).price;
+    if ((s.kills || 0) < price) {
+      s.shopMessage = '擊殺數不足';
+      setUi(v => ({ ...v, shopMessage: s.shopMessage }));
+      return;
+    }
+    s.kills -= price;
+    bagRef.current = bagRef.current.map((t, i) => i === idx ? offer.type : t);
+    s.bag = [...bagRef.current];
+    offer.bought = true;
+    s.replaceOffer = null;
+    s.shopMessage = `已替換為 ${WEAPONS[offer.type].name}！`;
+    s.shopBoughtFx = Date.now();
+    setUi(v => ({ ...v, kills: s.kills, bag: [...bagRef.current], replaceOffer: null, shopItems: [...s.shopItems], shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
+  };
+
+  const buyHeal = () => {
+    const s = stateRef.current;
+    if (!s) return;
+    if ((s.allyHp || 0) >= 100) {
+      s.shopMessage = '基地 HP 已滿';
+      setUi(v => ({ ...v, shopMessage: s.shopMessage }));
+      return;
+    }
+    if ((s.kills || 0) < 40) {
+      s.shopMessage = '擊殺數不足';
+      setUi(v => ({ ...v, shopMessage: s.shopMessage }));
+      return;
+    }
+    s.kills -= 40;
+    s.allyHp = Math.min(100, (s.allyHp || 0) + 20);
+    s.shopMessage = '基地回復 20 HP！';
+    s.shopBoughtFx = Date.now();
+    setUi(v => ({ ...v, kills: s.kills, allyHp: Math.ceil(s.allyHp), shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
+  };
+
   const continueAfterUpgrade = (option = null) => {
     const s = stateRef.current;
     if (s && option?.boost) {
@@ -352,7 +547,7 @@ function App() {
         s.tutorialStep = 6;
         syncTutorialUi(6);
       }
-      setUi(v => ({ ...v, upgrading: false, upgradeOptions: [], level: s.level, exp: s.exp, expNeed: s.level * 80, stats: { ...s.stats }, tutorialStep: s.tutorialStep || v.tutorialStep, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight }));
+      setUi(v => ({ ...v, upgrading: false, upgradeOptions: [], level: s.level, exp: s.exp, expNeed: s.level * 80, stats: { ...s.stats }, tutorialStep: s.tutorialStep || v.tutorialStep, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight, nodeIndex: s.nodeIndex || 0, shopOpen: s.shopOpen || false, shopItems: s.shopItems || [], shopMessage: s.shopMessage || '', replaceOffer: s.replaceOffer || null, shopBoughtFx: s.shopBoughtFx || 0 }));
     }
   };
 
@@ -362,10 +557,10 @@ function App() {
     const ctx = canvas.getContext('2d');
     stateRef.current = {
       w: 390, h: 780, battleH: 585, last: performance.now(), autoWeapon: 0,
-      wave: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0, bannerLife: 1.5,
+      wave: 0, nodeIndex: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0, bannerLife: 1.5,
       berserkActive: false, berserkScheduled: false, berserkTriggered: false, berserkAt: 0, waveElapsed: 0,
       allies: [], enemies: [], weapons: [], hitEffects: [], particles: [], floatTexts: [], path: [], isDrawing: false, drawTime: 0,
-      allyHp: 100, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', pointerId: null, animTime: 0,
+      allyHp: 100, weaponEnergy: 0, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', pointerId: null, animTime: 0,
       classChosen: true, playerClass: WARRIOR.name, stats: { ...WARRIOR.stats }, bag: [...WARRIOR.initialBag], bagCapacity: WARRIOR.bagCapacity, showBag: false,
       tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialPracticeType: '', tutorialIntroSpawned: false, tutorialStepTimer: 0, tutorialSpawned: false,
     };
@@ -527,20 +722,38 @@ function App() {
         s.floatTexts.push({ id: uid(), text: '標記', x: p.x, y: p.y - 12, vy: -18, life: .45, color: '#d9ff99', size: 13, glow: true });
         return;
       }
+      if (s.isDrawing && selectedWeapon?.multiLine) {
+        canvas.setPointerCapture(e.pointerId); s.pointerId = e.pointerId;
+        s.multiPaths = s.multiPaths || [];
+        s.multiPaths.push([p]);
+        s.path = s.multiPaths.flat();
+        return;
+      }
       canvas.setPointerCapture(e.pointerId); s.pointerId = e.pointerId;
-      s.path = [p]; s.isDrawing = true; s.drawTime = 1; s.aimMode = selectedWeapon?.aim ? 'bow' : 'trace';
-      if (selectedWeapon?.aim) s.floatTexts.push({ id: uid(), text: '點擊地圖標記目標！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#d9ff99', size: 20, glow: true });
+      s.path = [p]; s.multiPaths = selectedWeapon?.multiLine ? [[p]] : []; s.isDrawing = true; s.drawTime = 1; s.aimMode = selectedWeapon?.aim ? 'bow' : selectedWeapon?.multiLine ? 'multiTrace' : 'trace';
+      if (selectedWeapon?.aim) s.floatTexts.push({ id: uid(), text: '可連續點擊多個位置標記目標！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#d9ff99', size: 20, glow: true });
+      if (selectedWeapon?.multiLine) s.floatTexts.push({ id: uid(), text: '可畫多條線！時間到後一起發動', x: s.w/2, y: 96, vy: -8, life: .8, color: '#e9d5ff', size: 18, glow: true });
       setUi(v => ({ ...v, drawing: true, timer: 1 }));
     };
     const moveDraw = e => {
       const s = stateRef.current; if (!s.isDrawing || e.pointerId !== s.pointerId || s.aimMode === 'bow') return;
       const p = toPoint(e); if (p.y <= s.battleH && p.y >= 0) {
-        const last = s.path[s.path.length - 1];
-        if (!last || dist(last, p) > 5) s.path.push(p);
+        if (s.aimMode === 'multiTrace') {
+          const current = s.multiPaths?.[s.multiPaths.length - 1];
+          const last = current?.[current.length - 1];
+          if (!last || dist(last, p) > 5) { current.push(p); s.path = s.multiPaths.flat(); }
+        } else {
+          const last = s.path[s.path.length - 1];
+          if (!last || dist(last, p) > 5) s.path.push(p);
+        }
       }
     };
     const endDraw = e => {
       const s = stateRef.current; if (!s.isDrawing || e.pointerId !== s.pointerId) return;
+      if (s.aimMode === 'multiTrace') {
+        s.pointerId = null;
+        return;
+      }
       if (s.aimMode !== 'bow') {
         launchWeapon(); s.isDrawing = false; s.drawTime = 0; s.pointerId = null; s.aimMode = '';
         setUi(v => ({ ...v, drawing: false, timer: 0 }));
@@ -559,19 +772,35 @@ function App() {
       if (tierInfo.tier >= 2) stateRef.current.floatTexts.push({ id: uid(), text: tierInfo.tier === 3 ? base.triple : base.label, x: stateRef.current.w / 2, y: stateRef.current.battleH / 2, vy: -10, life: 1.2, color: tierInfo.tier === 3 ? '#ffd76a' : '#d38cff', size: tierInfo.tier === 3 ? 34 : 26 });
       setUi(v => ({ ...v, queue: queueRef.current, selected: null }));
     }
+    function applyPostAttackAllEnemies(s, item) {
+      const stats = s.stats || {};
+      const STR = stats.STR || 0, DEX = stats.DEX || 0;
+      if (item.type === 'kingsword' && STR > 50) {
+        for (const e of s.enemies) damageEnemy(s, e, 2 * STR, '#ffd76a', { type: item.type, combo: item.tier || 1, stats });
+        s.floatTexts.push({ id: uid(), text: '王者餘威！全場斬擊', x: s.w/2, y: 128, vy: -10, life: .9, color:'#ffd76a', size:22, glow:true });
+      }
+    }
     function launchBowAttack(s, item, tierInfo) {
       const base = WEAPONS[item.type];
       const points = s.path.length ? [...s.path] : [{ x: s.w / 2, y: s.battleH / 2 }];
-      const dmg = weaponBaseDamage(item.type, s.stats) * tierInfo.power;
+      const stats = { ...(s.stats || {}) };
+      const radius = (item.type === 'giantbow' && (stats.DEX || 0) + (stats.STR || 0) > 60) ? 85 : base.radius;
+      const dmg = weaponBaseDamage(item.type, stats) * tierInfo.power;
       for (const p of points) {
-        s.hitEffects.push({ id: uid(), type: 'bow', x: p.x, y: p.y, age: 0, life: .34, combo: tierInfo.tier });
+        s.hitEffects.push({ id: uid(), type: item.type, x: p.x, y: p.y, age: 0, life: .34, combo: tierInfo.tier });
         for (const e of s.enemies) {
-          if (Math.hypot(e.x - p.x, e.y - p.y) <= base.radius + (e.boss ? 10 : 0)) {
-            damageEnemy(s, e, dmg, tierEffectColor(item.type, tierInfo.tier), { type: item.type, combo: tierInfo.tier });
+          if (Math.hypot(e.x - p.x, e.y - p.y) <= radius + (e.boss ? 10 : 0)) {
+            const reps = (item.type === 'kingsword' && (stats.STR || 0) > 35) ? 2 : 1;
+            for (let r = 0; r < reps; r++) damageEnemy(s, e, dmg, tierEffectColor(item.type, tierInfo.tier), { type: item.type, combo: tierInfo.tier, stats });
           }
         }
-        s.floatTexts.push({ id: uid(), text: '箭雨！', x: p.x, y: p.y - 20, vy: -28, life: .55, color: tierEffectColor(item.type, tierInfo.tier), size: 16, glow: tierInfo.tier >= 2 });
+        if (item.type === 'giantbow' && (stats.DEX || 0) + (stats.STR || 0) > 35) {
+          s.zones = s.zones || [];
+          s.zones.push({ id: uid(), type: item.type, x: p.x, y: p.y, radius, damage: dmg * 0.5, tick: 1, life: 3, color: tierEffectColor(item.type, tierInfo.tier), stats });
+        }
+        s.floatTexts.push({ id: uid(), text: base.name + '！', x: p.x, y: p.y - 20, vy: -28, life: .55, color: tierEffectColor(item.type, tierInfo.tier), size: 16, glow: tierInfo.tier >= 2 });
       }
+      applyPostAttackAllEnemies(s, item);
       s.path = [];
       consumeSelectedWeapon(item, tierInfo);
     }
@@ -579,10 +808,13 @@ function App() {
       const s = stateRef.current, item = selectedRef.current; if (!item || s.path.length < 1) return;
       const base = WEAPONS[item.type]; const tierInfo = getTierInfo(item);
       if (base.aim) { launchBowAttack(s, item, tierInfo); return; }
-      if (s.path.length < 2) return;
-      const weaponPath = [...s.path];
-      s.path = [];
-      s.weapons.push({ id: uid(), type: item.type, path: weaponPath, seg: 0, t: 0, x: weaponPath[0].x, y: weaponPath[0].y, radius: base.radius, damage: weaponBaseDamage(item.type, s.stats) * tierInfo.power, hitCd: {}, trail: [], combo: tierInfo.tier, trailColor: tierTrailColor(item.type, tierInfo.tier), damageColor: tierEffectColor(item.type, tierInfo.tier) });
+      const paths = base.multiLine ? (s.multiPaths || []).filter(path => path.length >= 2) : [s.path].filter(path => path.length >= 2);
+      if (!paths.length) return;
+      const stats = { ...(s.stats || {}) };
+      s.path = []; s.multiPaths = [];
+      for (const weaponPath of paths) {
+        s.weapons.push({ id: uid(), type: item.type, path: weaponPath, seg: 0, t: 0, x: weaponPath[0].x, y: weaponPath[0].y, radius: base.radius, damage: weaponBaseDamage(item.type, stats) * tierInfo.power, hitCd: {}, trail: [], combo: tierInfo.tier, trailColor: tierTrailColor(item.type, tierInfo.tier), damageColor: tierEffectColor(item.type, tierInfo.tier), stats, returning: false });
+      }
       consumeSelectedWeapon(item, tierInfo);
       if (s.tutorialActive && s.tutorialStep === 2) {
         s.tutorialStep = 3;
@@ -603,8 +835,11 @@ function App() {
         boss,
       };
     }
-    function startWave(s) {
-      s.wave++;
+    function startCurrentNode(s) {
+      const node = ADVENTURE_NODES[s.nodeIndex || 0];
+      if (!node) { s.gameOver = '冒險完成，遊戲勝利！'; return; }
+      if (node.type === 'shop') { openShopNode(s); return; }
+      s.wave = node.wave;
       const cfg = waveConfig(s.wave);
       s.waveState = 'wave';
       s.waveSpawnTimer = 0;
@@ -617,21 +852,27 @@ function App() {
       s.berserkAt = rand(3, Math.max(4, cfg.total * cfg.interval * 0.65));
       s.bannerLife = 1.6;
       s.floatTexts.push({ id: uid(), text: cfg.boss ? `第 ${s.wave} 波 BOSS 來襲！` : `第 ${s.wave} 波開始！`, x: s.w/2, y: 96, vy: -8, life: 1.4, color: cfg.boss ? '#ffdf6e' : '#ffffff', size: cfg.boss ? 32 : 26 });
-      setUi(v => ({ ...v, wave: s.wave, waveState: s.waveState, rest: 0, enemiesLeft: s.waveTotal - s.waveSpawned + s.enemies.length, banner: cfg.boss ? `第 ${s.wave} 波 BOSS 來襲！` : `第 ${s.wave} 波開始！` }));
+      setUi(v => ({ ...v, nodeIndex: s.nodeIndex || 0, wave: s.wave, waveState: s.waveState, rest: 0, enemiesLeft: s.waveTotal - s.waveSpawned + s.enemies.length, banner: cfg.boss ? `第 ${s.wave} 波 BOSS 來襲！` : `第 ${s.wave} 波開始！` }));
     }
     function enterRest(s) {
-      if (s.wave >= 10) {
-        s.gameOver = '十波清完，遊戲勝利！';
+      if ((s.nodeIndex || 0) >= ADVENTURE_NODES.length - 1) {
+        s.gameOver = '冒險完成，遊戲勝利！';
+        return;
+      }
+      s.nodeIndex = (s.nodeIndex || 0) + 1;
+      s.berserkActive = false;
+      s.berserkScheduled = false;
+      s.waveSpawnTimer = 0;
+      s.bannerLife = 1.4;
+      const next = ADVENTURE_NODES[s.nodeIndex];
+      if (next?.type === 'shop') {
+        openShopNode(s);
         return;
       }
       s.waveState = 'rest';
-      s.berserkActive = false;
-      s.berserkScheduled = false;
       s.restTime = s.restDuration;
-      s.waveSpawnTimer = 0;
-      s.bannerLife = 1.4;
       s.floatTexts.push({ id: uid(), text: `休息 ${s.restDuration} 秒`, x: s.w/2, y: 100, vy: -8, life: 1.2, color: '#d9ecff', size: 26 });
-      setUi(v => ({ ...v, waveState: 'rest', rest: Math.ceil(s.restTime), enemiesLeft: 0, banner: `休息 ${s.restDuration} 秒` }));
+      setUi(v => ({ ...v, nodeIndex: s.nodeIndex, waveState: 'rest', rest: Math.ceil(s.restTime), enemiesLeft: 0, banner: `休息 ${s.restDuration} 秒` }));
     }
     function spawnBat(s, boss, index) {
       const cfg = waveConfig(s.wave);
@@ -690,7 +931,7 @@ function App() {
         hp, maxHp: hp, atk: isBoss ? 25 : 5 + s.wave, cd: 0,
         speed: isBoss ? (s.battleH * .25 - 30) / 2.2 : cfg.speed(s) * speedMul, flash:0, frozen:0, animSeed: Math.random() * 4,
         boss: isBoss, finalBoss: isBoss && s.wave === 10, radius: isBoss ? 30 : enemyType === 'MON' ? 11 : 13,
-        bossCenterX: s.w / 2, bossMovePhase: Math.random() * Math.PI * 2, bossMoveAmp: s.w * .25,
+        bossCenterX: s.w / 2, bossMovePhase: Math.random() * Math.PI * 2, bossMoveAmp: s.w * .25, bossMoveTime: 0,
         skillCd: isBoss ? 5 : 0, skillState: '', skillTimer: 0, skillDuration: 0, shielded: false, hurtAnim: 0, fireSpawned: 0,
       });
       s.waveSpawned++;
@@ -711,7 +952,7 @@ function App() {
         s.upgradeOptions = drawUpgradeOptions();
         if (s.tutorialActive) s.tutorialStep = 5;
         s.floatTexts.push({ id: uid(), text: 'Level Up！', x: s.w / 2, y: s.battleH * .45, vy: -6, life: 1.1, color: '#fff4b8', size: 34, glow: true });
-        setUi(v => ({ ...v, level: s.level, exp: s.exp, expNeed: s.level * 80, upgrading: true, upgradeOptions: s.upgradeOptions, tutorialStep: s.tutorialStep || v.tutorialStep, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight }));
+        setUi(v => ({ ...v, level: s.level, exp: s.exp, expNeed: s.level * 80, upgrading: true, upgradeOptions: s.upgradeOptions, tutorialStep: s.tutorialStep || v.tutorialStep, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight, nodeIndex: s.nodeIndex || 0, shopOpen: s.shopOpen || false, shopItems: s.shopItems || [], shopMessage: s.shopMessage || '', replaceOffer: s.replaceOffer || null, shopBoughtFx: s.shopBoughtFx || 0 }));
       } else {
         setUi(v => ({ ...v, exp: s.exp, expNeed: s.level * 80, level: s.level }));
       }
@@ -769,7 +1010,7 @@ function App() {
         return true;
       }
 
-      if (s.tutorialStep === 1 || s.tutorialStep === 6 || s.tutorialStep === 7 || s.tutorialStep === 10) {
+      if (s.tutorialStep === 1 || s.tutorialStep === 6 || s.tutorialStep === 7 || s.tutorialStep === 10 || s.tutorialStep === 12) {
         return true;
       }
       // 劍：點下武器後 step2 直接讓怪物開始移動，玩家可立即畫線。
@@ -779,7 +1020,7 @@ function App() {
         return true;
       }
 
-      if (![3, 8, 9].includes(s.tutorialStep)) return false;
+      if (![3, 8, 9, 11].includes(s.tutorialStep)) return false;
       if (!s.tutorialSpawned) beginTutorialWave(s, s.tutorialPracticeType || 'sword');
       const forcedType = s.tutorialPracticeType || 'sword';
       s.autoWeapon += dt;
@@ -802,11 +1043,45 @@ function App() {
           queueRef.current = [];
           selectedRef.current = null;
           setUi(v => ({ ...v, queue: [], selected: null, tutorialStep: 10, tutorialText: tutorialTexts[10].text, tutorialHighlight: tutorialTexts[10].highlight }));
+        } else if (s.tutorialStep === 11) {
+          s.tutorialStep = 12;
+          queueRef.current = [];
+          selectedRef.current = null;
+          setUi(v => ({ ...v, queue: [], selected: null, tutorialStep: 12, tutorialText: tutorialTexts[12].text, tutorialHighlight: tutorialTexts[12].highlight, weaponEnergy: s.weaponEnergy }));
         }
       }
       return false;
     }
 
+
+    function applyWeaponSpecialOnHit(s, e, weapon, finalDamage = 0) {
+      if (!weapon?.type) return;
+      const stats = weapon.stats || s.stats || {};
+      const STR = stats.STR || 0, DEX = stats.DEX || 0, VIT = stats.VIT || 0;
+      if (weapon.type === 'katana' && STR + DEX > 25) {
+        e.bleedTime = Math.max(e.bleedTime || 0, 3);
+        e.bleedPct = e.boss ? 0.005 : 0.02;
+      }
+      if (weapon.type === 'greatshield' && VIT > 15) {
+        e.stunned = Math.max(e.stunned || 0, 2);
+      }
+      if (weapon.type === 'gianthammer') {
+        if (VIT > 25) e.wounded = Math.max(e.wounded || 0, 3);
+        if (VIT + STR > 55) e.weakpoint = true;
+      }
+      if (weapon.type === 'holyshield') {
+        const wasMarked = (e.holyMark || 0) > 0;
+        if (VIT > 30) e.holyMark = Math.max(e.holyMark || 0, 5);
+        if (wasMarked && VIT + STR > 55) {
+          for (const other of s.enemies) {
+            if (other.id !== e.id && Math.hypot(other.x - e.x, other.y - e.y) <= 20 + (other.boss ? 10 : 0)) {
+              damageEnemy(s, other, 2 * VIT, '#ffd76a', { type: weapon.type, combo: weapon.combo || 1, stats, noSpecial: true });
+            }
+          }
+          s.floatTexts.push({ id: uid(), text: '聖光爆發', x:e.x, y:e.y-34, vy:-28, life:.55, color:'#ffd76a', size:16, glow:true });
+        }
+      }
+    }
 
     function damageEnemy(s, e, dmg, color, weapon = null) {
       if (e.boss && e.shielded) {
@@ -814,11 +1089,23 @@ function App() {
         for (let i=0;i<5;i++) s.particles.push({ id: uid(), x:e.x+rand(-28,28), y:e.y+rand(-36,36), vx:rand(-40,40), vy:rand(-40,40), life:.35, color:'#d56bff', size:3, glow:true });
         return;
       }
-      e.hp -= dmg; e.flash = .08;
+      const stats = weapon?.stats || s.stats || {};
+      let finalDmg = dmg;
+      let crit = false;
+      if (e.wounded > 0) finalDmg *= 1.3;
+      if (e.weakpoint) { finalDmg *= 2; e.weakpoint = false; crit = true; }
+      if (weapon?.type === 'katana' && (stats.STR || 0) + (stats.DEX || 0) > 50 && (e.bleedTime || 0) > 0) {
+        finalDmg *= 2;
+        finalDmg += e.maxHp * (e.boss ? 0.03 : 0.25);
+      }
+      const critInfo = critSpec(weapon?.type, stats);
+      if (!crit && critInfo.chance > 0 && Math.random() < critInfo.chance) { finalDmg *= critInfo.mult; crit = true; }
+      e.hp -= finalDmg; e.flash = .08;
+      applyWeaponSpecialOnHit(s, e, weapon, finalDmg);
       if (e.finalBoss) e.hurtAnim = .18;
       const isTierColor = color === '#c084fc' || color === '#ffd76a';
       s.floatTexts.push({
-        id: uid(), text: Math.round(dmg).toString(), x: e.x + rand(-8,8), y: e.y - (e.boss ? 34 : 18),
+        id: uid(), text: `${crit ? '暴擊 ' : ''}${Math.round(finalDmg)}`, x: e.x + rand(-8,8), y: e.y - (e.boss ? 34 : 18),
         vy: isTierColor ? -58 : -45, life: isTierColor ? .82 : .65, color,
         size: (e.boss ? 20 : 16) + (color === '#ffd76a' ? 6 : color === '#c084fc' ? 3 : 0),
         glow: isTierColor
@@ -841,9 +1128,25 @@ function App() {
         size: color === '#ffd76a' ? rand(3,7) : color === '#c084fc' ? rand(2,6) : 4, glow: isTierColor
       });
     }
+    function addWeaponCharge(s, amount = 10) {
+      if (!s || s.gameOver) return;
+      s.weaponEnergy = Math.min(100, (s.weaponEnergy || 0) + amount);
+      if (s.weaponEnergy >= 100) {
+        s.weaponEnergy = 0;
+        const created = addWeapon('充能完成！獲得武器');
+        if (!created) {
+          s.floatTexts.push({ id: uid(), text: '充能完成！武器列已滿', x: s.w / 2, y: s.battleH - 92, vy: -18, life: 1, color: '#7dd3fc', size: 18, glow: true });
+        }
+      }
+    }
+
     function killEnemy(s, e) {
       s.kills++;
-      gainExp(s, e.boss ? 100 : 10);
+      const isBossSummon = !!e.summonOwner;
+      if (!e.boss) addWeaponCharge(s, 10);
+      // Boss 召喚物（蝙蝠 / 火球）不給經驗；只有普通怪 +10，Boss +100。
+      if (e.boss) gainExp(s, 100);
+      else if (!isBossSummon) gainExp(s, 10);
       const n = e.boss ? 36 : 14;
       for (let i=0;i<n;i++) s.particles.push({ id: uid(), x:e.x, y:e.y, vx:rand(-160,160), vy:rand(-160,160), life:.65, color:e.boss ? '#ffdf6e' : '#ffcc99' });
       if (e.boss) s.floatTexts.push({ id: uid(), text: 'BOSS 擊破！', x: e.x, y: e.y - 40, vy: -22, life: 1.2, color:'#ffdf6e', size:28 });
@@ -864,6 +1167,10 @@ function App() {
         setUi(v => ({ ...v, showBag: true, stats: { ...s.stats }, bag: [...bagRef.current] }));
         return;
       }
+      if (s.shopOpen) {
+        setUi(v => ({ ...v, shopOpen: true, shopItems: s.shopItems || [], shopMessage: s.shopMessage || '', replaceOffer: s.replaceOffer || null, kills: s.kills, allyHp: Math.ceil(s.allyHp), bag: [...bagRef.current], nodeIndex: s.nodeIndex || 0 }));
+        return;
+      }
       if (s.isDrawing) {
         s.drawTime -= dt;
         setUi(v => ({ ...v, timer: Math.max(0, s.drawTime) }));
@@ -871,6 +1178,7 @@ function App() {
           launchWeapon();
           s.isDrawing = false;
           s.aimMode = '';
+          s.pointerId = null;
           setUi(v => ({ ...v, drawing:false, timer:0 }));
         }
         return;
@@ -879,7 +1187,7 @@ function App() {
         const freezeTutorial = tutorialUpdate(s, dt);
         if (freezeTutorial) {
           updateTutorialPassive(s, dt);
-          setUi(v => ({ ...v, kills:s.kills, allyHp:Math.max(0,Math.ceil(s.allyHp)), wave:s.wave || 1, waveState:s.waveState, rest:0, enemiesLeft:s.enemies.length, level:s.level, exp:s.exp, expNeed:s.level * 80, upgrading:s.upgrading, upgradeOptions:s.upgradeOptions, gameOver:s.gameOver, classChosen:true, playerClass:s.playerClass, stats:s.stats || WARRIOR.stats, bag:[...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: s.showBag || false, tutorialActive:true, tutorialStep:s.tutorialStep || 0, tutorialWeaponPicked: s.tutorialWeaponPicked || false, tutorialText:tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight:tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight }));
+          setUi(v => ({ ...v, kills:s.kills, allyHp:Math.max(0,Math.ceil(s.allyHp)), weaponEnergy: s.weaponEnergy || 0, wave:s.wave || 1, waveState:s.waveState, rest:0, enemiesLeft:s.enemies.length, level:s.level, exp:s.exp, expNeed:s.level * 80, upgrading:s.upgrading, upgradeOptions:s.upgradeOptions, gameOver:s.gameOver, classChosen:true, playerClass:s.playerClass, stats:s.stats || WARRIOR.stats, bag:[...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: s.showBag || false, tutorialActive:true, tutorialStep:s.tutorialStep || 0, tutorialWeaponPicked: s.tutorialWeaponPicked || false, tutorialText:tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight:tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight }));
           return;
         }
       } else {
@@ -894,7 +1202,7 @@ function App() {
           if (s.restTime <= 3 && s.restTime + dt > 3) s.floatTexts.push({ id: uid(), text: `下一波倒數 3`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:28 });
           if (s.restTime <= 2 && s.restTime + dt > 2) s.floatTexts.push({ id: uid(), text: `2`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:32 });
           if (s.restTime <= 1 && s.restTime + dt > 1) s.floatTexts.push({ id: uid(), text: `1`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:32 });
-          if (s.restTime <= 0) startWave(s);
+          if (s.restTime <= 0) startCurrentNode(s);
         } else if (s.waveState === 'wave') {
           const cfg = waveConfig(s.wave);
           s.waveElapsed += dt;
@@ -917,8 +1225,15 @@ function App() {
         e.hurtAnim = Math.max(0, (e.hurtAnim || 0) - dt);
         e.cd -= dt;
         e.frozen = Math.max(0, e.frozen - dt);
+        e.stunned = Math.max(0, (e.stunned || 0) - dt);
+        e.wounded = Math.max(0, (e.wounded || 0) - dt);
+        e.holyMark = Math.max(0, (e.holyMark || 0) - dt);
+        if ((e.bleedTime || 0) > 0) {
+          e.bleedTime = Math.max(0, e.bleedTime - dt);
+          e.hp -= e.maxHp * (e.bleedPct || 0) * dt;
+        }
 
-        if (e.boss) {
+        if (e.boss && (e.stunned || 0) <= 0) {
           const activeSummons = s.enemies.some(x => x.summonOwner === e.id && x.hp > 0);
           if (e.finalBoss) {
             e.shielded = activeSummons || e.skillState === 'summoning';
@@ -957,7 +1272,7 @@ function App() {
           }
         }
 
-        if (e.frozen <= 0) {
+        if (e.frozen <= 0 && (e.stunned || 0) <= 0) {
           if (e.boss) {
             // 第 5 / 第 10 波 BOSS 不再一路往基地衝。
             // 先進場到戰場上方 1/4 附近，之後左右巡航並持續施放技能。
@@ -966,13 +1281,15 @@ function App() {
               e.y = Math.min(targetY, e.y + e.speed * dt);
             } else {
               e.y = targetY;
-              e.x = clamp((e.bossCenterX || s.w / 2) + Math.sin(s.animTime * 1.15 + (e.bossMovePhase || 0)) * (e.bossMoveAmp || s.w * .25), 56, s.w - 56);
+              // BOSS 左右移動時間只在遊戲未時停時累積，避免玩家畫線時 BOSS 累積相位，解除時停後瞬移。
+              e.bossMoveTime = (e.bossMoveTime || 0) + dt;
+              e.x = clamp((e.bossCenterX || s.w / 2) + Math.sin(e.bossMoveTime * 1.15 + (e.bossMovePhase || 0)) * (e.bossMoveAmp || s.w * .25), 56, s.w - 56);
             }
           } else if (e.type === 'BAT' || e.type === 'FIREBALL') {
             const dy = Math.max(1, (s.battleH - 28) - e.y);
             const dx = ((e.targetX || e.x) - e.x) / dy;
             e.x += dx * e.speed * dt + Math.sin(s.animTime * 5 + (e.driftPhase || 0)) * (e.driftAmp || 0) * dt;
-            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
+            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * ((e.holyMark || 0) > 0 ? 0.5 : 1) * dt;
           } else {
             e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
           }
@@ -984,12 +1301,29 @@ function App() {
         }
       }
       s.enemies = s.enemies.filter(e=>{ if(e.hp<=0){ if(e.y<=s.battleH-28) killEnemy(s,e); return false;} return true; });
+      s.zones = s.zones || [];
+      for (const z of s.zones) {
+        z.life -= dt; z.tick -= dt;
+        if (z.tick <= 0) {
+          z.tick += 1;
+          for (const e of s.enemies) {
+            if (Math.hypot(e.x - z.x, e.y - z.y) <= z.radius + (e.boss ? 10 : 0)) {
+              damageEnemy(s, e, z.damage, z.color || '#ffd76a', { type: z.type, combo: 1, stats: z.stats });
+            }
+          }
+        }
+      }
+      s.zones = s.zones.filter(z => z.life > 0);
       for (const w of s.weapons) {
         const base=WEAPONS[w.type]; const next=w.path[w.seg+1]; const cur=w.path[w.seg];
         if(!next){ w.done=true; continue; }
         const len=Math.max(1, dist(cur,next)); w.t += base.speed*dt/len;
         while(w.t>=1 && w.seg < w.path.length-2){ w.t-=1; w.seg++; }
-        if (w.seg >= w.path.length - 2 && w.t >= 1) { w.t = 1; w.done = true; }
+        if (w.seg >= w.path.length - 2 && w.t >= 1) {
+          if (base.returnPath && (w.stats?.DEX || 0) > 20 && !w.returning) {
+            w.path = [...w.path].reverse(); w.seg = 0; w.t = 0; w.returning = true; w.hitCd = {};
+          } else { w.t = 1; w.done = true; }
+        }
         const p0=w.path[w.seg], p1=w.path[w.seg+1] || p0; w.x=lerp(p0.x,p1.x,clamp(w.t,0,1)); w.y=lerp(p0.y,p1.y,clamp(w.t,0,1));
         w.trail.push({x:w.x,y:w.y,life:.35}); w.trail.forEach(t=>t.life-=dt); w.trail=w.trail.filter(t=>t.life>0).slice(-18);
         for (const key of Object.keys(w.hitCd)) w.hitCd[key] = Math.max(0, w.hitCd[key] - dt);
@@ -1000,6 +1334,7 @@ function App() {
             damageEnemy(s,e,w.damage,w.damageColor || base.color,w);
             if(base.freeze) e.frozen=Math.max(e.frozen,base.freeze);
             if(base.knockback && !e.boss) e.y = Math.max(34, e.y - base.knockback);
+            if(w.type === 'greatshield' && (w.stats?.VIT || 0) > 30 && (e.stunned || 0) > 0 && !e.boss) { e.x = w.x; e.y = Math.max(34, w.y); }
           }
         }
       }
@@ -1009,7 +1344,7 @@ function App() {
       s.particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;}); s.particles=s.particles.filter(p=>p.life>0);
       s.floatTexts.forEach(f=>{f.y+=f.vy*dt;f.life-=dt;}); s.floatTexts=s.floatTexts.filter(f=>f.life>0);
       if(s.allyHp<=0) s.gameOver='我方基地陷落';
-      setUi(v => ({ ...v, kills:s.kills, allyHp:Math.max(0,Math.ceil(s.allyHp)), wave:s.wave, waveState:s.waveState, rest:Math.max(0,Math.ceil(s.restTime)), enemiesLeft:Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length), level:s.level, exp:s.exp, expNeed:s.level * 80, upgrading:s.upgrading, upgradeOptions:s.upgradeOptions, gameOver:s.gameOver, classChosen:s.classChosen, playerClass:s.playerClass, stats:s.stats || WARRIOR.stats, bag:[...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: s.showBag || false, tutorialActive: s.tutorialActive || false, tutorialStep: s.tutorialStep || 0, tutorialWeaponPicked: s.tutorialWeaponPicked || false, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight }));
+      setUi(v => ({ ...v, kills:s.kills, allyHp:Math.max(0,Math.ceil(s.allyHp)), weaponEnergy: s.weaponEnergy || 0, wave:s.wave, waveState:s.waveState, rest:Math.max(0,Math.ceil(s.restTime)), enemiesLeft:Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length), level:s.level, exp:s.exp, expNeed:s.level * 80, upgrading:s.upgrading, upgradeOptions:s.upgradeOptions, gameOver:s.gameOver, classChosen:s.classChosen, playerClass:s.playerClass, stats:s.stats || WARRIOR.stats, bag:[...bagRef.current], bagCapacity: WARRIOR.bagCapacity, showBag: s.showBag || false, tutorialActive: s.tutorialActive || false, tutorialStep: s.tutorialStep || 0, tutorialWeaponPicked: s.tutorialWeaponPicked || false, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight, nodeIndex: s.nodeIndex || 0, shopOpen: s.shopOpen || false, shopItems: s.shopItems || [], shopMessage: s.shopMessage || '', replaceOffer: s.replaceOffer || null, shopBoughtFx: s.shopBoughtFx || 0 }));
     }
 
     function render() {
@@ -1028,12 +1363,12 @@ function App() {
       }
       const rg=ctx.createRadialGradient(s.w/2,s.battleH*.45,20,s.w/2,s.battleH*.45,s.battleH*.72); rg.addColorStop(0,'rgba(255,255,255,.08)'); rg.addColorStop(1,'rgba(0,0,0,.25)'); ctx.fillStyle=rg; ctx.fillRect(0,0,s.w,s.battleH);
       ctx.fillStyle='rgba(255,255,255,.10)'; ctx.fillRect(s.w*.06,42,s.w*.010,s.battleH-92); ctx.fillRect(s.w*.93,42,s.w*.010,s.battleH-92);
-      ctx.fillStyle=s.berserkActive ? 'rgba(150,35,25,.62)' : 'rgba(80,30,30,.40)'; ctx.fillRect(0,0,s.w,42); ctx.fillStyle='#ffd6d6'; ctx.font='bold 15px system-ui'; ctx.textAlign='center'; ctx.fillText(s.waveState === 'rest' ? `休息中：${Math.max(0,Math.ceil(s.restTime))} 秒` : `第 ${s.wave} 波  剩餘 ${Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length)}${s.berserkActive ? '  狂暴中' : ''}`,s.w/2,28);
+      ctx.fillStyle=s.berserkActive ? 'rgba(150,35,25,.62)' : 'rgba(80,30,30,.40)'; ctx.fillRect(0,0,s.w,42); ctx.fillStyle='#ffd6d6'; ctx.font='bold 15px system-ui'; ctx.textAlign='center'; ctx.fillText(s.waveState === 'rest' ? `休息中：${Math.max(0,Math.ceil(s.restTime))} 秒` : `剩餘 ${Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length)}${s.berserkActive ? '  狂暴中' : ''}`,s.w/2,28);
       const boss = s.enemies.find(e => e.boss && e.hp > 0);
       if (boss) {
         const ratio = clamp(boss.hp / boss.maxHp, 0, 1);
-        const barY = 42;
-        const barH = 28;
+        const barY = 72;
+        const barH = 26;
         ctx.save();
         ctx.fillStyle = 'rgba(22, 8, 12, .92)';
         ctx.fillRect(0, barY, s.w, barH);
@@ -1063,7 +1398,20 @@ function App() {
         ctx.fillText(label, s.w / 2, barY + barH / 2 + 1);
         ctx.restore();
       }
-      const baseG=ctx.createLinearGradient(0,s.battleH-52,0,s.battleH); baseG.addColorStop(0,'#2d70c9'); baseG.addColorStop(1,'#17458f'); ctx.fillStyle=baseG; ctx.fillRect(0,s.battleH-46,s.w,40); ctx.fillStyle='rgba(255,255,255,.16)'; ctx.fillRect(0,s.battleH-46,s.w,5); ctx.fillStyle='#dff4ff'; ctx.fillText(`我方基地 HP ${Math.max(0,Math.ceil(s.allyHp))}`,s.w/2,s.battleH-20);
+      const energyRatio = clamp((s.weaponEnergy || 0) / 100, 0, 1);
+      ctx.save();
+      ctx.fillStyle='rgba(2,8,23,.72)'; ctx.fillRect(10,s.battleH-57,s.w-20,7);
+      const energyG=ctx.createLinearGradient(10,s.battleH-57,s.w-10,s.battleH-57); energyG.addColorStop(0,'#2563eb'); energyG.addColorStop(1,'#7dd3fc');
+      ctx.fillStyle=energyG; ctx.shadowColor='#38bdf8'; ctx.shadowBlur=8; ctx.fillRect(10,s.battleH-57,(s.w-20)*energyRatio,7);
+      ctx.shadowBlur=0; ctx.strokeStyle='rgba(255,255,255,.38)'; ctx.lineWidth=1; ctx.strokeRect(10,s.battleH-57,s.w-20,7);
+      ctx.restore();
+      const baseHpRatio = clamp(s.allyHp / 100, 0, 1);
+      const baseG=ctx.createLinearGradient(0,s.battleH-52,0,s.battleH); baseG.addColorStop(0,'#19345f'); baseG.addColorStop(1,'#0f244a'); ctx.fillStyle=baseG; ctx.fillRect(0,s.battleH-46,s.w,40);
+      ctx.fillStyle='rgba(120,15,20,.88)'; ctx.fillRect(10,s.battleH-35,s.w-20,16);
+      const hpG=ctx.createLinearGradient(10,s.battleH-35,s.w-10,s.battleH-35); hpG.addColorStop(0,'#2f7dff'); hpG.addColorStop(1,'#68d7ff'); ctx.fillStyle=hpG; ctx.fillRect(10,s.battleH-35,(s.w-20)*baseHpRatio,16);
+      ctx.fillStyle='rgba(255,255,255,.22)'; ctx.fillRect(10,s.battleH-35,(s.w-20)*baseHpRatio,4);
+      ctx.strokeStyle='rgba(255,255,255,.55)'; ctx.lineWidth=2; ctx.strokeRect(10,s.battleH-35,s.w-20,16);
+      ctx.fillStyle='#dff4ff'; ctx.font='bold 15px system-ui'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.strokeStyle='rgba(0,0,0,.75)'; ctx.lineWidth=4; const baseLabel=`我方基地 HP ${Math.max(0,Math.ceil(s.allyHp))}/100`; ctx.strokeText(baseLabel,s.w/2,s.battleH-27); ctx.fillText(baseLabel,s.w/2,s.battleH-27);
       ctx.fillStyle='rgba(255,255,255,.15)'; ctx.fillRect(0,s.battleH/2-1,s.w,2);
       s.enemies.forEach(e=>drawEnemySprite(ctx, s, e));
       for(const w of s.weapons){
@@ -1085,8 +1433,13 @@ function App() {
           const fh = sheet.naturalHeight;
           const drawW = size;
           const drawH = size * (fh / fw);
-          if (base.rotateToPath) {
-            // 火焰法杖：用細長火焰彈沿玩家軌跡方向飛行。
+          if (base.spin) {
+            // 盾牌沿軌跡飛行時使用自身圖示，並持續高速 360 度旋轉。
+            // 旋轉只影響視覺，不改變原本命中判定半徑與擊退效果。
+            ctx.translate(w.x, w.y);
+            ctx.rotate(s.animTime * (base.spinSpeed || 10));
+            ctx.drawImage(sheet, frame * fw, 0, fw, fh, -drawW / 2, -drawH / 2, drawW, drawH);
+          } else if (base.rotateToPath) {
             const p0 = w.path[w.seg] || { x: w.x, y: w.y };
             const p1 = w.path[w.seg + 1] || p0;
             const angle = Math.atan2(p1.y - p0.y, p1.x - p0.x);
@@ -1124,7 +1477,7 @@ function App() {
         ctx.drawImage(sheet, frame * fw, 0, fw, fh, h.x - drawW / 2, h.y - drawH / 2, drawW, drawH);
         ctx.restore();
       }
-      if(s.path.length>0 && selectedRef.current?.type === 'bow'){
+      if(s.path.length>0 && WEAPONS[selectedRef.current?.type]?.aim){
         const tier = selectedRef.current?.tier || 1;
         const markerColor = tier >= 3 ? '#ffd76a' : tier >= 2 ? '#c084fc' : '#ffffff';
         for (const p of s.path) {
@@ -1139,9 +1492,18 @@ function App() {
         ctx.lineCap='round'; ctx.lineJoin='round';
 
         const drawPath = () => {
-          ctx.beginPath();
-          s.path.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
-          ctx.stroke();
+          const drawOne = (path) => {
+            if (!path || path.length < 2) return;
+            ctx.beginPath();
+            path.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));
+            ctx.stroke();
+          };
+          if (s.aimMode === 'multiTrace' && s.multiPaths?.length) {
+            // 武士刀：多條線必須各自獨立，不把線段頭尾硬連在一起。
+            s.multiPaths.forEach(drawOne);
+          } else {
+            drawOne(s.path);
+          }
         };
 
         if (tier === 1) {
@@ -1198,10 +1560,33 @@ function App() {
 
   const expRatio = Math.max(0, Math.min(1, (ui.exp || 0) / Math.max(1, ui.expNeed || 80)));
 
-  const tutorialData = tutorialTexts[ui.tutorialStep] || tutorialTexts[0];
-  const hideTutorialBox = ui.drawing || [2, 3].includes(ui.tutorialStep) || ([8, 9].includes(ui.tutorialStep) && ui.tutorialWeaponPicked);
+  const devAddWeapon = (type) => {
+    if (queueRef.current.length >= 7) return;
+    queueRef.current = normalizeWeaponQueue([...queueRef.current, { id: uid(), type, tier: 1, born: Date.now() }]);
+    setUi(v => ({ ...v, queue: queueRef.current }));
+  };
+  const devAddStats = (key, amount = 5) => {
+    const s = stateRef.current; if (!s) return;
+    s.stats[key] = (s.stats[key] || 0) + amount;
+    setUi(v => ({ ...v, stats: { ...s.stats } }));
+  };
+  const devJumpWave = (wave) => {
+    const s = stateRef.current; if (!s) return;
+    s.tutorialActive = false;
+    s.enemies = []; s.weapons = []; s.hitEffects = []; s.particles = []; s.path = [];
+    const idx = Math.max(0, ADVENTURE_NODES.findIndex(n => n.type === 'wave' && n.wave === wave));
+    s.nodeIndex = idx < 0 ? 0 : idx;
+    s.wave = wave;
+    s.shopOpen = false; s.shopItems = []; s.replaceOffer = null;
+    s.waveState = 'rest'; s.restTime = .25; s.waveSpawned = 0; s.waveTotal = 0;
+    setUi(v => ({ ...v, tutorialActive: false, wave: s.wave, waveState: 'rest', rest: 1, enemiesLeft: 0 }));
+  };
+  const toggleDev = () => setUi(v => ({ ...v, showDev: !v.showDev }));
 
-  return <div className="page"><div className={`phone ${(ui.upgrading || ui.showBag) ? 'isPaused' : ''} ${ui.tutorialActive ? `tutorialMode highlight-${ui.tutorialHighlight || 'none'}` : ''}`} ref={wrapRef}>
+  const tutorialData = tutorialTexts[ui.tutorialStep] || tutorialTexts[0];
+  const hideTutorialBox = ui.drawing || [3, 11].includes(ui.tutorialStep) || ([8, 9].includes(ui.tutorialStep) && ui.tutorialWeaponPicked);
+
+  return <div className="page"><div className={`phone ${(ui.upgrading || ui.showBag || ui.shopOpen) ? 'isPaused' : ''} ${ui.tutorialActive ? `tutorialMode highlight-${ui.tutorialHighlight || 'none'}` : ''}`} ref={wrapRef}>
     <canvas ref={canvasRef} />
     {ui.tutorialActive && !hideTutorialBox && <div className={`tutorialBox step${ui.tutorialStep}`}>
       <div className="tutorialTitle">新手教學</div>
@@ -1214,11 +1599,28 @@ function App() {
         <button className="tutorialSkip" onClick={skipTutorial}>跳過教學</button>
       </div>
     </div>}
-    <div className="hud"><div className="title">武器軌跡割草</div><div className="wave">第 {ui.wave || 1}/10 波</div><div className="kills">擊殺：{ui.kills}</div></div>
+    <div className="hud"><button className="devToggle" onClick={toggleDev}>DEV</button><div className="title">武器軌跡割草</div><div className="kills">擊殺：{ui.kills}</div></div>
+    {ui.showDev && <div className="devPanel">
+      <div className="devTitle">開發者模式</div>
+      <div className="devRow"><span>跳關</span>{[1,5,10].map(n => <button key={n} onClick={() => devJumpWave(n)}>第{n}波</button>)}</div>
+      <div className="devRow"><span>數值 +5</span>{STAT_KEYS.map(k => <button key={k} onClick={() => devAddStats(k, 5)}>{k}</button>)}</div>
+      <div className="devRow weaponDev"><span>生成方塊</span>{TYPES.map(t => <button key={t} onClick={() => devAddWeapon(t)}>{WEAPONS[t].name}</button>)}</div>
+    </div>}
     <div className="expHud">
       <div className="expText">Lv.{ui.level}　EXP {Math.floor(ui.exp || 0)} / {ui.expNeed || 80}</div>
       <div className="expTrack"><div className="expFill" style={{ width: `${expRatio * 100}%` }} /></div>
     </div>
+    {!ui.tutorialActive && <div className="waveMap" aria-label="adventure node progress">
+      {ADVENTURE_NODES.map((node, idx) => {
+        const current = (ui.nodeIndex || 0) === idx;
+        const cleared = (ui.nodeIndex || 0) > idx;
+        const boss = node.type === 'wave' && (node.wave === 5 || node.wave === 10);
+        const shop = node.type === 'shop';
+        return <div key={idx} className={`waveNode ${current ? 'current' : ''} ${cleared ? 'cleared' : ''} ${boss ? 'bossNode' : ''} ${shop ? 'shopNode' : ''}`}>
+          <span>{shop ? '商' : boss ? '★' : node.wave}</span>
+        </div>;
+      })}
+    </div>}
     {ui.drawing && <div className="timer">畫軌跡：{ui.timer.toFixed(1)}s</div>}
     {ui.upgrading && <div className="levelOverlay">
       <div className="levelCard">
@@ -1232,6 +1634,40 @@ function App() {
           )}
         </div>
         <button className="skipUpgrade" onClick={continueAfterUpgrade}>跳過選擇</button>
+      </div>
+    </div>}
+    {ui.shopOpen && <div className="shopOverlay">
+      <div className={`shopPanel ${ui.shopBoughtFx ? 'shopFlash' : ''}`}>
+        <div className="shopTop"><h2>⚔️ 武器商店</h2><div className="shopKills">💀 擊殺：{ui.kills}</div></div>
+        {ui.shopMessage && <div className={`shopMessage ${ui.shopMessage.includes('不足') ? 'bad' : ''}`}>{ui.shopMessage}</div>}
+        <div className="shopGrid">
+          {(ui.shopItems || []).map((offer) => {
+            const w = WEAPONS[offer.type];
+            const meta = weaponQualityMeta(offer.type);
+            return <button key={offer.id} className={`shopCard ${meta.key} ${offer.bought ? 'bought' : ''} ${ui.shopMessage === '擊殺數不足' ? 'shake' : ''}`} onClick={() => buyShopWeapon(offer)} disabled={offer.bought}>
+              <div className="shopIcon"><img src={w.icon} alt={w.name} /></div>
+              <div className="shopName">{w.name}</div>
+              <div className="shopFormula">{w.formula}</div>
+              <div className="shopDesc">{w.desc || (w.freeze ? '命中凍結敵人' : w.knockback ? '命中擊退敵人' : w.aim ? '點擊指定地點打擊' : '沿軌跡多段命中')}</div>
+              <div className="shopPrice">💀 {offer.price}</div>
+            </button>;
+          })}
+          <button className={`shopCard heal ${(ui.allyHp || 0) >= 100 ? 'disabled' : ''}`} onClick={buyHeal} disabled={(ui.allyHp || 0) >= 100}>
+            <div className="shopEmoji">❤️</div>
+            <div className="shopName">基地修復</div>
+            <div className="shopFormula">回復基地 20 HP</div>
+            <div className="shopDesc">HP 不超過 100；滿血時不可購買</div>
+            <div className="shopPrice">💀 40</div>
+          </button>
+        </div>
+        {ui.replaceOffer && <div className="replaceBox">
+          <div className="replaceTitle">包包已滿，選擇要替換掉的武器</div>
+          <div className="replaceSlots">{(ui.bag || []).map((type, idx) => {
+            const w = WEAPONS[type];
+            return <button key={idx} className="replaceSlot" onClick={() => replaceBagWeapon(idx)}><img src={w.icon} alt={w.name}/><span>{w.name}</span></button>;
+          })}</div>
+        </div>}
+        <button className="leaveShop" onClick={leaveShop}>離開商店</button>
       </div>
     </div>}
     {ui.gameOver && <div className="gameOver"><b>{ui.gameOver}</b><button onClick={()=>location.reload()}>重新開始</button></div>}
@@ -1254,7 +1690,7 @@ function App() {
           return <button key={idx} className={`bagSlot ${ui.selectedBagIndex === idx ? 'active' : ''}`} onClick={() => selectBagWeapon(idx)}>{w ? <><img src={w.icon} alt={w.name}/><small>{w.name}</small><small className="bagDamage">傷害 {weaponDamageText(type, ui.stats || WARRIOR.stats)}</small><small className="bagFormula">半徑 {w.radius}｜{w.aim ? '點擊標記' : w.knockback ? '擊退' : w.freeze ? '凍結' : '軌跡'}</small></> : <small>空格</small>}</button>;
         })}</div>
         {ui.bag?.[ui.selectedBagIndex ?? 0] && (() => { const type = ui.bag[ui.selectedBagIndex ?? 0]; const w = WEAPONS[type]; return <div className="weaponDetail"><b>{w.name}</b><span>傷害：{weaponDamageText(type, ui.stats || WARRIOR.stats)}</span><span>半徑：{w.radius}</span><span>速度：{w.aim ? '指定地點打擊' : w.speed < 350 ? '慢' : w.speed > 800 ? '最快' : w.speed > 600 ? '快' : '中'}</span><span>特效：{w.knockback ? '擊中後怪物往後退' : w.freeze ? '凍結 3 秒' : w.aim ? '1 秒內點擊地圖標記，時間到後打擊標記地點' : '沿軌跡多段命中'}</span></div> })()}
-        <p className="bagHint">序列生成會從包包武器隨機抽取。商店替換功能下一版實裝。</p>
+        <p className="bagHint">序列生成會從包包武器隨機抽取。商店節點可購買新武器並替換包包內容。</p>
       </div>
     </div>}
   </div></div>;

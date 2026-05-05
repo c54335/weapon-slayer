@@ -415,3 +415,204 @@ canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelate
 .tutorialBox.step5 .tutorialText{font-size:13px;line-height:1.32;}
 .tutorialBox.step5 .tutorialStatsIntro{gap:5px;margin-top:7px;}
 .tutorialBox.step5 .tutorialStatsIntro span{padding:5px 5px;font-size:11px;}
+
+
+/* v39：劍教學點武器後，顯示畫線說明但不擋住玩家操作 */
+.tutorialBox.step2{
+  top:86px;
+  left:18px;
+  right:18px;
+  padding:10px 12px;
+  pointer-events:none;
+}
+.tutorialBox.step2 .tutorialText{
+  font-size:14px;
+  line-height:1.34;
+}
+.tutorialBox.step2 .tutorialActions{
+  display:none;
+}
+
+/* v40：左側線性波次地圖，取代上方第 X/10 波文字 */
+.waveMap{
+  position:absolute;
+  left:8px;
+  top:86px;
+  width:34px;
+  height:235px;
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 0;
+  pointer-events:none;
+}
+.waveMap::before{
+  content:"";
+  position:absolute;
+  top:15px;
+  bottom:15px;
+  left:50%;
+  width:4px;
+  transform:translateX(-50%);
+  border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.18));
+  box-shadow:0 0 0 2px rgba(0,0,0,.35);
+}
+.waveNode{
+  position:relative;
+  z-index:1;
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  display:grid;
+  place-items:center;
+  border:2px solid rgba(255,255,255,.75);
+  background:linear-gradient(180deg,#64748b,#1f2937);
+  color:#e5e7eb;
+  font-size:10px;
+  font-weight:1000;
+  text-shadow:0 1px 0 #000;
+  box-shadow:0 2px 0 rgba(0,0,0,.6),0 0 8px rgba(0,0,0,.45);
+}
+.waveNode.cleared{
+  background:linear-gradient(180deg,#9ca3af,#4b5563);
+  color:#d1d5db;
+  opacity:.55;
+  border-color:rgba(229,231,235,.45);
+  filter:grayscale(1);
+}
+.waveNode.current{
+  width:30px;
+  height:30px;
+  color:#111827;
+  border-color:#fff7a8;
+  background:linear-gradient(180deg,#fff3a3,#f0c040);
+  box-shadow:0 0 18px #ffd76a,0 0 0 3px rgba(0,0,0,.45),0 3px 0 rgba(0,0,0,.65);
+  animation:waveNodePulse .75s infinite alternate;
+}
+.waveNode.bossNode:not(.current){
+  border-color:#ffb86b;
+  color:#ffe7b8;
+}
+.waveNode.bossNode.current{
+  background:linear-gradient(180deg,#ffe066,#ff6644);
+  box-shadow:0 0 20px #ff6644,0 0 0 3px rgba(0,0,0,.45),0 3px 0 rgba(0,0,0,.65);
+}
+@keyframes waveNodePulse{from{transform:scale(1)}to{transform:scale(1.12)}}
+
+/* v41：開發者模式 */
+.hud .devToggle{
+  pointer-events:auto;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:999px;
+  padding:3px 8px;
+  margin-right:6px;
+  background:rgba(15,23,42,.84);
+  color:#7dd3fc;
+  font-size:11px;
+  font-weight:1000;
+  box-shadow:0 2px 0 rgba(0,0,0,.55),0 0 10px rgba(56,189,248,.25);
+}
+.devPanel{
+  position:absolute;
+  top:76px;
+  left:10px;
+  right:10px;
+  z-index:30;
+  padding:10px;
+  border-radius:14px;
+  background:rgba(8,13,25,.94);
+  border:2px solid rgba(125,211,252,.45);
+  box-shadow:0 12px 36px rgba(0,0,0,.55),0 0 20px rgba(56,189,248,.18);
+  color:#e0f2fe;
+  font-weight:900;
+}
+.devTitle{font-size:15px;color:#7dd3fc;margin-bottom:6px;text-shadow:0 2px 0 #000}
+.devRow{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:5px 0}
+.devRow span{min-width:62px;color:#fff3a3;font-size:12px}
+.devRow button{
+  border:0;
+  border-radius:999px;
+  padding:4px 8px;
+  background:#1e293b;
+  color:#fff;
+  font-size:12px;
+  font-weight:1000;
+  box-shadow:0 2px 0 #020617;
+}
+.devRow button:active{transform:translateY(2px);box-shadow:0 0 0 #020617}
+.weaponDev button{font-size:11px;padding:4px 7px}
+
+/* v45 shop system */
+.shopOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 70;
+  background: rgba(0, 0, 0, .68);
+  backdrop-filter: blur(3px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.shopPanel {
+  width: 100%;
+  max-width: 390px;
+  min-height: 68%;
+  border: 3px solid rgba(255, 218, 92, .75);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(26, 22, 35, .96), rgba(9, 13, 22, .96));
+  box-shadow: 0 0 24px rgba(255, 206, 82, .25), inset 0 0 22px rgba(255,255,255,.05);
+  padding: 14px;
+  color: #fff;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.shopPanel.shopFlash { animation: shopFlash .45s ease-out; }
+@keyframes shopFlash { 0% { filter: brightness(1.55); } 100% { filter: brightness(1); } }
+.shopTop { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.shopTop h2 { margin: 0; font-size: 24px; text-shadow: 0 0 8px #ffd76a; }
+.shopKills { font-weight: 900; color: #ffd76a; background: rgba(0,0,0,.35); padding: 6px 9px; border-radius: 10px; }
+.shopMessage { min-height: 24px; text-align:center; color:#bfffc4; font-weight:900; text-shadow:0 0 8px currentColor; }
+.shopMessage.bad { color:#ff8585; }
+.shopGrid { display:grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.shopCard {
+  min-height: 210px;
+  border: 2px solid #4b5563;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(30,41,59,.96), rgba(12,18,30,.96));
+  color: #fff;
+  padding: 7px 5px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  cursor:pointer;
+  image-rendering: pixelated;
+}
+.shopCard.blue { border-color:#60a5fa; box-shadow:0 0 12px rgba(96,165,250,.55); }
+.shopCard.purple { border-color:#c084fc; box-shadow:0 0 14px rgba(192,132,252,.62); }
+.shopCard.gold { border-color:#ffd76a; box-shadow:0 0 16px rgba(255,215,106,.70); }
+.shopCard.heal { border-color:#fb7185; box-shadow:0 0 12px rgba(251,113,133,.45); }
+.shopCard.disabled, .shopCard.bought { opacity:.42; filter: grayscale(.65); cursor:not-allowed; }
+.shopCard.shake { animation: shopShake .24s linear; }
+@keyframes shopShake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
+.shopIcon { width:48px; height:48px; display:flex; align-items:center; justify-content:center; }
+.shopIcon img { max-width:100%; max-height:100%; object-fit:contain; image-rendering:pixelated; }
+.shopEmoji { font-size: 40px; line-height: 48px; }
+.shopName { font-size: 13px; font-weight: 900; min-height: 32px; display:flex; align-items:center; text-align:center; }
+.shopFormula { font-size: 11px; color:#dbeafe; line-height:1.2; min-height: 28px; }
+.shopDesc { font-size: 10px; color:#cbd5e1; line-height:1.25; min-height: 62px; overflow:hidden; }
+.shopPrice { margin-top:auto; color:#ffd76a; font-weight:900; font-size:15px; text-shadow:0 0 8px rgba(255,215,106,.7); }
+.replaceBox { border:2px solid rgba(255,255,255,.18); border-radius:14px; padding:10px; background:rgba(0,0,0,.36); }
+.replaceTitle { text-align:center; font-weight:900; margin-bottom:8px; color:#fff6a8; }
+.replaceSlots { display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; }
+.replaceSlot { border:2px solid #64748b; border-radius:12px; background:#111827; color:#fff; padding:8px 4px; display:flex; flex-direction:column; align-items:center; gap:4px; }
+.replaceSlot img { width:42px; height:42px; object-fit:contain; image-rendering:pixelated; }
+.leaveShop { margin-top:auto; border:0; border-radius:14px; background:linear-gradient(180deg,#ffd76a,#c98715); color:#241505; font-weight:1000; font-size:18px; padding:12px; box-shadow:0 0 16px rgba(255,215,106,.45); }
+.waveNode.shopNode { border-color:#ffd76a; box-shadow:0 0 10px rgba(255,215,106,.5); }
+.waveNode.shopNode span { font-size: 11px; color:#ffd76a; }
