@@ -616,3 +616,276 @@ canvas{position:absolute;inset:0;width:100%;height:100%;image-rendering:pixelate
 .leaveShop { margin-top:auto; border:0; border-radius:14px; background:linear-gradient(180deg,#ffd76a,#c98715); color:#241505; font-weight:1000; font-size:18px; padding:12px; box-shadow:0 0 16px rgba(255,215,106,.45); }
 .waveNode.shopNode { border-color:#ffd76a; box-shadow:0 0 10px rgba(255,215,106,.5); }
 .waveNode.shopNode span { font-size: 11px; color:#ffd76a; }
+
+
+/* v52：新手教學箭頭與手勢引導 */
+.tutorialArrow{
+  position:absolute;
+  z-index:18;
+  font-size:34px;
+  font-weight:1000;
+  filter:drop-shadow(0 3px 0 #000) drop-shadow(0 0 10px rgba(255,215,106,.85));
+  animation:tutorialArrowBob .75s ease-in-out infinite alternate;
+  pointer-events:none;
+}
+.arrowQueue{left:50%;bottom:104px;transform:translateX(-50%)}
+.arrowBag{left:50%;bottom:64px;transform:translateX(-50%)}
+.arrowBagClose{right:38px;bottom:calc(14px + 74% - 52px);font-size:38px;color:#fff3a3;transform:rotate(-35deg)}
+.arrowEnergy{left:50%;bottom:114px;transform:translateX(-50%);color:#7dd3fc;text-shadow:0 0 12px #38bdf8}
+@keyframes tutorialArrowBob{0%{margin-bottom:0;opacity:.85}100%{margin-bottom:8px;opacity:1}}
+.tutorialHand{
+  position:absolute;
+  z-index:17;
+  left:50%;top:42%;width:150px;height:64px;margin-left:-75px;
+  pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:42px;
+  opacity:.78;
+  filter:drop-shadow(0 4px 0 #000) drop-shadow(0 0 14px rgba(255,255,255,.7));
+  animation:tutorialSwipeHand 1.05s ease-in-out infinite;
+}
+.tutorialHand span{
+  position:absolute;left:20px;right:20px;bottom:9px;height:8px;border-radius:999px;
+  background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.88),rgba(255,255,255,.05));
+  box-shadow:0 0 16px rgba(255,255,255,.8);
+}
+@keyframes tutorialSwipeHand{0%{transform:translateX(-45px)}50%{transform:translateX(45px)}100%{transform:translateX(-45px)}}
+.phone.tutorialMode.highlight-energy .energyTrack,
+.phone.tutorialMode.highlight-energy .energyFill{
+  box-shadow:0 0 14px rgba(56,189,248,.95),0 0 28px rgba(56,189,248,.45);
+}
+
+/* v53：教學 UI 定位修正 */
+.tutorialBox.step1,
+.tutorialBox.step8,
+.tutorialBox.step9{
+  left:78px;
+  right:78px;
+  bottom:112px;
+  top:auto;
+  padding:8px 10px;
+  border-radius:14px;
+  text-align:center;
+  pointer-events:none;
+}
+.tutorialBox.step1 .tutorialTitle,
+.tutorialBox.step8 .tutorialTitle,
+.tutorialBox.step9 .tutorialTitle{display:none}
+.tutorialBox.step1 .tutorialText,
+.tutorialBox.step8 .tutorialText,
+.tutorialBox.step9 .tutorialText{font-size:14px;line-height:1.18;white-space:nowrap}
+.arrowQueue{
+  left:50%;
+  bottom:80px;
+  transform:translateX(-50%);
+  font-size:28px;
+}
+.tutorialBox.step6{
+  top:auto;
+  bottom:62px;
+  left:28px;
+  right:28px;
+  padding:9px 11px;
+  text-align:center;
+  pointer-events:none;
+}
+.tutorialBox.step6 .tutorialTitle{display:none}
+.tutorialBox.step6 .tutorialText{font-size:14px;line-height:1.25}
+.arrowBag{
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%);
+  font-size:30px;
+}
+.bagPanel{
+  z-index:44 !important;
+  align-items:center !important;
+  padding:12px 12px 112px !important;
+  background:rgba(0,0,0,.58) !important;
+}
+.bagPanel .bagCard{
+  max-height:calc(100% - 18px) !important;
+  margin-bottom:0 !important;
+}
+.arrowBagClose{
+  z-index:60;
+  right:24px;
+  top:94px;
+  bottom:auto;
+  font-size:34px;
+  color:#fff3a3;
+  transform:rotate(-28deg);
+}
+.tutorialBox.step7{
+  top:52px;
+  left:44px;
+  right:92px;
+  padding:8px 10px;
+  pointer-events:none;
+}
+.tutorialBox.step7 .tutorialTitle{display:none}
+.tutorialBox.step7 .tutorialText{font-size:14px;line-height:1.25}
+.tutorialBox.step80,
+.tutorialBox.step90{
+  top:82px;
+  left:20px;
+  right:20px;
+  padding:9px 11px;
+  pointer-events:none;
+  text-align:center;
+}
+.tutorialBox.step80 .tutorialTitle,
+.tutorialBox.step90 .tutorialTitle{display:none}
+.tutorialBox.step80 .tutorialText,
+.tutorialBox.step90 .tutorialText{font-size:15px;line-height:1.3}
+
+
+/* v54：教學 UI 精準對位修正 */
+.tutorialBox.step1,
+.tutorialBox.step8,
+.tutorialBox.step9{
+  left:auto !important;
+  right:78px !important;
+  bottom:118px !important;
+  width:142px !important;
+  padding:7px 8px !important;
+  border-radius:13px !important;
+  text-align:center !important;
+  pointer-events:none !important;
+}
+.tutorialBox.step1 .tutorialText,
+.tutorialBox.step8 .tutorialText,
+.tutorialBox.step9 .tutorialText{
+  font-size:13px !important;
+  line-height:1.15 !important;
+  white-space:nowrap !important;
+}
+.arrowQueue{
+  left:auto !important;
+  right:58px !important;
+  bottom:73px !important;
+  transform:none !important;
+  font-size:30px !important;
+  color:#fff3a3;
+}
+.tutorialBox.step6{
+  top:auto !important;
+  bottom:104px !important;
+  left:36px !important;
+  right:36px !important;
+  padding:9px 12px !important;
+  text-align:center !important;
+  pointer-events:none !important;
+}
+.arrowBag{
+  left:auto !important;
+  right:86px !important;
+  bottom:33px !important;
+  transform:none !important;
+  font-size:32px !important;
+  color:#fff3a3;
+}
+.bagPanel{
+  z-index:44 !important;
+  align-items:flex-start !important;
+  justify-content:center !important;
+  padding:66px 12px 112px !important;
+  background:rgba(0,0,0,.58) !important;
+}
+.bagPanel .bagCard{
+  max-height:calc(100% - 4px) !important;
+  margin:0 !important;
+  overflow:auto !important;
+}
+.tutorialBox.step7{
+  top:70px !important;
+  left:42px !important;
+  right:auto !important;
+  width:150px !important;
+  padding:7px 9px !important;
+  pointer-events:none !important;
+}
+.arrowBagClose{
+  z-index:80 !important;
+  top:82px !important;
+  right:46px !important;
+  bottom:auto !important;
+  font-size:38px !important;
+  color:#fff3a3 !important;
+  transform:none !important;
+}
+.tutorialBox.step80,
+.tutorialBox.step90{
+  top:auto !important;
+  bottom:126px !important;
+  left:24px !important;
+  right:24px !important;
+  padding:9px 12px !important;
+  pointer-events:none !important;
+  text-align:center !important;
+}
+.tutorialBox.step10{
+  top:98px !important;
+  left:26px !important;
+  right:26px !important;
+  transform:none !important;
+  padding:12px 14px !important;
+  text-align:center !important;
+  pointer-events:none !important;
+}
+.arrowEnergy{
+  left:22px !important;
+  right:auto !important;
+  bottom:63px !important;
+  transform:none !important;
+  font-size:34px !important;
+  color:#7dd3fc !important;
+  text-shadow:0 0 12px #38bdf8,0 2px 0 #000 !important;
+}
+
+/* 強化 2/3 階方塊的選中特效：放在 tier 規則後面，避免被本身光芒蓋掉。 */
+.block.selected.tier2,
+.block.selected.tier3{
+  z-index:32;
+  transform:translateY(-6px) scale(1.1);
+  outline:4px solid #ffffff;
+  outline-offset:4px;
+}
+.block.selected.tier2{
+  border-color:#ffffff;
+  box-shadow:0 0 0 4px rgba(255,255,255,.9),0 0 0 8px rgba(168,85,247,.88),0 0 36px 14px rgba(168,85,247,.95),inset 0 0 20px rgba(255,255,255,.72),0 7px 0 #050814;
+}
+.block.selected.tier3{
+  border-color:#ffffff;
+  box-shadow:0 0 0 4px rgba(255,255,255,.95),0 0 0 9px rgba(251,191,36,.9),0 0 44px 18px rgba(251,191,36,1),inset 0 0 22px rgba(255,255,255,.78),0 7px 0 #050814;
+}
+.block.selected.tier2::after,
+.block.selected.tier3::after{
+  content:"已選";
+  position:absolute;
+  top:-18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  min-width:42px;
+  text-align:center;
+  padding:2px 7px;
+  border-radius:999px;
+  background:#fff;
+  color:#111827;
+  border:2px solid #111827;
+  font-size:12px;
+  font-weight:1000;
+  line-height:1.1;
+  box-shadow:0 0 14px #fff,0 2px 0 #0007;
+  animation:selectedBadgePulse .72s ease-in-out infinite alternate;
+}
+.block.selected.tier2::before,
+.block.selected.tier3::before{
+  border-style:dashed;
+  border-width:3px;
+  opacity:1;
+  animation:selectedRingSpin 1.1s linear infinite;
+}
+@keyframes selectedBadgePulse{from{transform:translateX(-50%) translateY(0) scale(1)}to{transform:translateX(-50%) translateY(-2px) scale(1.08)}}
+@keyframes selectedRingSpin{from{transform:rotate(0deg) scale(1.08);opacity:1}to{transform:rotate(360deg) scale(1.08);opacity:1}}
