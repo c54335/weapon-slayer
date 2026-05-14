@@ -181,7 +181,7 @@ function critSpec(type, stats = {}) {
 function weaponDamageText(type, stats = {}, tier = 1) {
   const mul = tier === 3 ? 2 : tier === 2 ? 1.5 : 1;
   const globalMul = globalDamageMultiplier(stats);
-  return `${Math.round(weaponBaseDamage(type, stats) * mul * globalMul)}（${WEAPONS[type]?.formula || ''}${tier > 1 ? ` × ${mul}` : ''}｜全域 ×${globalMul.toFixed(2)}）`;
+  return `${Math.round(weaponBaseDamage(type, stats) * mul * globalMul)}`;
 }
 function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 function lerp(a, b, t) { return a + (b - a) * t; }
@@ -201,6 +201,36 @@ function drawPixelPerson(ctx, x, y, color, team, flash = 0, frozen = 0) {
   if (team === 'enemy') { ctx.fillStyle = '#331111'; ctx.fillRect(-8, -13, 5, 5); ctx.fillRect(3, -13, 5, 5); }
   if (frozen > 0) { ctx.strokeStyle = '#bdf6ff'; ctx.lineWidth = 3; ctx.strokeRect(-12, -15, 24, 34); }
   ctx.restore();
+}
+
+
+function drawRegularPolygon(ctx, x, y, sides, radius, rotation = -Math.PI / 2) {
+  ctx.beginPath();
+  for (let i = 0; i < sides; i++) {
+    const a = rotation + i * Math.PI * 2 / sides;
+    const px = x + Math.cos(a) * radius;
+    const py = y + Math.sin(a) * radius;
+    if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+}
+function weaponStatTags(type) {
+  if (['sword','greatsword','kingsword'].includes(type)) return '受 STR 影響';
+  if (type === 'katana') return '受 STR / DEX 影響';
+  if (['bomb','lightning'].includes(type)) return '受 INT 影響';
+  if (type === 'ice') return '受 INT / DEX 影響';
+  if (['shield','greatshield','holyshield'].includes(type)) return '受 VIT 影響';
+  if (type === 'gianthammer') return '受 VIT / STR 影響';
+  if (['bow','crossbow','boomerang'].includes(type)) return '受 DEX 影響';
+  if (type === 'giantbow') return '受 DEX / STR 影響';
+  return '受素質影響';
+}
+function weaponControlText(type) {
+  const w = WEAPONS[type] || {};
+  if (w.swipeSlash) return '操作：左右滑動';
+  if (w.shieldClick) return '操作：點擊發射';
+  if (w.aim) return '操作：點擊指定位置';
+  return '操作：畫線攻擊';
 }
 
 function App() {
@@ -751,174 +781,81 @@ function App() {
     }
 
     function drawEnemySprite(ctx, s, e) {
-      let img = null;
-      let frameCount = 4;
-      let srcW = 64;
-      let srcH = 64;
-      let size = 46;
-      let fps = 7;
+      const bob = Math.sin((s.animTime * 8) + (e.animSeed || 0)) * (e.boss ? 1.2 : 2);
+      const cy = e.y + bob;
+      const isSummon = e.type === 'BAT' || e.type === 'FIREBALL';
+      let size = e.boss ? 96 : e.type === 'CHARGER' ? 48 : e.type === 'RUSHER' ? 42 : e.type === 'RANGED' ? 40 : isSummon ? 30 : 38;
+      let sides = 32;
+      let fill = '#8b5cf6';
+      let stroke = '#ddd6fe';
+      let label = '';
+      let rot = -Math.PI / 2 + (s.animTime * 0.8);
 
-      if (e.type === 'BAT') {
-        img = vBatImg; frameCount = 4; srcW = 32; srcH = 32; size = 30; fps = 12;
-      } else if (e.type === 'FIREBALL') {
-        img = dBossFireImg; frameCount = 6; srcW = 32; srcH = 32; size = 34; fps = 14;
-      } else if (e.finalBoss) {
-        if (e.skillState === 'summoning') {
-          img = finalBossSummonImg; frameCount = 4; srcW = 96; srcH = 96; fps = 8;
-        } else if (e.hurtAnim > 0) {
-          img = finalBossHurtImg; frameCount = 2; srcW = 96; srcH = 96; fps = 12;
-        } else {
-          img = finalBossImg; frameCount = 4; srcW = 96; srcH = 96; fps = 6;
-        }
-        size = 96;
-      } else if (e.boss) {
-        img = bossImg; frameCount = 4; srcW = 96; srcH = 96; size = 96; fps = 6;
-      } else if (e.type === 'RANGED') {
-        img = zomImg; frameCount = 4; srcW = 64; srcH = 64; size = 42; fps = 7;
-      } else if (e.type === 'RUSHER') {
-        img = monImg; frameCount = 4; srcW = 64; srcH = 64; size = 44; fps = 14;
-      } else if (e.type === 'CHARGER') {
-        img = zomImg; frameCount = 4; srcW = 64; srcH = 64; size = 58; fps = 5;
-      } else if (e.type === 'MON') {
-        img = monImg; frameCount = 4; srcW = 64; srcH = 64; size = 42; fps = 10;
-      } else {
-        img = zomImg; frameCount = 4; srcW = 64; srcH = 64; size = 46; fps = 7;
-      }
+      if (e.boss) { sides = 8; fill = e.finalBoss ? '#6d28d9' : '#b45309'; stroke = e.finalBoss ? '#e9d5ff' : '#fed7aa'; label = 'B'; rot = Math.PI / 8; }
+      else if (e.type === 'RUSHER') { sides = 3; fill = '#dc2626'; stroke = '#fecaca'; label = '衝'; rot = -Math.PI / 2 + s.animTime * 4; }
+      else if (e.type === 'RANGED') { sides = 4; fill = '#ca8a04'; stroke = '#fef08a'; label = '遠'; rot = Math.PI / 4; }
+      else if (e.type === 'CHARGER') { sides = 6; fill = '#7c3aed'; stroke = '#ddd6fe'; label = '蓄'; rot = Math.PI / 6; }
+      else if (e.type === 'BAT') { sides = 3; fill = '#9333ea'; stroke = '#f0abfc'; label = ''; rot = Math.PI + Math.sin(s.animTime * 8) * .25; }
+      else if (e.type === 'FIREBALL') { sides = 32; fill = '#f97316'; stroke = '#fed7aa'; label = ''; }
+      else if (e.type === 'MON') { sides = 32; fill = '#22c55e'; stroke = '#bbf7d0'; label = ''; }
+      else { sides = 32; fill = '#38bdf8'; stroke = '#bae6fd'; label = ''; }
 
-      const frame = Math.floor((s.animTime * fps + e.animSeed) % frameCount);
-      const bob = Math.sin((s.animTime * (e.type === 'MON' || e.type === 'BAT' ? 12 : 8)) + e.animSeed) * (e.boss ? 1.2 : 2);
       ctx.save();
-      ctx.imageSmoothingEnabled = false;
-      ctx.globalAlpha = .30;
-      ctx.fillStyle = e.boss ? '#321006' : e.type === 'BAT' ? '#190825' : e.type === 'FIREBALL' ? '#341106' : e.type === 'MON' ? '#1c1130' : '#102116';
+      ctx.globalAlpha = .28;
+      ctx.fillStyle = '#000';
       ctx.beginPath();
-      ctx.ellipse(e.x, e.y + size * .34, size * .32, size * .10, 0, 0, Math.PI * 2);
+      ctx.ellipse(e.x, e.y + size * .36, size * .38, size * .12, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.globalAlpha = 1;
-      if (e.boss) { ctx.shadowColor = e.finalBoss ? '#d56bff' : '#ff6a1a'; ctx.shadowBlur = 18; }
-      else if (e.type === 'BAT') { ctx.shadowColor = '#d56bff'; ctx.shadowBlur = 8; }
-      else if (e.type === 'FIREBALL') { ctx.shadowColor = '#ff9a2e'; ctx.shadowBlur = 10; }
-      else if (e.type === 'RANGED') { ctx.shadowColor = '#ffdf6e'; ctx.shadowBlur = 10; }
-      else if (e.type === 'RUSHER') { ctx.shadowColor = '#ff3b30'; ctx.shadowBlur = 20; }
-      else if (e.type === 'CHARGER') { ctx.shadowColor = '#a78bfa'; ctx.shadowBlur = 14; }
-      else if (e.type === 'MON') { ctx.shadowColor = '#c084fc'; ctx.shadowBlur = 6; }
-
-      if (e.flash > 0) ctx.filter = 'brightness(2.5) saturate(.25)';
-      if (img && img.complete && img.naturalWidth) {
-        ctx.drawImage(img, frame * srcW, 0, srcW, srcH, e.x - size / 2, e.y - size / 2 + bob, size, size);
-      } else {
-        drawPixelPerson(ctx, e.x, e.y, e.boss ? '#ff6a1a' : e.type === 'BAT' ? '#c084fc' : e.type === 'FIREBALL' ? '#ff9a2e' : e.type === 'MON' ? '#b084ff' : '#75d36a', 'enemy', e.flash, e.frozen);
-      }
-      // 特殊怪改為獨立外觀：遠程=黃色弓手、衝鋒=紅色發光高速怪、蓄力=紫色重甲怪。
-      if (!e.boss && ['RANGED','RUSHER','CHARGER'].includes(e.type)) {
-        ctx.save();
-        const cy = e.y + bob;
-        if (e.type === 'RANGED') {
-          // 黃色兜帽 + 弓弦，讓玩家一眼看出是遠程單位。
-          ctx.shadowColor = '#ffdf6e';
-          ctx.shadowBlur = 12;
-          ctx.fillStyle = 'rgba(255,223,110,.28)';
-          ctx.beginPath(); ctx.arc(e.x, cy, size * .40, 0, Math.PI * 2); ctx.fill();
-          ctx.shadowBlur = 0;
-          ctx.fillStyle = '#b7791f';
-          ctx.beginPath();
-          ctx.moveTo(e.x, cy - size * .45);
-          ctx.lineTo(e.x - size * .34, cy + size * .10);
-          ctx.lineTo(e.x + size * .34, cy + size * .10);
-          ctx.closePath(); ctx.fill();
-          ctx.strokeStyle = '#ffdf6e';
-          ctx.lineWidth = 3;
-          ctx.beginPath();
-          ctx.arc(e.x + size * .26, cy, size * .30, -Math.PI * .55, Math.PI * .55);
-          ctx.stroke();
-          ctx.beginPath();
-          ctx.moveTo(e.x + size * .06, cy - size * .26);
-          ctx.lineTo(e.x + size * .06, cy + size * .26);
-          ctx.stroke();
-          ctx.fillStyle = '#fff7c2';
-          ctx.fillRect(e.x - 2, cy - size * .10, size * .34, 4);
-        } else if (e.type === 'RUSHER') {
-          // 紅色發光、速度殘影與尖角，代表快速衝鋒怪。
-          ctx.shadowColor = '#ff3b30';
-          ctx.shadowBlur = 24;
-          ctx.fillStyle = 'rgba(255,59,48,.30)';
-          ctx.beginPath(); ctx.arc(e.x, cy, size * .55, 0, Math.PI * 2); ctx.fill();
-          ctx.shadowBlur = 0;
-          ctx.strokeStyle = 'rgba(255,88,80,.75)';
-          ctx.lineWidth = 4;
-          for (let i = 0; i < 3; i++) {
-            ctx.beginPath();
-            ctx.moveTo(e.x - size * (.58 + i * .12), cy - size * (.18 - i * .12));
-            ctx.lineTo(e.x - size * (.16 + i * .08), cy - size * (.10 - i * .10));
-            ctx.stroke();
-          }
-          ctx.fillStyle = '#ff3b30';
-          ctx.beginPath();
-          ctx.moveTo(e.x - size*.20, cy - size*.38);
-          ctx.lineTo(e.x - size*.03, cy - size*.62);
-          ctx.lineTo(e.x + size*.02, cy - size*.34);
-          ctx.closePath(); ctx.fill();
-          ctx.beginPath();
-          ctx.moveTo(e.x + size*.20, cy - size*.38);
-          ctx.lineTo(e.x + size*.03, cy - size*.62);
-          ctx.lineTo(e.x - size*.02, cy - size*.34);
-          ctx.closePath(); ctx.fill();
-        } else if (e.type === 'CHARGER') {
-          // 紫色重甲與肩甲，比一般怪更大；蓄力時額外有聚能光圈。
-          ctx.shadowColor = '#a78bfa';
-          ctx.shadowBlur = 16;
-          ctx.fillStyle = 'rgba(167,139,250,.22)';
-          ctx.beginPath(); ctx.arc(e.x, cy, size * .50, 0, Math.PI * 2); ctx.fill();
-          ctx.shadowBlur = 0;
-          ctx.fillStyle = '#5b21b6';
-          ctx.fillRect(e.x - size*.34, cy - size*.22, size*.68, size*.44);
-          ctx.fillStyle = '#a78bfa';
-          ctx.beginPath();
-          ctx.moveTo(e.x - size*.48, cy - size*.24);
-          ctx.lineTo(e.x - size*.28, cy - size*.48);
-          ctx.lineTo(e.x - size*.12, cy - size*.20);
-          ctx.closePath(); ctx.fill();
-          ctx.beginPath();
-          ctx.moveTo(e.x + size*.48, cy - size*.24);
-          ctx.lineTo(e.x + size*.28, cy - size*.48);
-          ctx.lineTo(e.x + size*.12, cy - size*.20);
-          ctx.closePath(); ctx.fill();
-          if (e.chargeState === 'charging') {
-            ctx.strokeStyle = '#ddd6fe';
-            ctx.lineWidth = 3;
-            ctx.setLineDash([5, 4]);
-            ctx.beginPath(); ctx.arc(e.x, cy, size * (.58 + Math.sin(s.animTime * 8) * .04), 0, Math.PI * 2); ctx.stroke();
-            ctx.setLineDash([]);
-          }
-        }
-        ctx.restore();
-      }
-      ctx.filter = 'none';
+      ctx.shadowColor = stroke;
+      ctx.shadowBlur = e.boss ? 22 : e.type === 'RUSHER' ? 18 : 10;
+      ctx.fillStyle = e.flash > 0 ? '#ffffff' : fill;
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = e.boss ? 4 : 3;
+      drawRegularPolygon(ctx, e.x, cy, sides, size * .42, rot);
+      ctx.fill();
+      ctx.stroke();
       ctx.shadowBlur = 0;
 
-      if (false && e.boss && (e.shielded || e.skillState === 'summoning' || e.skillState === 'fire')) {
-        const shieldColor = e.finalBoss ? '#d56bff' : '#ffb257';
-        const shieldFill = e.finalBoss ? '#b45cff' : '#ff7a18';
-        ctx.globalAlpha = .65 + Math.sin(s.animTime * 8) * .15;
-        ctx.strokeStyle = shieldColor;
-        ctx.lineWidth = 4;
-        ctx.shadowColor = shieldColor;
-        ctx.shadowBlur = 18;
-        ctx.beginPath();
-        ctx.arc(e.x, e.y + bob, size * .55, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.globalAlpha = .13;
-        ctx.fillStyle = shieldFill;
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1;
+      if (e.type === 'RUSHER') {
+        ctx.strokeStyle = 'rgba(254,202,202,.65)';
+        ctx.lineWidth = 3;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.moveTo(e.x - size * (.58 + i * .16), cy + size * (.14 - i * .10));
+          ctx.lineTo(e.x - size * (.22 + i * .08), cy + size * (.08 - i * .06));
+          ctx.stroke();
+        }
       }
-
+      if (e.type === 'RANGED') {
+        ctx.strokeStyle = '#fef08a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(e.x + size * .18, cy, size * .20, -Math.PI * .55, Math.PI * .55);
+        ctx.stroke();
+      }
+      if (e.type === 'CHARGER' && e.chargeState === 'charging') {
+        ctx.strokeStyle = '#ddd6fe';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([5, 4]);
+        ctx.beginPath(); ctx.arc(e.x, cy, size * (.55 + Math.sin(s.animTime * 8) * .05), 0, Math.PI * 2); ctx.stroke();
+        ctx.setLineDash([]);
+      }
+      if (label) {
+        ctx.fillStyle = '#fff';
+        ctx.font = `900 ${e.boss ? 24 : 13}px system-ui`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.strokeStyle = 'rgba(0,0,0,.75)';
+        ctx.lineWidth = 4;
+        ctx.strokeText(label, e.x, cy + 1);
+        ctx.fillText(label, e.x, cy + 1);
+      }
       if (e.frozen > 0) {
         ctx.strokeStyle = '#bdf6ff';
         ctx.lineWidth = e.boss ? 5 : 3;
         ctx.globalAlpha = .78;
-        ctx.strokeRect(e.x - size * .38, e.y - size * .48, size * .76, size * .9);
+        ctx.strokeRect(e.x - size * .44, cy - size * .44, size * .88, size * .88);
         ctx.globalAlpha = 1;
       }
       if (!e.boss) {
@@ -926,8 +863,6 @@ function App() {
         const barW = e.type === 'BAT' ? 24 : e.type === 'FIREBALL' ? 26 : 34;
         const barH = 5;
         const barY = e.y - size * .52;
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1;
         ctx.fillStyle = 'rgba(18, 10, 12, .82)';
         ctx.fillRect(e.x - barW / 2, barY, barW, barH);
         ctx.fillStyle = hpRatio > .5 ? '#80e35a' : hpRatio > .25 ? '#ffd45a' : '#ff5a55';
@@ -2165,19 +2100,16 @@ function App() {
 
     function render() {
       const s=stateRef.current; ctx.clearRect(0,0,s.w,s.h);
-      if (battleBgImg.complete && battleBgImg.naturalWidth) {
-        // 新草地背景滿版 cover：不留黑邊，畫面完整鋪滿戰場。
-        ctx.imageSmoothingEnabled = false;
-        const iw = battleBgImg.naturalWidth, ih = battleBgImg.naturalHeight;
-        const scale = Math.max(s.w / iw, s.battleH / ih);
-        const sw = s.w / scale, sh = s.battleH / scale;
-        const sx = (iw - sw) / 2, sy = (ih - sh) / 2;
-        ctx.drawImage(battleBgImg, sx, sy, sw, sh, 0, 0, s.w, s.battleH);
-        ctx.fillStyle='rgba(12,24,12,.08)'; ctx.fillRect(0,0,s.w,s.battleH);
-      } else {
-        const g=ctx.createLinearGradient(0,0,0,s.battleH); g.addColorStop(0,'#2f6e35'); g.addColorStop(.52,'#4f9142'); g.addColorStop(1,'#6caf55'); ctx.fillStyle=g; ctx.fillRect(0,0,s.w,s.battleH);
-      }
-      const rg=ctx.createRadialGradient(s.w/2,s.battleH*.45,20,s.w/2,s.battleH*.45,s.battleH*.72); rg.addColorStop(0,'rgba(255,255,255,.08)'); rg.addColorStop(1,'rgba(0,0,0,.25)'); ctx.fillStyle=rg; ctx.fillRect(0,0,s.w,s.battleH);
+      const g=ctx.createLinearGradient(0,0,0,s.battleH);
+      g.addColorStop(0,'#111827');
+      g.addColorStop(.58,'#172554');
+      g.addColorStop(1,'#0f172a');
+      ctx.fillStyle=g;
+      ctx.fillRect(0,0,s.w,s.battleH);
+      ctx.fillStyle='rgba(255,255,255,.035)';
+      for (let y = 72; y < s.battleH - 70; y += 48) ctx.fillRect(0, y, s.w, 1);
+      for (let x = 32; x < s.w; x += 48) ctx.fillRect(x, 42, 1, s.battleH - 96);
+      const rg=ctx.createRadialGradient(s.w/2,s.battleH*.45,20,s.w/2,s.battleH*.45,s.battleH*.72); rg.addColorStop(0,'rgba(255,255,255,.07)'); rg.addColorStop(1,'rgba(0,0,0,.28)'); ctx.fillStyle=rg; ctx.fillRect(0,0,s.w,s.battleH);
       ctx.fillStyle='rgba(255,255,255,.10)'; ctx.fillRect(s.w*.06,42,s.w*.010,s.battleH-92); ctx.fillRect(s.w*.93,42,s.w*.010,s.battleH-92);
       ctx.fillStyle=s.berserkActive ? 'rgba(150,35,25,.62)' : 'rgba(80,30,30,.40)'; ctx.fillRect(0,0,s.w,42); ctx.fillStyle='#ffd6d6'; ctx.font='bold 15px system-ui'; ctx.textAlign='center'; ctx.fillText(s.waveState === 'rest' ? `休息中：${Math.max(0,Math.ceil(s.restTime))} 秒` : `剩餘 ${Math.max(0, s.waveTotal - s.waveSpawned + s.enemies.length)}${s.berserkActive ? '  狂暴中' : ''}`,s.w/2,28);
       const boss = s.enemies.find(e => e.boss && e.hp > 0);
@@ -2548,18 +2480,25 @@ function App() {
     {ui.showBag && <div className="bagPanel">
       <div className="bagCard">
         <div className="bagHeader"><b>{ui.playerClass || '戰士'}</b><button ref={bagCloseRef} onClick={toggleBag}>×</button></div>
-        <div className="bagStats">
-          <span>力量 <b>{ui.stats?.STR ?? 5}</b><small>傷害 ×{globalDamageMultiplier(ui.stats || WARRIOR.stats).toFixed(2)}</small></span>
-          <span>敏捷 <b>{ui.stats?.DEX ?? 3}</b><small>方塊 {blockSpawnInterval(ui.stats || WARRIOR.stats).toFixed(2)}秒/個</small></span>
-          <span>智力 <b>{ui.stats?.INT ?? 1}</b><small>充能 ×{chargeMultiplier(ui.stats || WARRIOR.stats).toFixed(2)}</small></span>
-          <span>體質 <b>{ui.stats?.VIT ?? 3}</b><small>基地 +{baseRegenPerTick(ui.stats || WARRIOR.stats).toFixed(1)}/10秒</small></span>
+        <div className="bagStats simpleStats">
+          <span>STR <b>{ui.stats?.STR ?? 5}</b></span>
+          <span>DEX <b>{ui.stats?.DEX ?? 3}</b></span>
+          <span>VIT <b>{ui.stats?.VIT ?? 3}</b></span>
+          <span>INT <b>{ui.stats?.INT ?? 1}</b></span>
+        </div>
+        <div className="globalStatsPanel">
+          <div className="globalStatsTitle">全域效果</div>
+          <div className="globalStatItem globalStatStr"><b>全域傷害 ×{globalDamageMultiplier(ui.stats || WARRIOR.stats).toFixed(2)}</b><span>受 STR 影響</span></div>
+          <div className="globalStatItem globalStatDex"><b>方塊生成 {blockSpawnInterval(ui.stats || WARRIOR.stats).toFixed(2)} 秒 / 個</b><span>受 DEX 影響</span></div>
+          <div className="globalStatItem globalStatVit"><b>基地回復 +{baseRegenPerTick(ui.stats || WARRIOR.stats).toFixed(1)} / 10 秒</b><span>受 VIT 影響</span></div>
+          <div className="globalStatItem globalStatInt"><b>能量效率 ×{chargeMultiplier(ui.stats || WARRIOR.stats).toFixed(2)}</b><span>受 INT 影響</span></div>
         </div>
         <div className="bagTitle">武器包包 {ui.bag?.length || 0}/{ui.bagCapacity || 3}</div>
         <div className="bagSlots">{Array.from({length: ui.bagCapacity || 3}).map((_, idx) => {
           const type = ui.bag?.[idx]; const w = type ? WEAPONS[type] : null;
-          return <button key={idx} className={`bagSlot ${ui.selectedBagIndex === idx ? 'active' : ''}`} onClick={() => selectBagWeapon(idx)}>{w ? <><img src={w.icon} alt={w.name}/><small>{w.name}</small><small className="bagDamage">傷害 {weaponDamageText(type, ui.stats || WARRIOR.stats)}</small><small className="bagFormula">半徑 {w.radius}｜{w.swipeSlash ? '左右滑斬' : w.shieldClick ? '飛盾彈射' : w.aim ? '點擊標記' : SHIELD_TYPES.has(type) ? '暈眩'  : w.freeze ? '凍結' : '軌跡'}</small></> : <small>空格</small>}</button>;
+          return <button key={idx} className={`bagSlot ${ui.selectedBagIndex === idx ? 'active' : ''}`} onClick={() => selectBagWeapon(idx)}>{w ? <><img src={w.icon} alt={w.name}/><small>{w.name}</small></> : <small>空格</small>}</button>;
         })}</div>
-        {ui.bag?.[ui.selectedBagIndex ?? 0] && (() => { const type = ui.bag[ui.selectedBagIndex ?? 0]; const w = WEAPONS[type]; return <div className="weaponDetail"><b>{w.name}</b><span>傷害：{weaponDamageText(type, ui.stats || WARRIOR.stats)}</span><span>半徑：{w.radius}</span><span>速度：{w.aim ? '指定地點打擊' : w.speed < 350 ? '慢' : w.speed > 800 ? '最快' : w.speed > 600 ? '快' : '中'}</span><span>特效：{w.swipeSlash ? '1 秒內左右滑動螢幕，從基地向外進行橫向斬擊' : w.shieldClick ? '1 秒內連點螢幕，每次從基地前方射出飛盾追蹤最近敵人，並彈射兩次' : SHIELD_TYPES.has(type) ? '命中後賦予暈眩 1 秒，不再推怪' : w.freeze ? '凍結 3 秒' : w.aim ? '1 秒內點擊地圖標記，時間到後打擊標記地點' : '沿軌跡多段命中'}</span></div> })()}
+        {ui.bag?.[ui.selectedBagIndex ?? 0] && (() => { const type = ui.bag[ui.selectedBagIndex ?? 0]; const w = WEAPONS[type]; return <div className="weaponDetail"><b>{w.name}</b><span>傷害：{weaponDamageText(type, ui.stats || WARRIOR.stats)}</span><span>{weaponStatTags(type)}</span><span>{weaponControlText(type)}</span></div> })()}
         <p className="bagHint">序列生成會從包包武器隨機抽取。商店節點可購買新武器並替換包包內容。</p>
       </div>
     </div>}
@@ -2567,3 +2506,4 @@ function App() {
 }
 
 createRoot(document.getElementById('root')).render(<App />);
+
