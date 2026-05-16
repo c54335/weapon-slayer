@@ -3,3 +3,28 @@
 
 /* v83: make selected tier 2 / tier 3 blocks obvious */
 .block.selected{transform:translateY(-3px) scale(1.06);z-index:8;border-color:#fff!important;box-shadow:0 0 0 3px #fff,0 0 0 6px rgba(255,241,118,.95),0 0 30px rgba(255,241,118,.95),inset 0 0 22px rgba(255,255,255,.18)!important;animation:selectedBlockPulse .72s ease-in-out infinite alternate}.block.selected::before{content:"";position:absolute;inset:-8px;border-radius:18px;border:3px solid #fff;box-shadow:0 0 14px #fff,0 0 28px rgba(255,241,118,.95);pointer-events:none;animation:selectedRingPulse .72s ease-in-out infinite alternate}.block.selected::after{content:"已選";position:absolute;left:50%;top:-18px;transform:translateX(-50%);padding:2px 7px;border-radius:999px;background:#fff;color:#111827;font-size:10px;font-weight:1000;letter-spacing:.08em;box-shadow:0 2px 8px rgba(0,0,0,.45);pointer-events:none}.block.tier2.selected{border-color:#fff!important;box-shadow:0 0 0 3px #fff,0 0 0 7px rgba(192,132,252,.95),0 0 36px rgba(192,132,252,1),0 0 54px rgba(255,241,118,.75),inset 0 0 26px rgba(192,132,252,.35)!important}.block.tier2.selected::before{border-color:#f5e8ff;box-shadow:0 0 18px #fff,0 0 34px rgba(192,132,252,1),0 0 50px rgba(255,241,118,.7)}.block.tier2.selected::after{background:linear-gradient(90deg,#fff,#e9d5ff);color:#3b0764}.block.tier3.selected{border-color:#fff!important;box-shadow:0 0 0 3px #fff,0 0 0 7px rgba(255,215,106,1),0 0 40px rgba(255,215,106,1),0 0 62px rgba(255,255,255,.85),inset 0 0 30px rgba(255,215,106,.4)!important}.block.tier3.selected::before{border-color:#fff8dc;box-shadow:0 0 20px #fff,0 0 38px rgba(255,215,106,1),0 0 62px rgba(255,241,118,.9)}.block.tier3.selected::after{background:linear-gradient(90deg,#fff8dc,#ffd76a);color:#5f3700}.block.selected .weaponIcon,.block.selected img{filter:drop-shadow(0 0 7px #fff) drop-shadow(0 0 14px rgba(255,241,118,.95))!important}@keyframes selectedBlockPulse{from{transform:translateY(-2px) scale(1.045)}to{transform:translateY(-5px) scale(1.095)}}@keyframes selectedRingPulse{from{opacity:.72;inset:-6px}to{opacity:1;inset:-10px}}
+
+
+/* v86 dev weapon replace + branch readable bag UI */
+.devUpgradeBox{margin-top:8px;padding:8px;border-radius:12px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.12)}
+.devUpgradeTitle{font-size:12px;font-weight:900;color:#ffe082;margin-bottom:6px}
+.devUpgradeRow{display:grid;grid-template-columns:58px repeat(4,1fr);gap:5px;align-items:center;margin:5px 0}
+.devUpgradeRow span{font-size:12px;color:#aab5c5;font-weight:800}
+.devUpgradeRow button{padding:6px 5px;border-radius:8px;font-size:11px;font-weight:900;border:1px solid rgba(255,255,255,.16)}
+.branchStr{--branch:#ff8a80;--branchBg:rgba(255,138,128,.13)}
+.branchDex{--branch:#7ee787;--branchBg:rgba(126,231,135,.13)}
+.branchVit{--branch:#74b9ff;--branchBg:rgba(116,185,255,.13)}
+.branchBase{--branch:#ffe082;--branchBg:rgba(255,224,130,.10)}
+.devUpgradeRow button.branchStr,.devUpgradeRow button.branchDex,.devUpgradeRow button.branchVit{background:var(--branchBg);color:var(--branch);border-color:color-mix(in srgb,var(--branch) 45%,transparent)}
+.bagSlot{position:relative;overflow:hidden}
+.bagSlot.branchStr,.bagSlot.branchDex,.bagSlot.branchVit,.bagSlot.branchBase{background:linear-gradient(180deg,var(--branchBg),#11203a);border-color:color-mix(in srgb,var(--branch) 46%,rgba(255,255,255,.18));box-shadow:inset 0 0 24px var(--branchBg)}
+.bagSlot.branchStr img{filter:drop-shadow(0 0 9px rgba(255,138,128,.75)) drop-shadow(0 2px 2px #000)}
+.bagSlot.branchDex img{filter:drop-shadow(0 0 9px rgba(126,231,135,.75)) drop-shadow(0 2px 2px #000)}
+.bagSlot.branchVit img{filter:drop-shadow(0 0 9px rgba(116,185,255,.75)) drop-shadow(0 2px 2px #000)}
+.bagSlot em{font-style:normal;font-size:10px;font-weight:900;color:var(--branch);padding:2px 6px;border-radius:999px;background:rgba(0,0,0,.28);border:1px solid color-mix(in srgb,var(--branch) 42%,transparent)}
+.weaponDetail.branchStr,.weaponDetail.branchDex,.weaponDetail.branchVit,.weaponDetail.branchBase{border-color:color-mix(in srgb,var(--branch) 42%,rgba(255,255,255,.12));box-shadow:inset 0 0 28px var(--branchBg)}
+.weaponDetailTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.weaponDetailTop em{font-style:normal;font-size:12px;font-weight:900;color:var(--branch);padding:5px 8px;border-radius:999px;background:var(--branchBg);border:1px solid color-mix(in srgb,var(--branch) 45%,transparent)}
+.passiveList{display:flex;flex-direction:column;gap:6px;margin-top:3px;padding:10px;border-radius:12px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08)}
+.passiveList strong{font-size:14px;color:#ffe082}.passiveList span{font-size:14px;line-height:1.35;color:#dbeafe}
+.shopSectionTitle{margin:12px 0 8px;font-weight:900;color:#ffe082;letter-spacing:.04em;font-size:15px}.shopCard.disabled{opacity:.48;filter:saturate(.65);cursor:not-allowed}.shopCard.weapon{position:relative;overflow:hidden}.shopCard.weapon.branchStr{border-color:rgba(255,138,128,.55);background:linear-gradient(180deg,rgba(87,28,28,.72),#101b30)}.shopCard.weapon.branchDex{border-color:rgba(126,231,135,.55);background:linear-gradient(180deg,rgba(24,76,48,.72),#101b30)}.shopCard.weapon.branchVit{border-color:rgba(116,185,255,.55);background:linear-gradient(180deg,rgba(23,57,96,.72),#101b30)}.shopPassive{display:flex;flex-direction:column;gap:2px;font-size:11px;line-height:1.28;color:#dbeafe}.singleShopGrid{grid-template-columns:1fr}.shopEmoji{font-size:34px;line-height:1}.relicGrid .shopCard{min-height:110px}.shopCard.heal{min-height:130px}

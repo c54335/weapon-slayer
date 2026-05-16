@@ -50,22 +50,27 @@ const WEAPON_ASSETS = {
 };
 
 const WEAPONS = {
-  sword: { name: '劍', icon: swordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#f0c040', radius: 40, speed: 720, formula: '4 × 力量', label: '二階劍！', triple: '三階劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 300, slashName: '橫斬' },
+  sword: { name: '劍', icon: swordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#f0c040', radius: 40, speed: 720, formula: '4 × 力量', label: '二階劍！', triple: '三階劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 300, slashName: '橫斬', desc: '劍系基礎武器；左右滑動產生劍氣' },
   bomb: { name: '火焰法杖', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#ff6644', radius: 75, speed: 330, formula: '5 × 智力', label: '二階火焰！', triple: '三階烈焰！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
   ice: { name: '冰霜法杖', icon: iceIconUrl, sheet: iceSheetUrl, hitSheet: iceHitSheetUrl, color: '#88ddff', radius: 30, speed: 500, formula: '4 × 智力 + 1 × 敏捷', freeze: 3, label: '二階冰霜！', triple: '三階冰霜！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34 },
   lightning: { name: '雷電法杖', icon: lightningIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ccaaff', radius: 55, speed: 920, formula: '3 × 智力', label: '二階雷電！', triple: '三階雷鏈！', frames: 8, fps: 22, rotateToPath: true, hitFrames: 6, hitSize: 34 },
-  shield: { name: '盾', icon: shieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#9ca3af', radius: 40, speed: 300, formula: '5 × 體質', knockback: 42, label: '二階飛盾！', triple: '三階飛盾！', frames: 1, fps: 1, spin: true, spinSpeed: 12, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2 },
-  bow: { name: '弓箭', icon: bowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#84cc16', radius: 50, speed: 0, formula: '5 × 敏捷', aim: true, label: '二階箭雨！', triple: '三階箭雨！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34 },
+  shield: { name: '盾', icon: shieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#9ca3af', radius: 40, speed: 300, formula: '5 × 體質', knockback: 42, label: '二階飛盾！', triple: '三階飛盾！', frames: 1, fps: 1, spin: true, spinSpeed: 12, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2, desc: '盾系基礎武器；點擊發射飛盾' },
+  bow: { name: '弓箭', icon: bowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#84cc16', radius: 50, speed: 0, formula: '5 × 敏捷', aim: true, label: '二階箭雨！', triple: '三階箭雨！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: '弓系基礎武器；點擊標記位置' },
 
-  greatsword: { name: '大劍', quality: '藍色', icon: greatswordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 350, formula: '4.5 × 力量', label: '二階大劍！', triple: '三階大劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 400, slashName: '大橫斬', desc: '左右滑動斬擊；力量>15 追加 2×體質；力量>30 獲得 敏捷/100 爆擊率' },
-  katana: { name: '武士刀', quality: '紫色', icon: katanaIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#c084fc', radius: 40, speed: 500, formula: '4 × 力量 + 1 × 敏捷', multiLine: true, label: '二階武士刀！', triple: '三階武士刀！', frames: 8, fps: 22, hitFrames: 6, hitSize: 34, desc: '時間內可畫多條線；力量+敏捷>25 造成流血；>50 攻擊流血目標強化' },
-  kingsword: { name: '王者之劍', quality: '金色', icon: kingswordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#ffd76a', radius: 60, speed: 0, formula: '6 × 力量', aim: true, label: '二階王者之劍！', triple: '三階王者之劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: '力量>35 攻擊造成兩次；力量>50 攻擊後全場追加 2×力量 傷害' },
-  greatshield: { name: '巨盾', quality: '藍色', icon: greatshieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 300, formula: '5.5 × 體質', spin: true, spinSpeed: 14, label: '二階巨盾！', triple: '三階巨盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2, desc: '點擊召喚飛盾追蹤最近敵人並彈射；體質>15 暈眩2秒；體質>30 命中暈眩目標時拖曳目標跟隨盾牌' },
-  gianthammer: { name: '巨槌', quality: '紫色', icon: gianthammerIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#c084fc', radius: 45, speed: 0, formula: '6 × 體質 + 2 × 力量', aim: true, label: '二階巨槌！', triple: '三階巨槌！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, desc: '體質>25 目標受傷+30% 3秒；體質+力量>55 暴露弱點，下次受傷必定爆擊' },
-  holyshield: { name: '黃金聖盾', quality: '金色', icon: holyshieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#ffd76a', radius: 50, speed: 350, formula: '6 × 體質', spin: true, spinSpeed: 15, label: '二階聖盾！', triple: '三階聖盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, desc: '體質>30 聖光標記緩速50%；體質+力量>55 命中標記目標造成小範圍 2×體質 傷害' },
-  crossbow: { name: '弩箭', quality: '藍色', icon: crossbowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#60a5fa', radius: 55, speed: 0, formula: '5 × 敏捷', aim: true, label: '二階弩箭！', triple: '三階弩箭！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: '敏捷>15 附帶 敏捷/100 爆擊率；敏捷>30 爆擊傷害300%' },
-  boomerang: { name: '迴力鏢', quality: '紫色', icon: boomerangIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#c084fc', radius: 35, speed: 500, formula: '3 × 敏捷', returnPath: true, label: '二階迴力鏢！', triple: '三階迴力鏢！', frames: 8, fps: 20, rotateToPath: true, hitFrames: 6, hitSize: 34, desc: '敏捷>20 跑完軌跡後反向回來；敏捷>40 爆擊傷害300%' },
-  giantbow: { name: '巨人弓', quality: '金色', icon: giantbowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ffd76a', radius: 60, speed: 0, formula: '5 × 敏捷 + 2 × 力量', aim: true, label: '二階巨人弓！', triple: '三階巨人弓！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: '敏捷+力量>35 點擊位置持續3秒每秒50%傷害；>60 半徑85' },
+  greatsword: { name: '巨劍', quality: '藍色', branch: '劍系 STR', icon: greatswordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 720, formula: '4 × 力量', label: '二階巨劍！', triple: '三階巨劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 300, slashName: '巨劍橫斬', desc: '劍系STR中階；爆擊率 = STR / 2 %' },
+  katana: { name: '武士刀', quality: '藍色', branch: '劍系 DEX', icon: katanaIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 720, formula: '3 × 敏捷 + 1 × 力量', label: '二階武士刀！', triple: '三階武士刀！', frames: 8, fps: 22, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 300, slashName: '武士刀斬', desc: '劍系DEX中階；命中時 DEX/3 % 機率追加30%傷害' },
+  kingsword: { name: '王者之劍', quality: '金色', branch: '劍系 STR', icon: kingswordIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#ffd76a', radius: 50, speed: 720, formula: '5 × 力量', label: '二階王者之劍！', triple: '三階王者之劍！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 300, slashName: '王者斬', desc: '劍系STR高階；爆擊率 = STR/2%；攻擊時 STR/10% 機率造成兩倍傷害' },
+  muramasa: { name: '妖刀村正', quality: '金色', branch: '劍系 DEX', icon: katanaIconUrl, sheet: swordSheetUrl, hitSheet: swordHitSheetUrl, color: '#ff6b9d', radius: 50, speed: 720, formula: '3.5 × 敏捷 + 1.5 × 力量', label: '二階妖刀！', triple: '三階妖刀！', frames: 8, fps: 22, hitFrames: 6, hitSize: 34, swipeSlash: true, slashDepth: 300, slashName: '妖刀斬', desc: '劍系DEX高階；命中時 DEX/3 % 機率追加30%傷害；每次施法首斬再追加10%傷害' },
+
+  cannon: { name: '火炮', quality: '藍色', branch: '弓系 STR', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#fb923c', radius: 50, speed: 0, formula: '3 × 敏捷 + 2 × 力量', aim: true, label: '二階火炮！', triple: '三階火炮！', frames: 8, fps: 18, hitFrames: 6, hitSize: 38, desc: '弓系STR中階；標記攻擊範圍提升 STR/2 %' },
+  crossbow: { name: '十字弓', quality: '藍色', branch: '弓系 DEX', icon: crossbowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#60a5fa', radius: 50, speed: 0, formula: '5 × 敏捷', aim: true, label: '二階十字弓！', triple: '三階十字弓！', frames: 8, fps: 18, hitFrames: 6, hitSize: 34, desc: '弓系DEX中階；單次施法標記 > 5 處，傷害提升 DEX/3 %' },
+  grenadecannon: { name: '榴彈砲', quality: '金色', branch: '弓系 STR', icon: bombIconUrl, sheet: bombSheetUrl, hitSheet: bombHitSheetUrl, color: '#ffd76a', radius: 50, speed: 0, formula: '4 × 敏捷 + 2 × 力量', aim: true, label: '二階榴彈砲！', triple: '三階榴彈砲！', frames: 8, fps: 18, hitFrames: 6, hitSize: 42, desc: '弓系STR高階；範圍提升 STR/2%；標記 < 3 處時傷害提升 STR/2 %' },
+  giantbow: { name: '巨人弓', quality: '金色', branch: '弓系 DEX', icon: giantbowIconUrl, sheet: lightningSheetUrl, hitSheet: lightningHitSheetUrl, color: '#ffd76a', radius: 50, speed: 0, formula: '6 × 敏捷', aim: true, label: '二階巨人弓！', triple: '三階巨人弓！', frames: 8, fps: 18, hitFrames: 6, hitSize: 38, desc: '弓系DEX高階；標記 > 5 處傷害提升 DEX/3%；爆擊率 = DEX/2 %' },
+
+  greatshield: { name: '巨盾', quality: '藍色', branch: '盾系 VIT', icon: greatshieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#60a5fa', radius: 50, speed: 300, formula: '5 × 體質', spin: true, spinSpeed: 14, label: '二階巨盾！', triple: '三階巨盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2, desc: '盾系VIT中階；造成暈眩時，附帶 VIT/2 % 最大生命傷害' },
+  thornshield: { name: '荊棘盾', quality: '藍色', branch: '盾系 STR', icon: shieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#86efac', radius: 45, speed: 300, formula: '3 × 體質 + 2 × 力量', spin: true, spinSpeed: 15, label: '二階荊棘盾！', triple: '三階荊棘盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2, desc: '盾系STR中階；每次射出有 VIT/3 % 機率彈射 +1' },
+  holyshield: { name: '黃金聖盾', quality: '金色', branch: '盾系 VIT', icon: holyshieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#ffd76a', radius: 50, speed: 350, formula: '6 × 體質', spin: true, spinSpeed: 15, label: '二階聖盾！', triple: '三階聖盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2, desc: '盾系VIT高階；附帶 VIT/2 % 最大生命傷害；命中暈眩2秒' },
+  undeadshield: { name: '亡靈盾', quality: '金色', branch: '盾系 STR', icon: shieldIconUrl, sheet: shieldIconUrl, hitSheet: swordHitSheetUrl, color: '#a78bfa', radius: 45, speed: 350, formula: '3 × 體質 + 3 × 力量', spin: true, spinSpeed: 16, label: '二階亡靈盾！', triple: '三階亡靈盾！', frames: 1, fps: 1, hitFrames: 6, hitSize: 34, shieldClick: true, bounceRange: 150, bounces: 2, desc: '盾系STR高階；每次射出有 VIT/3 % 機率彈射+1；每5盾下一盾彈射+1' },
 };
 const SFX_URLS = {
   monsterDie: monsterDieSfxUrl,
@@ -75,9 +80,9 @@ const SFX_URLS = {
   shieldHit: shieldHitSfxUrl,
   swordHit: swordHitSfxUrl,
 };
-const SWORD_TYPES = new Set(['sword', 'greatsword', 'katana', 'kingsword']);
-const SHIELD_TYPES = new Set(['shield', 'greatshield', 'gianthammer', 'holyshield']);
-const SHOOT_TYPES = new Set(['bow', 'crossbow', 'boomerang', 'giantbow']);
+const SWORD_TYPES = new Set(['sword', 'greatsword', 'katana', 'kingsword', 'muramasa']);
+const SHIELD_TYPES = new Set(['shield', 'greatshield', 'thornshield', 'holyshield', 'undeadshield']);
+const SHOOT_TYPES = new Set(['bow', 'cannon', 'crossbow', 'grenadecannon', 'giantbow']);
 
 const TYPES = Object.keys(WEAPONS);
 const INITIAL_WEAPONS = ['sword', 'shield', 'bow'];
@@ -92,7 +97,6 @@ const ADVENTURE_NODES = [
   { type: 'shop' },
   { type: 'wave', wave: 10 },
 ];
-const SHOP_WEAPON_POOL = TYPES.filter(t => !INITIAL_WEAPONS.includes(t));
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const uid = (() => { let n = 1; return () => n++; })();
@@ -147,15 +151,18 @@ function weaponBaseDamage(type, stats = {}) {
   if (type === 'lightning') return 3 * INT;
   if (type === 'shield') return 5 * VIT;
   if (type === 'bow') return 5 * DEX;
-  if (type === 'greatsword') return 4.5 * STR + (STR > 15 ? 2 * VIT : 0);
-  if (type === 'katana') return 4 * STR + DEX;
-  if (type === 'kingsword') return 6 * STR;
-  if (type === 'greatshield') return 5.5 * VIT;
-  if (type === 'gianthammer') return 6 * VIT + 2 * STR;
-  if (type === 'holyshield') return 6 * VIT;
+  if (type === 'greatsword') return 4 * STR;
+  if (type === 'katana') return 3 * DEX + STR;
+  if (type === 'kingsword') return 5 * STR;
+  if (type === 'muramasa') return 3.5 * DEX + 1.5 * STR;
+  if (type === 'cannon') return DEX * 3 + STR * 2;
   if (type === 'crossbow') return 5 * DEX;
-  if (type === 'boomerang') return 3 * DEX;
-  if (type === 'giantbow') return 5 * DEX + 2 * STR;
+  if (type === 'grenadecannon') return DEX * 4 + STR * 2;
+  if (type === 'giantbow') return 6 * DEX;
+  if (type === 'greatshield') return 5 * VIT;
+  if (type === 'thornshield') return VIT * 3 + STR * 2;
+  if (type === 'holyshield') return 6 * VIT;
+  if (type === 'undeadshield') return VIT * 3 + STR * 3;
   return 1;
 }
 function globalDamageMultiplier(stats = {}) {
@@ -173,9 +180,9 @@ function chargeMultiplier(stats = {}) {
 
 function critSpec(type, stats = {}) {
   const STR = stats.STR || 0, DEX = stats.DEX || 0;
-  if (type === 'greatsword' && STR > 30) return { chance: Math.min(.85, DEX / 100), mult: 2 };
-  if (type === 'crossbow' && DEX > 15) return { chance: Math.min(.85, DEX / 100), mult: DEX > 30 ? 3 : 2 };
-  if (type === 'boomerang' && DEX > 40) return { chance: Math.min(.65, DEX / 100), mult: 3 };
+  if (type === 'greatsword') return { chance: Math.min(.85, (STR / 2) / 100), mult: 2 };
+  if (type === 'kingsword') return { chance: Math.min(.85, (STR / 2) / 100), mult: 2 };
+  if (type === 'giantbow') return { chance: Math.min(.85, (DEX / 2) / 100), mult: 2 };
   return { chance: 0, mult: 2 };
 }
 function weaponDamageText(type, stats = {}, tier = 1) {
@@ -216,13 +223,13 @@ function drawRegularPolygon(ctx, x, y, sides, radius, rotation = -Math.PI / 2) {
 }
 function weaponStatTags(type) {
   if (['sword','greatsword','kingsword'].includes(type)) return '受 STR 影響';
-  if (type === 'katana') return '受 STR / DEX 影響';
+  if (['katana','muramasa'].includes(type)) return '受 STR / DEX 影響';
   if (['bomb','lightning'].includes(type)) return '受 INT 影響';
   if (type === 'ice') return '受 INT / DEX 影響';
   if (['shield','greatshield','holyshield'].includes(type)) return '受 VIT 影響';
-  if (type === 'gianthammer') return '受 VIT / STR 影響';
-  if (['bow','crossbow','boomerang'].includes(type)) return '受 DEX 影響';
-  if (type === 'giantbow') return '受 DEX / STR 影響';
+  if (['thornshield','undeadshield'].includes(type)) return '受 VIT / STR 影響';
+  if (['bow','crossbow','giantbow'].includes(type)) return '受 DEX 影響';
+  if (['cannon','grenadecannon'].includes(type)) return '受 DEX / STR 影響';
   return '受素質影響';
 }
 function weaponControlText(type) {
@@ -232,6 +239,90 @@ function weaponControlText(type) {
   if (w.aim) return '操作：點擊指定位置';
   return '操作：畫線攻擊';
 }
+function weaponSeriesLabel(type) {
+  if (SWORD_TYPES.has(type)) return '劍系';
+  if (SHIELD_TYPES.has(type)) return '盾系';
+  if (SHOOT_TYPES.has(type)) return '弓系';
+  return '武器';
+}
+
+function weaponSeriesKey(type) {
+  if (SWORD_TYPES.has(type)) return 'sword';
+  if (SHIELD_TYPES.has(type)) return 'shield';
+  if (SHOOT_TYPES.has(type)) return 'bow';
+  return type;
+}
+function weaponShopTierText(type) {
+  if (HIGH_WEAPONS.has(type)) return '高階武器';
+  if (MID_WEAPONS.has(type)) return '中階武器';
+  return '基礎武器';
+}
+function weaponBranchAttr(type) {
+  if (['greatsword','kingsword','cannon','grenadecannon','thornshield','undeadshield'].includes(type)) return 'STR';
+  if (['katana','muramasa','crossbow','giantbow'].includes(type)) return 'DEX';
+  if (['greatshield','holyshield'].includes(type)) return 'VIT';
+  return '';
+}
+function weaponBranchClass(type) {
+  if (['greatsword','kingsword','cannon','grenadecannon','thornshield','undeadshield'].includes(type)) return 'branchStr';
+  if (['katana','muramasa','crossbow','giantbow'].includes(type)) return 'branchDex';
+  if (['greatshield','holyshield'].includes(type)) return 'branchVit';
+  return 'branchBase';
+}
+function weaponBranchText(type) {
+  const branch = WEAPONS[type]?.branch;
+  if (branch) return branch;
+  return `${weaponSeriesLabel(type)} 基礎`;
+}
+function weaponRangeText(type) {
+  const w = WEAPONS[type] || {};
+  if (w.swipeSlash) return `射程：${w.slashDepth || 0}`;
+  if (w.aim) return `標記範圍：${Math.round(w.radius || 0)}`;
+  if (w.shieldClick) return `彈射距離：${Math.round(w.bounceRange || 0)}`;
+  return '';
+}
+function weaponPassiveTexts(type, stats = {}) {
+  const STR = stats.STR || 0, DEX = stats.DEX || 0, VIT = stats.VIT || 0;
+  const pct = (v) => `${Number(v).toFixed(1).replace(/\.0$/, '')}%`;
+  const list = [];
+  if (type === 'greatsword') list.push(`爆擊率 +${pct(STR / 2)}`);
+  if (type === 'katana') list.push(`命中時 ${pct(DEX / 3)} 機率追加 30% 傷害`);
+  if (type === 'kingsword') { list.push(`爆擊率 +${pct(STR / 2)}`); list.push(`攻擊時 ${pct(STR / 10)} 機率造成 2 倍傷害`); }
+  if (type === 'muramasa') { list.push(`命中時 ${pct(DEX / 3)} 機率追加 30% 傷害`); list.push('每次施法第一次斬擊追加 10% 傷害'); }
+  if (type === 'cannon') list.push(`標記範圍 +${pct(STR / 2)}`);
+  if (type === 'crossbow') list.push(`單次標記 > 5 處：傷害 +${pct(DEX / 3)}`);
+  if (type === 'grenadecannon') { list.push(`標記範圍 +${pct(STR / 2)}`); list.push(`標記 < 3 處：傷害 +${pct(STR / 2)}`); }
+  if (type === 'giantbow') { list.push(`單次標記 > 5 處：傷害 +${pct(DEX / 3)}`); list.push(`爆擊率 +${pct(DEX / 2)}`); }
+  if (type === 'greatshield') list.push(`造成暈眩時，附帶 ${pct(VIT / 2)} 最大生命傷害`);
+  if (type === 'thornshield') list.push(`射出時 ${pct(VIT / 3)} 機率彈射 +1`);
+  if (type === 'holyshield') { list.push(`造成暈眩時，附帶 ${pct(VIT / 2)} 最大生命傷害`); list.push('命中造成暈眩 2 秒'); }
+  if (type === 'undeadshield') { list.push(`射出時 ${pct(VIT / 3)} 機率彈射 +1`); list.push('單次施法每投出 5 個盾，下一盾彈射 +1'); }
+  if (!list.length) list.push('無特殊被動');
+  return list;
+}
+const DEV_WEAPON_UPGRADES = [
+  { base: 'sword', title: '劍升級', options: ['greatsword','katana','kingsword','muramasa'] },
+  { base: 'bow', title: '弓升級', options: ['cannon','crossbow','grenadecannon','giantbow'] },
+  { base: 'shield', title: '盾升級', options: ['greatshield','thornshield','holyshield','undeadshield'] },
+];
+
+const SHOP_BRANCH_POOLS = {
+  STR: {
+    mid: ['greatsword', 'cannon', 'thornshield'],
+    high: ['kingsword', 'grenadecannon', 'undeadshield'],
+  },
+  DEX: {
+    mid: ['katana', 'crossbow'],
+    high: ['muramasa', 'giantbow'],
+  },
+  VIT: {
+    mid: ['greatshield'],
+    high: ['holyshield'],
+  },
+};
+const MID_WEAPONS = new Set(['greatsword', 'katana', 'cannon', 'crossbow', 'greatshield', 'thornshield']);
+const HIGH_WEAPONS = new Set(['kingsword', 'muramasa', 'grenadecannon', 'giantbow', 'holyshield', 'undeadshield']);
+const SHOP_ATTR_KEYS = ['STR', 'DEX', 'VIT'];
 
 function App() {
   const canvasRef = useRef(null);
@@ -589,34 +680,61 @@ function App() {
   };
 
 
-  const weaponQualityMeta = (type) => {
-    const q = WEAPONS[type]?.quality || '普通';
-    if (q.includes('金')) return { key: 'gold', label: '金色', price: 150 };
-    if (q.includes('紫')) return { key: 'purple', label: '紫色', price: 100 };
-    if (q.includes('藍')) return { key: 'blue', label: '藍色', price: 50 };
-    return { key: 'blue', label: '藍色', price: 50 };
+  const shopWeaponPrice = (type) => HIGH_WEAPONS.has(type) ? 120 : 80;
+
+  const topShopStats = (stats = {}) => {
+    const sorted = SHOP_ATTR_KEYS
+      .map(key => ({ key, value: stats[key] || 0 }))
+      .sort((a, b) => b.value - a.value || SHOP_ATTR_KEYS.indexOf(a.key) - SHOP_ATTR_KEYS.indexOf(b.key));
+    return sorted.slice(0, 2).map(item => item.key);
   };
 
-  const rollShopItems = () => {
-    const byQ = (q) => SHOP_WEAPON_POOL.filter(t => (WEAPONS[t]?.quality || '藍色').includes(q));
-    const blue = byQ('藍');
-    const purple = byQ('紫');
-    const all = SHOP_WEAPON_POOL;
-    const pick = (arr, used = new Set()) => {
-      const candidates = arr.filter(t => !used.has(t));
-      return candidates[Math.floor(Math.random() * candidates.length)] || arr[0] || 'greatsword';
+  const hasMidWeaponInSeries = (seriesKey) => (bagRef.current || []).some(type => weaponSeriesKey(type) === seriesKey && MID_WEAPONS.has(type));
+
+  const rollOneShopWeapon = (attr, highShop = false, used = new Set()) => {
+    const pools = SHOP_BRANCH_POOLS[attr];
+    if (!pools) return null;
+    const midPool = pools.mid || [];
+    const candidates = midPool.length ? midPool : [];
+    const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+    let pickedMid = shuffled.find(type => !used.has(`${attr}:${weaponSeriesKey(type)}`)) || shuffled[0];
+    if (!pickedMid) return null;
+    const series = weaponSeriesKey(pickedMid);
+    let type = pickedMid;
+    if (highShop && hasMidWeaponInSeries(series)) {
+      const idx = midPool.indexOf(pickedMid);
+      type = (pools.high || [])[idx] || pickedMid;
+    }
+    used.add(`${attr}:${series}`);
+    return {
+      id: uid(),
+      kind: 'weapon',
+      attr,
+      type,
+      series,
+      tierLabel: weaponShopTierText(type),
+      price: shopWeaponPrice(type),
+      bought: false,
     };
+  };
+
+  const rollShopItems = (s) => {
+    const highShop = (s?.nodeIndex || 0) >= 7;
     const used = new Set();
-    const b = pick(blue, used); used.add(b);
-    const p = pick(purple, used); used.add(p);
-    const r = pick(all, used);
-    return [b, p, r].map(type => ({ id: uid(), type, ...weaponQualityMeta(type), bought: false }));
+    let attrs = topShopStats(s?.stats || WARRIOR.stats).filter(attr => SHOP_BRANCH_POOLS[attr]);
+    if (attrs.length < 2) {
+      for (const attr of SHOP_ATTR_KEYS) {
+        if (!attrs.includes(attr) && SHOP_BRANCH_POOLS[attr]) attrs.push(attr);
+        if (attrs.length >= 2) break;
+      }
+    }
+    return attrs.slice(0, 2).map(attr => rollOneShopWeapon(attr, highShop, used)).filter(Boolean);
   };
 
   const openShopNode = (s) => {
     s.shopOpen = true;
     s.waveState = 'shop';
-    s.shopItems = rollShopItems();
+    s.shopItems = rollShopItems(s);
     s.shopMessage = '';
     s.replaceOffer = null;
     s.shopBoughtFx = 0;
@@ -640,33 +758,44 @@ function App() {
 
   const buyShopWeapon = (offer) => {
     const s = stateRef.current;
-    if (!s || !offer || offer.bought) return;
-    const price = offer.price || weaponQualityMeta(offer.type).price;
+    if (!s || !offer || offer.bought || offer.kind !== 'weapon') return;
+    const price = offer.price || shopWeaponPrice(offer.type);
     if ((s.kills || 0) < price) {
       s.shopMessage = '擊殺數不足';
       setUi(v => ({ ...v, shopMessage: '擊殺數不足', shopItems: [...(s.shopItems || [])] }));
       return;
     }
-    if (bagRef.current.length < (s.bagCapacity || 3)) {
-      s.kills -= price;
+
+    const series = weaponSeriesKey(offer.type);
+    const sameSeriesIndex = bagRef.current.findIndex(type => weaponSeriesKey(type) === series);
+    s.kills -= price;
+
+    if (sameSeriesIndex >= 0) {
+      const oldName = WEAPONS[bagRef.current[sameSeriesIndex]]?.name || '武器';
+      bagRef.current = bagRef.current.map((type, i) => i === sameSeriesIndex ? offer.type : type);
+      s.shopMessage = `${oldName} → ${WEAPONS[offer.type].name}`;
+    } else if (bagRef.current.length < (s.bagCapacity || 3)) {
       bagRef.current = [...bagRef.current, offer.type];
-      s.bag = [...bagRef.current];
-      offer.bought = true;
       s.shopMessage = `購入 ${WEAPONS[offer.type].name}！`;
-      s.shopBoughtFx = Date.now();
-      setUi(v => ({ ...v, kills: s.kills, bag: [...bagRef.current], shopItems: [...s.shopItems], shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
+    } else {
+      s.kills += price;
+      s.replaceOffer = offer;
+      s.shopMessage = '包包已滿，請選擇要替換的武器';
+      setUi(v => ({ ...v, replaceOffer: offer, shopMessage: s.shopMessage }));
       return;
     }
-    s.replaceOffer = offer;
-    s.shopMessage = '包包已滿，請選擇要替換的武器';
-    setUi(v => ({ ...v, replaceOffer: offer, shopMessage: s.shopMessage }));
+
+    s.bag = [...bagRef.current];
+    offer.bought = true;
+    s.shopBoughtFx = Date.now();
+    setUi(v => ({ ...v, kills: s.kills, bag: [...bagRef.current], shopItems: [...s.shopItems], shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
   };
 
   const replaceBagWeapon = (idx) => {
     const s = stateRef.current;
     if (!s?.replaceOffer) return;
     const offer = s.replaceOffer;
-    const price = offer.price || weaponQualityMeta(offer.type).price;
+    const price = offer.price || shopWeaponPrice(offer.type);
     if ((s.kills || 0) < price) {
       s.shopMessage = '擊殺數不足';
       setUi(v => ({ ...v, shopMessage: s.shopMessage }));
@@ -690,14 +819,14 @@ function App() {
       setUi(v => ({ ...v, shopMessage: s.shopMessage }));
       return;
     }
-    if ((s.kills || 0) < 40) {
+    if ((s.kills || 0) < 50) {
       s.shopMessage = '擊殺數不足';
       setUi(v => ({ ...v, shopMessage: s.shopMessage }));
       return;
     }
-    s.kills -= 40;
+    s.kills -= 50;
     s.allyHp = Math.min(100, (s.allyHp || 0) + 20);
-    s.shopMessage = '基地回復 20 HP！';
+    s.shopMessage = '基地回復 20%！';
     s.shopBoughtFx = Date.now();
     setUi(v => ({ ...v, kills: s.kills, allyHp: Math.ceil(s.allyHp), shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
   };
@@ -858,6 +987,30 @@ function App() {
         ctx.strokeRect(e.x - size * .44, cy - size * .44, size * .88, size * .88);
         ctx.globalAlpha = 1;
       }
+      if (e.boss && (e.brokenTimer || 0) > 0) {
+        const t = s.animTime * 7;
+        ctx.save();
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.font = '900 24px system-ui';
+        for (let i = 0; i < 3; i++) {
+          const a = t + i * Math.PI * 2 / 3;
+          const sx = e.x + Math.cos(a) * 30;
+          const sy = cy - size * .72 + Math.sin(a) * 8;
+          ctx.fillStyle = '#fde68a';
+          ctx.strokeStyle = 'rgba(0,0,0,.65)';
+          ctx.lineWidth = 4;
+          ctx.strokeText('★', sx, sy);
+          ctx.fillText('★', sx, sy);
+        }
+        ctx.font = '900 14px system-ui';
+        ctx.fillStyle = '#fff7ad';
+        ctx.strokeStyle = 'rgba(0,0,0,.75)';
+        ctx.lineWidth = 4;
+        ctx.strokeText('暈眩', e.x, cy - size * .62);
+        ctx.fillText('暈眩', e.x, cy - size * .62);
+        ctx.restore();
+      }
       if (!e.boss) {
         const hpRatio = Math.max(0, e.hp / e.maxHp);
         const barW = e.type === 'BAT' ? 24 : e.type === 'FIREBALL' ? 26 : 34;
@@ -947,7 +1100,7 @@ function App() {
       s.aimStartTime = performance.now(); // 記錄弓箭啟動時間，防止立即射擊
       if (selectedWeapon?.aim) s.floatTexts.push({ id: uid(), text: '點擊位置標記目標！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#d9ff99', size: 20, glow: true });
       // 弓箭第一次啟動不加標記（避免選武器的點擊直接射擊）
-      if (selectedWeapon?.shieldClick) { spawnShieldShot(s, selectedRef.current, getTierInfo(selectedRef.current)); s.floatTexts.push({ id: uid(), text: '連點螢幕召喚飛盾！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#d7e4ff', size: 20, glow: true }); }
+      if (selectedWeapon?.shieldClick) { s.undeadShieldCastCount = 0; spawnShieldShot(s, selectedRef.current, getTierInfo(selectedRef.current)); s.floatTexts.push({ id: uid(), text: '連點螢幕召喚飛盾！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#d7e4ff', size: 20, glow: true }); }
       if (selectedWeapon?.swipeSlash) { s.lastSlashX = p.x; s.lastSlashTime = performance.now(); s.swipeTriggered = false; s.floatTexts.push({ id: uid(), text: '左右滑動產生一條劍氣！', x: s.w/2, y: 96, vy: -8, life: .8, color: '#fff3b0', size: 18, glow: true }); }
       if (selectedWeapon?.multiLine) s.floatTexts.push({ id: uid(), text: '可畫多條線！時間到後一起發動', x: s.w/2, y: 96, vy: -8, life: .8, color: '#e9d5ff', size: 18, glow: true });
       setUi(v => ({ ...v, drawing: true, timer: s.drawTime }));
@@ -1042,7 +1195,7 @@ function App() {
         id: uid(), x: startX, y, top, depth, direction, vx,
         age: 0, life: (s.w + 160) / slashSpeed,
         color, tier: tierInfo.tier, type: item.type,
-        damage: dmg, stats, hitIds: []
+        damage: dmg, stats, hitIds: [], firstHitBonus: item.type === 'muramasa', firstHitUsed: false
       });
       const label = direction > 0 ? '右斬！' : '左斬！';
       s.floatTexts.push({ id: uid(), text: label, x: s.w/2, y: top + 24, vy: -22, life: .35, color, size: speedX > 0.9 ? 17 : 14, glow: true });
@@ -1069,27 +1222,37 @@ function App() {
         return;
       }
       const stats = { ...(s.stats || {}) };
+      let bouncesLeft = base.bounces ?? 2;
+      if ((item.type === 'thornshield' || item.type === 'undeadshield') && Math.random() < Math.min(.85, ((stats.VIT || 0) / 3) / 100)) {
+        bouncesLeft += 1;
+        s.floatTexts.push({ id: uid(), text: '彈射+1', x: origin.x, y: origin.y - 44, vy: -18, life: .45, color: '#86efac', size: 14, glow: true });
+      }
+      if (item.type === 'undeadshield') {
+        s.undeadShieldCastCount = (s.undeadShieldCastCount || 0) + 1;
+        if (s.undeadShieldCastCount % 5 === 0) {
+          bouncesLeft += 1;
+          s.floatTexts.push({ id: uid(), text: '亡靈彈射+1', x: origin.x, y: origin.y - 60, vy: -18, life: .55, color: '#c4b5fd', size: 15, glow: true });
+        }
+      }
       s.shieldShots = s.shieldShots || [];
-      s.shieldShots.push({ id: uid(), type: item.type, x: origin.x, y: origin.y, targetId: target.id, damage: weaponBaseDamage(item.type, stats) * tierInfo.power, speed: 720, radius: base.radius, combo: tierInfo.tier, color: tierEffectColor(item.type, tierInfo.tier), stats, hitIds: [], bouncesLeft: base.bounces ?? 2, bounceRange: base.bounceRange || 150, age: 0 });
+      s.shieldShots.push({ id: uid(), type: item.type, x: origin.x, y: origin.y, targetId: target.id, damage: weaponBaseDamage(item.type, stats) * tierInfo.power, speed: 720, radius: base.radius, combo: tierInfo.tier, color: tierEffectColor(item.type, tierInfo.tier), stats, hitIds: [], bouncesLeft, bounceRange: base.bounceRange || 150, age: 0 });
     }
 
     function launchBowAttack(s, item, tierInfo) {
       const base = WEAPONS[item.type];
       const points = s.path.length ? [...s.path] : [{ x: s.w / 2, y: s.battleH / 2 }];
       const stats = { ...(s.stats || {}) };
-      const radius = (item.type === 'giantbow' && (stats.DEX || 0) + (stats.STR || 0) > 60) ? 85 : base.radius;
-      const dmg = weaponBaseDamage(item.type, stats) * tierInfo.power;
+      let radius = base.radius || 50;
+      if (item.type === 'cannon' || item.type === 'grenadecannon') radius *= 1 + ((stats.STR || 0) / 2) / 100;
+      let dmg = weaponBaseDamage(item.type, stats) * tierInfo.power;
+      if ((item.type === 'crossbow' || item.type === 'giantbow') && points.length > 5) dmg *= 1 + ((stats.DEX || 0) / 3) / 100;
+      if (item.type === 'grenadecannon' && points.length < 3) dmg *= 1 + ((stats.STR || 0) / 2) / 100;
       for (const p of points) {
         s.hitEffects.push({ id: uid(), type: item.type, x: p.x, y: p.y, age: 0, life: .34, combo: tierInfo.tier });
         for (const e of s.enemies) {
           if (Math.hypot(e.x - p.x, e.y - p.y) <= radius + (e.boss ? 10 : 0)) {
-            const reps = (item.type === 'kingsword' && (stats.STR || 0) > 35) ? 2 : 1;
-            for (let r = 0; r < reps; r++) damageEnemy(s, e, dmg, tierEffectColor(item.type, tierInfo.tier), { type: item.type, combo: tierInfo.tier, stats });
+            damageEnemy(s, e, dmg, tierEffectColor(item.type, tierInfo.tier), { type: item.type, combo: tierInfo.tier, stats });
           }
-        }
-        if (item.type === 'giantbow' && (stats.DEX || 0) + (stats.STR || 0) > 35) {
-          s.zones = s.zones || [];
-          s.zones.push({ id: uid(), type: item.type, x: p.x, y: p.y, radius, damage: dmg * 0.5, tick: 1, life: 3, color: tierEffectColor(item.type, tierInfo.tier), stats });
         }
         s.floatTexts.push({ id: uid(), text: base.name + '！', x: p.x, y: p.y - 20, vy: -28, life: .55, color: tierEffectColor(item.type, tierInfo.tier), size: 16, glow: tierInfo.tier >= 2 });
       }
@@ -1248,6 +1411,7 @@ function App() {
       boss.skillDuration = 0.72;
       boss.shielded = false; // no boss invulnerability
       boss.broken = false;
+      boss.brokenTimer = 0;
       boss.summonBatchId = uid();
       boss.summonBatchAlive = 8;
       s.floatTexts.push({ id: uid(), text: 'BOSS 召喚蝙蝠！', x: s.w/2, y: 96, vy: -8, life: 1.1, color:'#d56bff', size:28, glow:true });
@@ -1260,6 +1424,7 @@ function App() {
       boss.fireSpawned = 0;
       boss.shielded = false; // no boss invulnerability
       boss.broken = false;
+      boss.brokenTimer = 0;
       boss.summonBatchId = uid();
       boss.summonBatchAlive = 3;
       s.floatTexts.push({ id: uid(), text: 'BOSS 火球術！', x: s.w/2, y: 96, vy: -8, life: .9, color:'#ffb257', size:26, glow:true });
@@ -1301,7 +1466,7 @@ function App() {
       const isBoss = cfg.boss && s.waveSpawned === cfg.total - 1;
       const enemyType = isBoss ? 'BOSS' : chooseEnemyType(s.wave, s.waveSpawned, cfg.total, s);
       const st = isBoss
-        ? { hp: s.wave === 10 ? 25000 : 12000, speed: (s.battleH * .25 - 30) / 2.2, atk: 25, radius: 30, exp: 100, defense: s.wave === 10 ? 150 : 50 }
+        ? { hp: s.wave === 10 ? 12500 : 6000, speed: (s.battleH * .25 - 30) / 2.2, atk: 25, radius: 30, exp: 100, defense: s.wave === 10 ? 150 : 50 }
         : makeEnemyStats(enemyType, cfg, s);
       s.enemies.push({
         id: uid(), type: enemyType, x: rand(s.w*.12, s.w*.88), y: isBoss ? 30 : 42,
@@ -1313,7 +1478,7 @@ function App() {
         chargeStopY: st.chargeStopY || 0, chargeDuration: st.chargeDuration || 5, chargeTimer: 0, chargeState: st.chargeStopY ? 'moving' : '', rushSpeed: st.rushSpeed || 0,
         bossCenterX: s.w / 2, bossMovePhase: Math.random() * Math.PI * 2, bossMoveAmp: s.w * .25, bossMoveTime: 0,
         skillCd: isBoss ? 5 : 0, skillState: '', skillTimer: 0, skillDuration: 0, shielded: false, hurtAnim: 0, fireSpawned: 0,
-        defense: st.defense || 0, broken: false, summonBatchId: '', summonBatchAlive: 0,
+        defense: st.defense || 0, broken: false, brokenTimer: 0, summonBatchId: '', summonBatchAlive: 0,
       });
       s.waveSpawned++;
     }
@@ -1605,6 +1770,7 @@ function App() {
     function stunEnemyByShield(s, e, duration = 1) {
       if (!e || e.hp <= 0) return;
       if (e.type === 'CHARGER' && e.chargeState === 'charging') {
+        e.chargeInterrupted = true;
         e.chargeState = 'moving';
         e.chargeTimer = 0;
         e.chargeWarned = false;
@@ -1614,28 +1780,19 @@ function App() {
     }
 
     function applyWeaponSpecialOnHit(s, e, weapon, finalDamage = 0) {
-      if (!weapon?.type) return;
+      if (!weapon?.type || weapon.noSpecial) return;
       const stats = weapon.stats || s.stats || {};
       const STR = stats.STR || 0, DEX = stats.DEX || 0, VIT = stats.VIT || 0;
-      if (weapon.type === 'katana' && STR + DEX > 25) {
-        e.bleedTime = Math.max(e.bleedTime || 0, 3);
-        e.bleedPct = e.boss ? 0.005 : 0.02;
+      const type = weapon.type;
+      // DEX劍系的多段傷害已整合在 damageEnemy() 內處理。
+      // 不再用遞迴 damageEnemy() 產生多顆跳字，避免畫面誤判成重複BUG。
+      if (type === 'kingsword' && Math.random() < Math.min(.85, (STR / 10) / 100)) {
+        damageEnemy(s, e, finalDamage / Math.max(globalDamageMultiplier(stats), .01), '#ffd76a', { type, combo: weapon.combo || 1, stats, noSpecial: true });
+        s.floatTexts.push({ id: uid(), text: '王者重擊', x:e.x, y:e.y-50, vy:-26, life:.5, color:'#ffd76a', size:15, glow:true });
       }
-      if (weapon.type === 'gianthammer') {
-        if (VIT > 25) e.wounded = Math.max(e.wounded || 0, 3);
-        if (VIT + STR > 55) e.weakpoint = true;
-      }
-      if (weapon.type === 'holyshield') {
-        const wasMarked = (e.holyMark || 0) > 0;
-        if (VIT > 30) e.holyMark = Math.max(e.holyMark || 0, 5);
-        if (wasMarked && VIT + STR > 55) {
-          for (const other of s.enemies) {
-            if (other.id !== e.id && Math.hypot(other.x - e.x, other.y - e.y) <= 20 + (other.boss ? 10 : 0)) {
-              damageEnemy(s, other, 2 * VIT, '#ffd76a', { type: weapon.type, combo: weapon.combo || 1, stats, noSpecial: true });
-            }
-          }
-          s.floatTexts.push({ id: uid(), text: '聖光爆發', x:e.x, y:e.y-34, vy:-28, life:.55, color:'#ffd76a', size:16, glow:true });
-        }
+      if ((type === 'greatshield' || type === 'holyshield') && (e.stunned || 0) > 0) {
+        const pctDamage = (e.maxHp || e.hp || 1) * ((VIT / 2) / 100);
+        if (pctDamage > 0) damageEnemy(s, e, pctDamage / Math.max(globalDamageMultiplier(stats), .01), '#fef3c7', { type, combo: weapon.combo || 1, stats, noSpecial: true });
       }
     }
 
@@ -1643,14 +1800,15 @@ function App() {
       const stats = weapon?.stats || s.stats || {};
       let finalDmg = dmg * globalDamageMultiplier(stats);
       let crit = false;
-      if (weapon?.type && SHIELD_TYPES.has(weapon.type)) stunEnemyByShield(s, e, 1);
-      if (e.type === 'CHARGER' && e.chargeState === 'charging') {
+      if (weapon?.type && SHIELD_TYPES.has(weapon.type) && !weapon.noSpecial) stunEnemyByShield(s, e, weapon.type === 'holyshield' ? 2 : 1);
+      if (e.type === 'CHARGER' && !e.chargeInterrupted && (e.chargeState === 'moving' || e.chargeState === 'charging')) {
         finalDmg *= .05;
-        s.floatTexts.push({ id: uid(), text: '蓄力減傷', x: e.x, y: e.y - 36, vy: -30, life: .45, color:'#c4b5fd', size:13, glow:true });
+        s.floatTexts.push({ id: uid(), text: e.chargeState === 'charging' ? '蓄力減傷' : '蓄力前減傷', x: e.x, y: e.y - 36, vy: -30, life: .45, color:'#c4b5fd', size:13, glow:true });
       }
       if (e.boss) {
-        if (e.broken) finalDmg *= 1.3;
-        const defense = Math.max(0, (e.defense || 0) * (e.broken ? 0.5 : 1));
+        const isBroken = (e.brokenTimer || 0) > 0;
+        if (isBroken) finalDmg *= 1.5;
+        const defense = Math.max(0, (e.defense || 0) * (isBroken ? 0.5 : 1));
         if (defense > 0) {
           finalDmg = Math.max(0, finalDmg - defense);
           s.floatTexts.push({ id: uid(), text: `防禦 -${Math.round(defense)}`, x: e.x + rand(-8,8), y: e.y - 56, vy: -34, life: .5, color:'#9ca3af', size:14, glow:true });
@@ -1677,21 +1835,51 @@ function App() {
       }
       const critInfo = critSpec(weapon?.type, stats);
       if (!crit && critInfo.chance > 0 && Math.random() < critInfo.chance) { finalDmg *= critInfo.mult; crit = true; }
-      e.hp -= finalDmg; e.flash = .08;
+
+      let displayStages = null;
+      let totalDmg = finalDmg;
+      const dexExtraChance = Math.min(.85, ((stats.DEX || 0) / 3) / 100);
+      if (weapon?.type === 'katana' && !weapon.noSpecial && Math.random() < dexExtraChance) {
+        totalDmg = finalDmg * 1.3;
+        displayStages = [finalDmg, totalDmg];
+      }
+      if (weapon?.type === 'muramasa' && !weapon.noSpecial) {
+        const baseDmg = finalDmg;
+        let runningDmg = baseDmg;
+        const stages = [baseDmg];
+        if (Math.random() < dexExtraChance) {
+          runningDmg += baseDmg * 0.3;
+          stages.push(runningDmg);
+        }
+        if (weapon.firstHitBonus && !weapon.firstHitUsed) {
+          weapon.firstHitUsed = true;
+          runningDmg += baseDmg * 0.1;
+          stages.push(runningDmg);
+        }
+        totalDmg = runningDmg;
+        displayStages = stages.length > 1 ? stages : null;
+      }
+
+      e.hp -= totalDmg; e.flash = .08;
       if (e.boss) { addWeaponCharge(s, 5); playSfxCooldown(s, 'bossHit', 90, 0.85); }
       if (weapon?.type) {
         if (SWORD_TYPES.has(weapon.type)) playSfxCooldown(s, 'swordHit', 55, 0.8);
         else if (SHIELD_TYPES.has(weapon.type)) playSfxCooldown(s, 'shieldHit', 70, 0.8);
         else if (SHOOT_TYPES.has(weapon.type)) playSfxCooldown(s, 'shoot', 55, 0.75);
       }
-      applyWeaponSpecialOnHit(s, e, weapon, finalDmg);
+      applyWeaponSpecialOnHit(s, e, weapon, totalDmg);
       if (e.finalBoss) e.hurtAnim = .18;
       const isTierColor = color === '#c084fc' || color === '#ffd76a';
+      const floatLife = displayStages ? .95 : (isTierColor ? .82 : .65);
       s.floatTexts.push({
-        id: uid(), text: `${crit ? '暴擊 ' : ''}${Math.round(finalDmg)}`, x: e.x + rand(-8,8), y: e.y - (e.boss ? 34 : 18),
-        vy: isTierColor ? -58 : -45, life: isTierColor ? .82 : .65, color,
-        size: (e.boss ? 20 : 16) + (color === '#ffd76a' ? 6 : color === '#c084fc' ? 3 : 0),
-        glow: isTierColor
+        id: uid(),
+        text: `${crit ? '暴擊 ' : ''}${Math.round(totalDmg)}`,
+        stages: displayStages ? displayStages.map(v => `${crit ? '暴擊 ' : ''}${Math.round(v)}`) : null,
+        totalLife: floatLife,
+        x: e.x + rand(-8,8), y: e.y - (e.boss ? 34 : 18),
+        vy: displayStages ? -38 : (isTierColor ? -58 : -45), life: floatLife, color,
+        size: (e.boss ? 20 : 16) + (displayStages ? 4 : 0) + (color === '#ffd76a' ? 6 : color === '#c084fc' ? 3 : 0),
+        glow: isTierColor || !!displayStages
       });
       if (weapon?.type && WEAPONS[weapon.type]?.hitSheet) {
         s.hitEffects.push({
@@ -1781,8 +1969,12 @@ function App() {
           owner.summonBatchAlive = Math.max(0, (owner.summonBatchAlive || 0) - 1);
           if (owner.summonBatchAlive === 0) {
             owner.broken = true;
+            owner.brokenTimer = 5;
+            owner.skillState = '';
+            owner.skillTimer = 0;
+            owner.skillCd = 5;
             owner.shielded = false; // no boss invulnerability
-            s.floatTexts.push({ id: uid(), text: 'BOSS 破防！防禦-50% 受傷+30%', x: owner.x, y: owner.y - 58, vy: -22, life: 1.2, color:'#ffdf6e', size:22, glow:true });
+            s.floatTexts.push({ id: uid(), text: 'BOSS 破防 5秒！防禦-50% 受傷+50%', x: owner.x, y: owner.y - 58, vy: -22, life: 1.2, color:'#ffdf6e', size:22, glow:true });
           }
         }
       } else if (!e.boss) addWeaponCharge(s, 10);
@@ -1827,9 +2019,9 @@ function App() {
           s.pointerId = null;
           setUi(v => ({ ...v, drawing:false, timer:0 }));
         }
-        // 橫斬與飛盾是即時施放型：1秒施放期間戰場不時停，怪物與BOSS照常移動。
-        if (!['swipeSlash', 'shieldClick'].includes(s.aimMode)) return;
+        // 橫斬與飛盾是即時施放型。弓箭 / 法杖 / 軌跡類施法改為子彈時間，不再完全時停。
       }
+      const simDt = (s.isDrawing && !['swipeSlash', 'shieldClick'].includes(s.aimMode)) ? dt * 0.35 : dt;
       if (s.tutorialActive) {
         const freezeTutorial = tutorialUpdate(s, dt);
         if (freezeTutorial) {
@@ -1838,7 +2030,7 @@ function App() {
           return;
         }
       } else {
-        s.baseRegenTimer = (s.baseRegenTimer || 0) + dt;
+        s.baseRegenTimer = (s.baseRegenTimer || 0) + simDt;
         if (s.baseRegenTimer >= 10) {
           s.baseRegenTimer -= 10;
           const heal = baseRegenPerTick(s.stats || {});
@@ -1848,7 +2040,7 @@ function App() {
           }
         }
 
-        s.autoWeapon += dt;
+        s.autoWeapon += simDt;
         const spawnInterval = blockSpawnInterval(s.stats || {});
         if (s.autoWeapon >= spawnInterval) {
           // 滿格時不生成也不重置計時；一有空位就會立刻補進新武器。
@@ -1856,20 +2048,20 @@ function App() {
         }
 
         if (s.waveState === 'rest') {
-          s.restTime -= dt;
-          if (s.restTime <= 3 && s.restTime + dt > 3) s.floatTexts.push({ id: uid(), text: `下一波倒數 3`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:28 });
-          if (s.restTime <= 2 && s.restTime + dt > 2) s.floatTexts.push({ id: uid(), text: `2`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:32 });
-          if (s.restTime <= 1 && s.restTime + dt > 1) s.floatTexts.push({ id: uid(), text: `1`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:32 });
+          s.restTime -= simDt;
+          if (s.restTime <= 3 && s.restTime + simDt > 3) s.floatTexts.push({ id: uid(), text: `下一波倒數 3`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:28 });
+          if (s.restTime <= 2 && s.restTime + simDt > 2) s.floatTexts.push({ id: uid(), text: `2`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:32 });
+          if (s.restTime <= 1 && s.restTime + simDt > 1) s.floatTexts.push({ id: uid(), text: `1`, x: s.w/2, y: 120, vy: -8, life: .9, color:'#fff6a8', size:32 });
           if (s.restTime <= 0) startCurrentNode(s);
         } else if (s.waveState === 'wave') {
           const cfg = waveConfig(s.wave);
-          s.waveElapsed += dt;
+          s.waveElapsed += simDt;
           if (s.berserkScheduled && !s.berserkTriggered && s.waveElapsed >= s.berserkAt) {
             s.berserkTriggered = true;
             s.berserkActive = true;
             s.floatTexts.push({ id: uid(), text: '怪物狂暴！速度 +30%', x: s.w/2, y: 122, vy: -10, life: 1.4, color:'#ff6644', size:30 });
           }
-          s.waveSpawnTimer += dt;
+          s.waveSpawnTimer += simDt;
           while (s.waveSpawned < s.waveTotal && s.waveSpawnTimer >= cfg.interval) {
             spawnEnemy(s);
             s.waveSpawnTimer -= cfg.interval;
@@ -1879,24 +2071,32 @@ function App() {
       }
 
       for (const e of s.enemies) {
-        e.flash = Math.max(0, e.flash - dt);
-        e.hurtAnim = Math.max(0, (e.hurtAnim || 0) - dt);
-        e.cd -= dt;
-        e.frozen = Math.max(0, e.frozen - dt);
-        e.stunned = Math.max(0, (e.stunned || 0) - dt);
-        e.wounded = Math.max(0, (e.wounded || 0) - dt);
-        e.holyMark = Math.max(0, (e.holyMark || 0) - dt);
-        if ((e.bleedTime || 0) > 0) {
-          e.bleedTime = Math.max(0, e.bleedTime - dt);
-          e.hp -= e.maxHp * (e.bleedPct || 0) * dt;
+        e.flash = Math.max(0, e.flash - simDt);
+        e.hurtAnim = Math.max(0, (e.hurtAnim || 0) - simDt);
+        e.cd -= simDt;
+        e.frozen = Math.max(0, e.frozen - simDt);
+        e.stunned = Math.max(0, (e.stunned || 0) - simDt);
+        e.wounded = Math.max(0, (e.wounded || 0) - simDt);
+        e.holyMark = Math.max(0, (e.holyMark || 0) - simDt);
+        if (e.boss && (e.brokenTimer || 0) > 0) {
+          e.brokenTimer = Math.max(0, (e.brokenTimer || 0) - simDt);
+          e.broken = e.brokenTimer > 0;
+          e.skillState = '';
+          e.skillTimer = 0;
+        } else if (e.boss) {
+          e.broken = false;
         }
-        if (e.boss && (e.stunned || 0) <= 0) {
+        if ((e.bleedTime || 0) > 0) {
+          e.bleedTime = Math.max(0, e.bleedTime - simDt);
+          e.hp -= e.maxHp * (e.bleedPct || 0) * simDt;
+        }
+        if (e.boss && (e.stunned || 0) <= 0 && (e.brokenTimer || 0) <= 0) {
           const activeSummons = s.enemies.some(x => x.summonOwner === e.id && x.hp > 0);
           if (e.finalBoss) {
             e.shielded = false; // no boss invulnerability
-            e.skillCd -= dt;
+            e.skillCd -= simDt;
             if (e.skillState === 'summoning') {
-              e.skillTimer += dt;
+              e.skillTimer += simDt;
               if (e.skillTimer >= e.skillDuration) {
                 e.skillState = '';
                 e.skillTimer = 0;
@@ -1910,9 +2110,9 @@ function App() {
           } else if (s.wave === 5) {
             const activeFireballs = s.enemies.some(x => x.summonOwner === e.id && x.hp > 0);
             e.shielded = false; // no boss invulnerability
-            e.skillCd -= dt;
+            e.skillCd -= simDt;
             if (e.skillState === 'fire') {
-              e.skillTimer += dt;
+              e.skillTimer += simDt;
               while (e.fireSpawned < 3 && e.skillTimer >= e.fireSpawned * 0.16) {
                 spawnBossFireball(s, e, e.fireSpawned);
                 e.fireSpawned += 1;
@@ -1929,31 +2129,31 @@ function App() {
           }
         }
 
-        if (e.frozen <= 0 && (e.stunned || 0) <= 0) {
+        if (e.frozen <= 0 && (e.stunned || 0) <= 0 && !(e.boss && (e.brokenTimer || 0) > 0)) {
           if (e.boss) {
             // 第 5 / 第 10 波 BOSS 不再一路往基地衝。
             // 先進場到戰場上方 1/4 附近，之後左右巡航並持續施放技能。
             const targetY = s.battleH * .25;
             if (e.y < targetY) {
-              e.y = Math.min(targetY, e.y + e.speed * dt);
+              e.y = Math.min(targetY, e.y + e.speed * simDt);
             } else {
               e.y = targetY;
               // BOSS 左右移動時間只在遊戲未時停時累積，避免玩家畫線時 BOSS 累積相位，解除時停後瞬移。
-              e.bossMoveTime = (e.bossMoveTime || 0) + dt;
+              e.bossMoveTime = (e.bossMoveTime || 0) + simDt;
               e.x = clamp((e.bossCenterX || s.w / 2) + Math.sin(e.bossMoveTime * 1.15 + (e.bossMovePhase || 0)) * (e.bossMoveAmp || s.w * .25), 56, s.w - 56);
             }
           } else if (e.type === 'BAT' || e.type === 'FIREBALL') {
             const dy = Math.max(1, (s.battleH - 28) - e.y);
             const dx = ((e.targetX || e.x) - e.x) / dy;
-            e.x += dx * e.speed * dt + Math.sin(s.animTime * 5 + (e.driftPhase || 0)) * (e.driftAmp || 0) * dt;
-            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * ((e.holyMark || 0) > 0 ? 0.5 : 1) * dt;
+            e.x += dx * e.speed * simDt + Math.sin(s.animTime * 5 + (e.driftPhase || 0)) * (e.driftAmp || 0) * simDt;
+            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * ((e.holyMark || 0) > 0 ? 0.5 : 1) * simDt;
           } else if (e.type === 'RANGED') {
             const targetY = e.stopY || s.battleH * .42;
-            if (e.y < targetY) e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
+            if (e.y < targetY) e.y += e.speed * (s.berserkActive ? 1.3 : 1) * simDt;
             else {
               e.y = targetY;
-              e.x += Math.sin(s.animTime * 1.7 + e.animSeed) * 10 * dt;
-              e.shootCd -= dt;
+              e.x += Math.sin(s.animTime * 1.7 + e.animSeed) * 10 * simDt;
+              e.shootCd -= simDt;
               if (e.shootCd <= 0) {
                 e.shootCd = 5;
                 s.enemyProjectiles = s.enemyProjectiles || [];
@@ -1964,14 +2164,14 @@ function App() {
           } else if (e.type === 'CHARGER') {
             const stopY = e.chargeStopY || s.battleH - 150;
             if (e.chargeState === 'rushing') {
-              e.y += (e.rushSpeed || e.speed * 3) * (s.berserkActive ? 1.3 : 1) * dt;
+              e.y += (e.rushSpeed || e.speed * 3) * (s.berserkActive ? 1.3 : 1) * simDt;
             } else if (e.y < stopY) {
               e.chargeState = 'moving';
-              e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
+              e.y += e.speed * (s.berserkActive ? 1.3 : 1) * simDt;
             } else {
               e.y = stopY;
               e.chargeState = 'charging';
-              e.chargeTimer = (e.chargeTimer || 0) + dt;
+              e.chargeTimer = (e.chargeTimer || 0) + simDt;
               if (!e.chargeWarned) {
                 e.chargeWarned = true;
                 s.floatTexts.push({ id: uid(), text:'蓄力中！', x:e.x, y:e.y-32, vy:-22, life:.65, color:'#a78bfa', size:15, glow:true });
@@ -1982,7 +2182,7 @@ function App() {
               }
             }
           } else {
-            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * dt;
+            e.y += e.speed * (s.berserkActive ? 1.3 : 1) * simDt;
           }
         }
         if (!e.boss && e.y > s.battleH - 28) {
@@ -1999,8 +2199,8 @@ function App() {
       }
       s.enemyProjectiles = s.enemyProjectiles || [];
       for (const pr of s.enemyProjectiles) {
-        pr.y += pr.vy * dt;
-        pr.life -= dt;
+        pr.y += pr.vy * simDt;
+        pr.life -= simDt;
         if (pr.y >= s.battleH - 32 && !s.tutorialActive) {
           s.allyHp -= pr.damage || 3;
           pr.life = 0;
@@ -2012,7 +2212,7 @@ function App() {
       s.enemies = s.enemies.filter(e=>{ if(e.hp<=0){ if(e.y<=s.battleH-28) killEnemy(s,e); return false;} return true; });
       s.zones = s.zones || [];
       for (const z of s.zones) {
-        z.life -= dt; z.tick -= dt;
+        z.life -= simDt; z.tick -= simDt;
         if (z.tick <= 0) {
           z.tick += 1;
           for (const e of s.enemies) {
@@ -2024,21 +2224,23 @@ function App() {
       }
       s.zones = s.zones.filter(z => z.life > 0);
       for (const sl of (s.slashes || [])) {
-        sl.age = (sl.age || 0) + dt;
-        sl.life -= dt;
-        sl.x += (sl.vx || 0) * dt;
+        sl.age = (sl.age || 0) + simDt;
+        sl.life -= simDt;
+        sl.x += (sl.vx || 0) * simDt;
         const slashHitWidth = sl.type === 'greatsword' ? 54 : 42;
         for (const e of s.enemies) {
           if (e.hp <= 0 || sl.hitIds?.includes(e.id)) continue;
           if (e.y >= sl.top && e.y <= s.battleH - 8 && Math.abs(e.x - sl.x) <= slashHitWidth + (e.boss ? 16 : 0)) {
-            damageEnemy(s, e, sl.damage, sl.color, { type: sl.type, combo: sl.tier, stats: sl.stats });
+            const slashWeapon = { type: sl.type, combo: sl.tier, stats: sl.stats, firstHitBonus: sl.firstHitBonus, firstHitUsed: sl.firstHitUsed };
+            damageEnemy(s, e, sl.damage, sl.color, slashWeapon);
+            sl.firstHitUsed = slashWeapon.firstHitUsed;
             sl.hitIds.push(e.id);
           }
         }
       }
       s.slashes = (s.slashes || []).filter(sl => sl.life > 0 && sl.x > -120 && sl.x < s.w + 120);
       for (const shot of (s.shieldShots || [])) {
-        shot.age += dt;
+        shot.age += simDt;
         let target = s.enemies.find(e => e.id === shot.targetId && e.hp > 0);
         if (!target) {
           target = nearestEnemy(s, shot.x, shot.y, new Set(shot.hitIds), shot.bounceRange || Infinity);
@@ -2047,7 +2249,7 @@ function App() {
         if (!target) { shot.done = true; continue; }
         const dx = target.x - shot.x, dy = target.y - shot.y;
         const d = Math.max(1, Math.hypot(dx, dy));
-        const step = shot.speed * dt;
+        const step = shot.speed * simDt;
         if (d <= step) {
           shot.x = target.x; shot.y = target.y;
           damageEnemy(s, target, shot.damage, shot.color, { type: shot.type, combo: shot.combo, stats: shot.stats });
@@ -2067,7 +2269,7 @@ function App() {
       for (const w of s.weapons) {
         const base=WEAPONS[w.type]; const next=w.path[w.seg+1]; const cur=w.path[w.seg];
         if(!next){ w.done=true; continue; }
-        const len=Math.max(1, dist(cur,next)); w.t += base.speed*dt/len;
+        const len=Math.max(1, dist(cur,next)); w.t += base.speed*simDt/len;
         while(w.t>=1 && w.seg < w.path.length-2){ w.t-=1; w.seg++; }
         if (w.seg >= w.path.length - 2 && w.t >= 1) {
           if (base.returnPath && (w.stats?.DEX || 0) > 20 && !w.returning) {
@@ -2075,8 +2277,8 @@ function App() {
           } else { w.t = 1; w.done = true; }
         }
         const p0=w.path[w.seg], p1=w.path[w.seg+1] || p0; w.x=lerp(p0.x,p1.x,clamp(w.t,0,1)); w.y=lerp(p0.y,p1.y,clamp(w.t,0,1));
-        w.trail.push({x:w.x,y:w.y,life:.35}); w.trail.forEach(t=>t.life-=dt); w.trail=w.trail.filter(t=>t.life>0).slice(-18);
-        for (const key of Object.keys(w.hitCd)) w.hitCd[key] = Math.max(0, w.hitCd[key] - dt);
+        w.trail.push({x:w.x,y:w.y,life:.35}); w.trail.forEach(t=>t.life-=simDt); w.trail=w.trail.filter(t=>t.life>0).slice(-18);
+        for (const key of Object.keys(w.hitCd)) w.hitCd[key] = Math.max(0, w.hitCd[key] - simDt);
         for(const e of s.enemies){
           const hitKey = String(e.id);
           const swordSingleHit = SWORD_TYPES.has(w.type);
@@ -2140,7 +2342,7 @@ function App() {
         ctx.textBaseline = 'middle';
         ctx.strokeStyle = 'rgba(0,0,0,.75)';
         ctx.lineWidth = 4;
-        const shieldText = boss.shielded ? '  防護罩啟動' : '';
+        const shieldText = (boss.brokenTimer || 0) > 0 ? `  破防 ${Math.ceil(boss.brokenTimer)}s` : (boss.shielded ? '  防護罩啟動' : '');
         const label = `BOSS HP  ${Math.ceil(boss.hp)} / ${boss.maxHp}${shieldText}`;
         ctx.strokeText(label, s.w / 2, barY + barH / 2 + 1);
         ctx.fillText(label, s.w / 2, barY + barH / 2 + 1);
@@ -2348,7 +2550,21 @@ function App() {
         }
       }
       s.particles.forEach(p=>{ctx.save();ctx.globalAlpha=clamp(p.life*2,0,1);ctx.fillStyle=p.color;if(p.glow){ctx.shadowColor=p.color;ctx.shadowBlur=12;}const ps=p.size||4;ctx.fillRect(p.x-ps/2,p.y-ps/2,ps,ps);ctx.restore();});
-      s.floatTexts.forEach(f=>{ctx.save();ctx.globalAlpha=clamp(f.life,0,1);ctx.fillStyle=f.color;ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=f.glow?6:4;if(f.glow){ctx.shadowColor=f.color;ctx.shadowBlur=18;}ctx.font=`900 ${f.size}px system-ui`;ctx.textAlign='center';ctx.strokeText(f.text,f.x,f.y);ctx.fillText(f.text,f.x,f.y);ctx.restore();});
+      s.floatTexts.forEach(f=>{
+        ctx.save();
+        const totalLife = f.totalLife || f.life || 1;
+        const elapsed = totalLife - f.life;
+        let text = f.text;
+        let pulse = 0;
+        if (Array.isArray(f.stages) && f.stages.length) {
+          const stageLen = 0.18;
+          const idx = Math.min(f.stages.length - 1, Math.max(0, Math.floor(elapsed / stageLen)));
+          text = f.stages[idx];
+          const local = elapsed - idx * stageLen;
+          pulse = local >= 0 && local < 0.08 ? 5 : 0;
+        }
+        ctx.globalAlpha=clamp(f.life,0,1);ctx.fillStyle=f.color;ctx.strokeStyle='rgba(0,0,0,.7)';ctx.lineWidth=f.glow?6:4;if(f.glow){ctx.shadowColor=f.color;ctx.shadowBlur=18;}ctx.font=`900 ${f.size + pulse}px system-ui`;ctx.textAlign='center';ctx.strokeText(text,f.x,f.y);ctx.fillText(text,f.x,f.y);ctx.restore();
+      });
       ctx.fillStyle='rgba(18,23,33,.95)'; ctx.fillRect(0,s.battleH,s.w,s.h-s.battleH);
     }
     function loop(now){ const s=stateRef.current; const dt=Math.min(.033,(now-s.last)/1000); s.last=now; update(dt); render(); requestAnimationFrame(loop); }
@@ -2367,6 +2583,19 @@ function App() {
     const s = stateRef.current; if (!s) return;
     s.stats[key] = (s.stats[key] || 0) + amount;
     setUi(v => ({ ...v, stats: { ...s.stats } }));
+  };
+  const devReplaceBagWeapon = (baseType, nextType) => {
+    const s = stateRef.current; if (!s) return;
+    const baseSet = baseType === 'sword' ? SWORD_TYPES : baseType === 'bow' ? SHOOT_TYPES : SHIELD_TYPES;
+    let idx = bagRef.current.findIndex(t => t === baseType);
+    if (idx < 0) idx = bagRef.current.findIndex(t => baseSet.has(t));
+    if (idx < 0) idx = 0;
+    const nextBag = [...bagRef.current];
+    nextBag[idx] = nextType;
+    bagRef.current = nextBag;
+    s.bag = [...nextBag];
+    s.floatTexts?.push({ id: uid(), text: `${WEAPONS[nextType].name} 已裝備`, x: s.w / 2, y: 116, vy: -18, life: 1, color: WEAPONS[nextType].color || '#fff176', size: 20, glow: true });
+    setUi(v => ({ ...v, bag: [...nextBag], selectedBagIndex: idx, showBag: true }));
   };
   const devJumpWave = (wave) => {
     const s = stateRef.current; if (!s) return;
@@ -2405,6 +2634,13 @@ function App() {
       <div className="devRow"><span>跳關</span>{[1,5,10].map(n => <button key={n} onClick={() => devJumpWave(n)}>第{n}波</button>)}</div>
       <div className="devRow"><span>數值 +5</span>{STAT_KEYS.map(k => <button key={k} onClick={() => devAddStats(k, 5)}>{STAT_LABEL[k] || k}</button>)}</div>
       <div className="devRow weaponDev"><span>生成方塊</span>{TYPES.map(t => <button key={t} onClick={() => devAddWeapon(t)}>{WEAPONS[t].name}</button>)}</div>
+      <div className="devUpgradeBox">
+        <div className="devUpgradeTitle">替換包包武器</div>
+        {DEV_WEAPON_UPGRADES.map(group => <div key={group.base} className="devUpgradeRow">
+          <span>{group.title}</span>
+          {group.options.map(type => <button key={type} className={weaponBranchClass(type)} onClick={() => devReplaceBagWeapon(group.base, type)}>{WEAPONS[type].name}</button>)}
+        </div>)}
+      </div>
     </div>}
     <div className="expHud">
       <div className="expText">Lv.{ui.level}　EXP {Math.floor(ui.exp || 0)} / {ui.expNeed || 80}</div>
@@ -2437,26 +2673,36 @@ function App() {
     </div>}
     {ui.shopOpen && <div className="shopOverlay">
       <div className={`shopPanel ${ui.shopBoughtFx ? 'shopFlash' : ''}`}>
-        <div className="shopTop"><h2>⚔️ 武器商店</h2><div className="shopKills">💀 擊殺：{ui.kills}</div></div>
+        <div className="shopTop"><h2>補給站</h2><div className="shopKills">💀 擊殺：{ui.kills}</div></div>
         {ui.shopMessage && <div className={`shopMessage ${ui.shopMessage.includes('不足') ? 'bad' : ''}`}>{ui.shopMessage}</div>}
+        <div className="shopSectionTitle">武器升級</div>
         <div className="shopGrid">
-          {(ui.shopItems || []).map((offer) => {
+          {(ui.shopItems || []).slice(0, 2).map(offer => {
             const w = WEAPONS[offer.type];
-            const meta = weaponQualityMeta(offer.type);
-            return <button key={offer.id} className={`shopCard ${meta.key} ${offer.bought ? 'bought' : ''} ${ui.shopMessage === '擊殺數不足' ? 'shake' : ''}`} onClick={() => buyShopWeapon(offer)} disabled={offer.bought}>
-              <div className="shopIcon"><img src={w.icon} alt={w.name} /></div>
+            const stats = ui.stats || WARRIOR.stats;
+            return <button key={offer.id} className={`shopCard weapon ${weaponBranchClass(offer.type)} ${offer.bought ? 'disabled' : ''}`} onClick={() => buyShopWeapon(offer)} disabled={offer.bought}>
+              <div className="shopIcon"><img src={w.icon} alt={w.name}/></div>
               <div className="shopName">{w.name}</div>
-              <div className="shopFormula">{w.formula}</div>
-              <div className="shopDesc">{w.desc || (w.swipeSlash ? '左右滑動斬擊' : w.shieldClick ? '點擊召喚飛盾彈射' : w.freeze ? '命中凍結敵人' : SHIELD_TYPES.has(offer.type) ? '命中暈眩敵人 1 秒' : w.aim ? '點擊指定地點打擊' : '沿軌跡多段命中')}</div>
+              <div className="shopFormula">{offer.tierLabel}｜{weaponSeriesLabel(offer.type)}｜{offer.attr}</div>
+              <div className="shopDesc">傷害：{weaponDamageText(offer.type, stats)}　{weaponControlText(offer.type)}</div>
+              <div className="shopPassive">{weaponPassiveTexts(offer.type, stats).slice(0, 2).map((txt, i) => <span key={i}>• {txt}</span>)}</div>
               <div className="shopPrice">💀 {offer.price}</div>
             </button>;
           })}
+        </div>
+        <div className="shopSectionTitle">遺物</div>
+        <div className="shopGrid relicGrid">
+          <button className="shopCard relic disabled" disabled><div className="shopEmoji">◇</div><div className="shopName">遺物欄位</div><div className="shopDesc">尚未開放</div></button>
+          <button className="shopCard relic disabled" disabled><div className="shopEmoji">◇</div><div className="shopName">遺物欄位</div><div className="shopDesc">尚未開放</div></button>
+        </div>
+        <div className="shopSectionTitle">補給</div>
+        <div className="shopGrid singleShopGrid">
           <button className={`shopCard heal ${(ui.allyHp || 0) >= 100 ? 'disabled' : ''}`} onClick={buyHeal} disabled={(ui.allyHp || 0) >= 100}>
             <div className="shopEmoji">❤️</div>
             <div className="shopName">基地修復</div>
-            <div className="shopFormula">回復基地 20 HP</div>
+            <div className="shopFormula">回復基地 20%</div>
             <div className="shopDesc">HP 不超過 100；滿血時不可購買</div>
-            <div className="shopPrice">💀 40</div>
+            <div className="shopPrice">💀 50</div>
           </button>
         </div>
         {ui.replaceOffer && <div className="replaceBox">
@@ -2496,10 +2742,17 @@ function App() {
         <div className="bagTitle">武器包包 {ui.bag?.length || 0}/{ui.bagCapacity || 3}</div>
         <div className="bagSlots">{Array.from({length: ui.bagCapacity || 3}).map((_, idx) => {
           const type = ui.bag?.[idx]; const w = type ? WEAPONS[type] : null;
-          return <button key={idx} className={`bagSlot ${ui.selectedBagIndex === idx ? 'active' : ''}`} onClick={() => selectBagWeapon(idx)}>{w ? <><img src={w.icon} alt={w.name}/><small>{w.name}</small></> : <small>空格</small>}</button>;
+          return <button key={idx} className={`bagSlot ${ui.selectedBagIndex === idx ? 'active' : ''} ${type ? weaponBranchClass(type) : ''}`} onClick={() => selectBagWeapon(idx)}>{w ? <><img src={w.icon} alt={w.name}/><small>{w.name}</small><em>{weaponBranchText(type)}</em></> : <small>空格</small>}</button>;
         })}</div>
-        {ui.bag?.[ui.selectedBagIndex ?? 0] && (() => { const type = ui.bag[ui.selectedBagIndex ?? 0]; const w = WEAPONS[type]; return <div className="weaponDetail"><b>{w.name}</b><span>傷害：{weaponDamageText(type, ui.stats || WARRIOR.stats)}</span><span>{weaponStatTags(type)}</span><span>{weaponControlText(type)}</span></div> })()}
-        <p className="bagHint">序列生成會從包包武器隨機抽取。商店節點可購買新武器並替換包包內容。</p>
+        {ui.bag?.[ui.selectedBagIndex ?? 0] && (() => { const type = ui.bag[ui.selectedBagIndex ?? 0]; const w = WEAPONS[type]; const stats = ui.stats || WARRIOR.stats; return <div className={`weaponDetail ${weaponBranchClass(type)}`}>
+          <div className="weaponDetailTop"><b>{w.name}</b><em>{weaponBranchText(type)}</em></div>
+          <span>傷害：{weaponDamageText(type, stats)}</span>
+          <span>{weaponStatTags(type)}</span>
+          <span>{weaponControlText(type)}</span>
+          {weaponRangeText(type) && <span>{weaponRangeText(type)}</span>}
+          <div className="passiveList"><strong>特殊被動</strong>{weaponPassiveTexts(type, stats).map((txt, i) => <span key={i}>• {txt}</span>)}</div>
+        </div> })()}
+        <p className="bagHint">序列生成會從包包武器隨機抽取。</p>
       </div>
     </div>}
   </div></div>;
