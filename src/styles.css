@@ -28,3 +28,12 @@
 .passiveList{display:flex;flex-direction:column;gap:6px;margin-top:3px;padding:10px;border-radius:12px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.08)}
 .passiveList strong{font-size:14px;color:#ffe082}.passiveList span{font-size:14px;line-height:1.35;color:#dbeafe}
 .shopSectionTitle{margin:12px 0 8px;font-weight:900;color:#ffe082;letter-spacing:.04em;font-size:15px}.shopCard.disabled{opacity:.48;filter:saturate(.65);cursor:not-allowed}.shopCard.weapon{position:relative;overflow:hidden}.shopCard.weapon.branchStr{border-color:rgba(255,138,128,.55);background:linear-gradient(180deg,rgba(87,28,28,.72),#101b30)}.shopCard.weapon.branchDex{border-color:rgba(126,231,135,.55);background:linear-gradient(180deg,rgba(24,76,48,.72),#101b30)}.shopCard.weapon.branchVit{border-color:rgba(116,185,255,.55);background:linear-gradient(180deg,rgba(23,57,96,.72),#101b30)}.shopPassive{display:flex;flex-direction:column;gap:2px;font-size:11px;line-height:1.28;color:#dbeafe}.singleShopGrid{grid-template-columns:1fr}.shopEmoji{font-size:34px;line-height:1}.relicGrid .shopCard{min-height:110px}.shopCard.heal{min-height:130px}
+
+.swordUpgradeChoice{align-items:flex-start;text-align:left;padding:14px 14px;min-height:138px}
+.swordUpgradeChoice.strChoice{border-color:rgba(248,113,113,.65);box-shadow:0 0 0 1px rgba(248,113,113,.20),0 12px 28px rgba(127,29,29,.25)}
+.swordUpgradeChoice.dexChoice{border-color:rgba(96,165,250,.65);box-shadow:0 0 0 1px rgba(96,165,250,.20),0 12px 28px rgba(30,64,175,.25)}
+.upgradeTextBlock{display:flex;flex-direction:column;gap:5px;line-height:1.25;width:100%}
+.upgradeTextBlock b{font-size:20px;letter-spacing:.06em;color:#fff}
+.upgradeTextBlock small{font-size:12px;color:#93c5fd;font-weight:800;letter-spacing:.04em}
+.upgradeTextBlock p{margin:3px 0 0;color:#dbeafe;font-size:13px;line-height:1.45}
+.strChoice .upgradeTextBlock small{color:#fca5a5}

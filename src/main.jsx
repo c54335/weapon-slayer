@@ -97,6 +97,48 @@ const ADVENTURE_NODES = [
   { type: 'shop' },
   { type: 'wave', wave: 10 },
 ];
+
+
+const SWORD_UPGRADE_DEFS = {
+  aftershock_base: { id:'aftershock_base', kind:'swordUpgrade', branch:'STR', group:'aftershock', advanced:false, title:'餘震', subtitle:'劍 STR｜基礎', desc:'施法結束後，全屏敵人再吃一次普通斬擊。' },
+  aftershock_repeat: { id:'aftershock_repeat', kind:'swordUpgrade', branch:'STR', group:'aftershock', advanced:true, title:'餘震・連震', subtitle:'劍 STR｜進階', desc:'全屏攻擊有 STR/3% 機率再打一次。' },
+  aftershock_crit: { id:'aftershock_crit', kind:'swordUpgrade', branch:'STR', group:'aftershock', advanced:true, title:'餘震・破綻', subtitle:'劍 STR｜進階', desc:'全屏攻擊額外 +20% 爆擊率。' },
+  aftershock_single: { id:'aftershock_single', kind:'swordUpgrade', branch:'STR', group:'aftershock', advanced:true, title:'餘震・孤斬', subtitle:'劍 STR｜進階', desc:'施法期間若只攻擊一次，全屏攻擊傷害 ×1.2。' },
+  aftershock_pierce: { id:'aftershock_pierce', kind:'swordUpgrade', branch:'STR', group:'aftershock', advanced:true, title:'餘震・破甲', subtitle:'劍 STR｜進階', desc:'全屏攻擊無視敵人 50% 防禦。' },
+  focus_base: { id:'focus_base', kind:'swordUpgrade', branch:'STR', group:'focus', advanced:false, title:'專注', subtitle:'劍 STR｜基礎', desc:'施法第一下斬擊 +100% 傷害；後續每斬 -30%。' },
+  focus_power: { id:'focus_power', kind:'swordUpgrade', branch:'STR', group:'focus', advanced:true, title:'專注・極意', subtitle:'劍 STR｜進階', desc:'第一下斬擊改為 +200% 傷害。' },
+  focus_range: { id:'focus_range', kind:'swordUpgrade', branch:'STR', group:'focus', advanced:true, title:'專注・延斬', subtitle:'劍 STR｜進階', desc:'第一下斬擊射程 +100。' },
+  focus_execute: { id:'focus_execute', kind:'swordUpgrade', branch:'STR', group:'focus', advanced:true, title:'專注・斬殺', subtitle:'劍 STR｜進階', desc:'第一下斬擊後，怪物血量低於 10% 直接斬殺。' },
+  focus_crit: { id:'focus_crit', kind:'swordUpgrade', branch:'STR', group:'focus', advanced:true, title:'專注・會心', subtitle:'劍 STR｜進階', desc:'第一下斬擊額外 +30% 爆擊率。' },
+  frenzy_str_base: { id:'frenzy_str_base', kind:'swordUpgrade', branch:'STR', group:'frenzy_str', advanced:false, title:'狂躁', subtitle:'劍 STR｜基礎', desc:'一擊殺死怪物後，有 STR/15% 機率產生二階劍方塊。' },
+  frenzy_str_chance: { id:'frenzy_str_chance', kind:'swordUpgrade', branch:'STR', group:'frenzy_str', advanced:true, title:'狂躁・增幅', subtitle:'劍 STR｜進階', desc:'生成方塊機率提高 30%。' },
+  frenzy_str_t3: { id:'frenzy_str_t3', kind:'swordUpgrade', branch:'STR', group:'frenzy_str', advanced:true, title:'狂躁・昇華', subtitle:'劍 STR｜進階', desc:'生成方塊時，有 STR/15% 機率改為三階。' },
+  frenzy_str_boss: { id:'frenzy_str_boss', kind:'swordUpgrade', branch:'STR', group:'frenzy_str', advanced:true, title:'狂躁・屠王', subtitle:'劍 STR｜進階', desc:'攻擊 BOSS 也能用同機率生成劍方塊。' },
+  frenzy_str_gain: { id:'frenzy_str_gain', kind:'swordUpgrade', branch:'STR', group:'frenzy_str', advanced:true, title:'狂躁・成長', subtitle:'劍 STR｜進階', desc:'生成方塊時，30% 機率永久 +1 STR。' },
+  swordwave_base: { id:'swordwave_base', kind:'swordUpgrade', branch:'DEX', group:'swordwave', advanced:false, title:'劍氣', subtitle:'劍 DEX｜基礎', desc:'每次斬擊有 DEX/3% 機率射出全屏橫掃劍氣，傷害為原傷害 20%。' },
+  swordwave_double: { id:'swordwave_double', kind:'swordUpgrade', branch:'DEX', group:'swordwave', advanced:true, title:'劍氣・雙刃', subtitle:'劍 DEX｜進階', desc:'劍氣有 DEX/5% 機率造成兩次傷害。' },
+  swordwave_crit: { id:'swordwave_crit', kind:'swordUpgrade', branch:'DEX', group:'swordwave', advanced:true, title:'劍氣・會心', subtitle:'劍 DEX｜進階', desc:'劍氣額外 +20% 爆擊率。' },
+  swordwave_combo: { id:'swordwave_combo', kind:'swordUpgrade', branch:'DEX', group:'swordwave', advanced:true, title:'劍氣・連斬', subtitle:'劍 DEX｜進階', desc:'施法斬擊次數 ≥5 時，劍氣傷害改為 40%。' },
+  swordwave_pierce: { id:'swordwave_pierce', kind:'swordUpgrade', branch:'DEX', group:'swordwave', advanced:true, title:'劍氣・穿甲', subtitle:'劍 DEX｜進階', desc:'劍氣無視敵人防禦。' },
+  cruelty_base: { id:'cruelty_base', kind:'swordUpgrade', branch:'DEX', group:'cruelty', advanced:false, title:'殘酷', subtitle:'劍 DEX｜基礎', desc:'施法期間每次造成傷害 +1 層殘酷；每層全域傷害 +0.5%，上限 100。' },
+  cruelty_cap: { id:'cruelty_cap', kind:'swordUpgrade', branch:'DEX', group:'cruelty', advanced:true, title:'殘酷・上限', subtitle:'劍 DEX｜進階', desc:'殘酷上限提高為 150。' },
+  cruelty_stack: { id:'cruelty_stack', kind:'swordUpgrade', branch:'DEX', group:'cruelty', advanced:true, title:'殘酷・加深', subtitle:'劍 DEX｜進階', desc:'每次造成傷害改為 +2 層。' },
+  cruelty_extra: { id:'cruelty_extra', kind:'swordUpgrade', branch:'DEX', group:'cruelty', advanced:true, title:'殘酷・追擊', subtitle:'劍 DEX｜進階', desc:'殘酷 >80 層時，攻擊額外造成 10% 傷害。' },
+  cruelty_power: { id:'cruelty_power', kind:'swordUpgrade', branch:'DEX', group:'cruelty', advanced:true, title:'殘酷・強化', subtitle:'劍 DEX｜進階', desc:'每層殘酷傷害加成改為 0.7%。' },
+  frenzy_dex_base: { id:'frenzy_dex_base', kind:'swordUpgrade', branch:'DEX', group:'frenzy_dex', advanced:false, title:'狂躁', subtitle:'劍 DEX｜基礎', desc:'每次造成傷害後，有 DEX/20% 機率產生二階劍方塊。' },
+  frenzy_dex_chance: { id:'frenzy_dex_chance', kind:'swordUpgrade', branch:'DEX', group:'frenzy_dex', advanced:true, title:'狂躁・增幅', subtitle:'劍 DEX｜進階', desc:'生成方塊機率提高 30%。' },
+  frenzy_dex_t3: { id:'frenzy_dex_t3', kind:'swordUpgrade', branch:'DEX', group:'frenzy_dex', advanced:true, title:'狂躁・昇華', subtitle:'劍 DEX｜進階', desc:'生成方塊時，有 DEX/15% 機率改為三階。' },
+  frenzy_dex_boss: { id:'frenzy_dex_boss', kind:'swordUpgrade', branch:'DEX', group:'frenzy_dex', advanced:true, title:'狂躁・獵王', subtitle:'劍 DEX｜進階', desc:'攻擊 BOSS 時生成機率再 +15%。' },
+  frenzy_dex_gain: { id:'frenzy_dex_gain', kind:'swordUpgrade', branch:'DEX', group:'frenzy_dex', advanced:true, title:'狂躁・成長', subtitle:'劍 DEX｜進階', desc:'生成方塊時，5% 機率永久 +1 DEX。' },
+};
+const SWORD_UPGRADE_BRANCHES = {
+  STR: ['aftershock_base','aftershock_repeat','aftershock_crit','aftershock_single','aftershock_pierce','focus_base','focus_power','focus_range','focus_execute','focus_crit','frenzy_str_base','frenzy_str_chance','frenzy_str_t3','frenzy_str_boss','frenzy_str_gain'],
+  DEX: ['swordwave_base','swordwave_double','swordwave_crit','swordwave_combo','swordwave_pierce','cruelty_base','cruelty_cap','cruelty_stack','cruelty_extra','cruelty_power','frenzy_dex_base','frenzy_dex_chance','frenzy_dex_t3','frenzy_dex_boss','frenzy_dex_gain'],
+};
+const SWORD_BASE_BY_GROUP = {
+  aftershock:'aftershock_base', focus:'focus_base', frenzy_str:'frenzy_str_base', swordwave:'swordwave_base', cruelty:'cruelty_base', frenzy_dex:'frenzy_dex_base'
+};
+
 const rand = (a, b) => a + Math.random() * (b - a);
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const uid = (() => { let n = 1; return () => n++; })();
@@ -334,7 +376,7 @@ function App() {
   const energyBarRef = useRef(null);   // 能量條
   const [arrowPos, setArrowPos] = useState(null); // { top, left, dir }
   const WARRIOR = { name: '戰士', stats: { STR: 5, DEX: 3, INT: 1, VIT: 3 }, bagCapacity: 3, initialBag: ['sword', 'shield', 'bow'] };
-  const [ui, setUi] = useState({ queue: [], selected: null, kills: 0, allyHp: 100, wave: 0, waveState: 'tutorial', rest: 0, enemiesLeft: 0, banner: '新手教學', drawing: false, timer: 0, gameOver: '', level: 1, exp: 0, expNeed: 80, weaponEnergy: 0, upgrading: false, upgradeOptions: [], showDev: false, classChosen: true, playerClass: '戰士', stats: WARRIOR.stats, bag: [...WARRIOR.initialBag], bagCapacity: WARRIOR.bagCapacity, showBag: false, selectedBagIndex: 0, tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialText: '怪物來了！', nodeIndex: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0 });
+  const [ui, setUi] = useState({ queue: [], selected: null, kills: 0, allyHp: 100, wave: 0, waveState: 'tutorial', rest: 0, enemiesLeft: 0, banner: '新手教學', drawing: false, timer: 0, gameOver: '', level: 1, exp: 0, expNeed: 80, weaponEnergy: 0, upgrading: false, upgradeOptions: [], showDev: false, classChosen: true, playerClass: '戰士', stats: WARRIOR.stats, bag: [...WARRIOR.initialBag], bagCapacity: WARRIOR.bagCapacity, showBag: false, selectedBagIndex: 0, tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialText: '怪物來了！', nodeIndex: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0, swordUpgrades: {} });
   const selectedRef = useRef(null);
   const blockNextPointerDown = useRef(false); // 點武器方塊時，阻擋下一次canvas pointerdown
   const queueRef = useRef([]);
@@ -391,6 +433,16 @@ function App() {
     if (selectedRef.current && !queueRef.current.some(x => x.id === selectedRef.current.id)) selectedRef.current = null;
     setUi(v => ({ ...v, queue: queueRef.current, selected: selectedRef.current?.id ?? null }));
     if (reason && stateRef.current) stateRef.current.floatTexts.push({ id: uid(), text: reason, x: rand(80, stateRef.current.w - 80), y: stateRef.current.h * .77, vy: -34, life: 1, color: '#fff6a8', size: 18 });
+    return true;
+  };
+
+
+  const addSpecificWeaponBlock = (type = 'sword', tier = 1, reason = '') => {
+    if (queueRef.current.length >= 7) return false;
+    normalizeQueuePreservingSelection([...queueRef.current, { id: uid(), type, tier, born: Date.now(), generated: true }]);
+    if (selectedRef.current && !queueRef.current.some(x => x.id === selectedRef.current.id)) selectedRef.current = null;
+    setUi(v => ({ ...v, queue: queueRef.current, selected: selectedRef.current?.id ?? null }));
+    if (reason && stateRef.current) stateRef.current.floatTexts.push({ id: uid(), text: reason, x: rand(80, stateRef.current.w - 80), y: stateRef.current.h * .77, vy: -34, life: 1, color: tier >= 3 ? '#ffd76a' : '#c084fc', size: 18, glow: true });
     return true;
   };
 
@@ -653,6 +705,48 @@ function App() {
     return result;
   };
 
+  const hasSwordUpgrade = (s, id) => !!(s?.swordUpgrades || {})[id];
+  const swordUpgradeUnlocked = (s, def) => {
+    if (!def) return false;
+    if (!def.advanced) return true;
+    return hasSwordUpgrade(s, SWORD_BASE_BY_GROUP[def.group]);
+  };
+  const drawOneSwordUpgrade = (s, branch, used = new Set()) => {
+    const ids = SWORD_UPGRADE_BRANCHES[branch] || [];
+    const pool = ids
+      .map(id => SWORD_UPGRADE_DEFS[id])
+      .filter(def => def && !hasSwordUpgrade(s, def.id) && swordUpgradeUnlocked(s, def) && !used.has(def.id));
+    const fallback = Object.values(SWORD_UPGRADE_DEFS).filter(def => !hasSwordUpgrade(s, def.id) && swordUpgradeUnlocked(s, def) && !used.has(def.id));
+    const pickPool = pool.length ? pool : fallback;
+    if (!pickPool.length) return makeStatOption();
+    const pick = pickPool[Math.floor(Math.random() * pickPool.length)];
+    used.add(pick.id);
+    return { ...pick };
+  };
+  const drawCommonUpgradeOption = (s, used = new Set()) => {
+    const opt = makeStatOption();
+    opt.kind = 'commonStat';
+    opt.title = '通用強化';
+    opt.subtitle = '素質提升';
+    opt.desc = '依目前權重提升隨機素質。';
+    opt.signature = `common-${opt.signature}-${uid()}`;
+    return opt;
+  };
+  const topTwoStatKeys = (stats = {}) => [...STAT_KEYS]
+    .sort((a, b) => (stats[b] || 0) - (stats[a] || 0) || STAT_KEYS.indexOf(a) - STAT_KEYS.indexOf(b))
+    .slice(0, 2);
+  const drawWaveEndUpgradeOptions = (s) => {
+    const used = new Set();
+    const top = topTwoStatKeys(s?.stats || WARRIOR.stats);
+    const branches = top.map(k => k === 'DEX' ? 'DEX' : k === 'STR' ? 'STR' : null).filter(Boolean);
+    while (branches.length < 2) branches.push(branches.includes('STR') ? 'DEX' : 'STR');
+    return [
+      drawOneSwordUpgrade(s, branches[0], used),
+      drawOneSwordUpgrade(s, branches[1], used),
+      drawCommonUpgradeOption(s, used),
+    ];
+  };
+
 
   const statUpgradeRank = (value = 0) => {
     if (value >= 5) return { cls: 'gold', arrows: 3 };
@@ -811,6 +905,39 @@ function App() {
     setUi(v => ({ ...v, kills: s.kills, bag: [...bagRef.current], replaceOffer: null, shopItems: [...s.shopItems], shopMessage: s.shopMessage, shopBoughtFx: s.shopBoughtFx }));
   };
 
+  const finishWaveAdvance = (s) => {
+    if (!s) return;
+    if ((s.nodeIndex || 0) >= ADVENTURE_NODES.length - 1) {
+      s.gameOver = '冒險完成，遊戲勝利！';
+      setUi(v => ({ ...v, gameOver: s.gameOver, upgrading: false, upgradeOptions: [] }));
+      return;
+    }
+    s.nodeIndex = (s.nodeIndex || 0) + 1;
+    s.berserkActive = false;
+    s.berserkScheduled = false;
+    s.waveSpawnTimer = 0;
+    s.bannerLife = 1.4;
+    const next = ADVENTURE_NODES[s.nodeIndex];
+    if (next?.type === 'shop') {
+      openShopNode(s);
+      return;
+    }
+    s.waveState = 'rest';
+    s.restTime = s.restDuration || 5;
+    s.floatTexts.push({ id: uid(), text: `選擇完成，休息 ${s.restTime} 秒`, x: s.w/2, y: 100, vy: -8, life: 1.2, color: '#d9ecff', size: 26 });
+    setUi(v => ({ ...v, upgrading: false, upgradeOptions: [], nodeIndex: s.nodeIndex, waveState: 'rest', rest: Math.ceil(s.restTime), enemiesLeft: 0, banner: `休息 ${s.restTime} 秒`, stats: { ...s.stats }, swordUpgrades: { ...(s.swordUpgrades || {}) } }));
+  };
+
+  const openWaveEndUpgrade = (s) => {
+    if (!s || s.upgrading || s.pendingWaveEndUpgrade) return;
+    s.pendingWaveEndUpgrade = true;
+    s.upgrading = true;
+    s.upgradeOptions = drawWaveEndUpgradeOptions(s);
+    playSfxCooldown(s, 'levelUp', 500, 0.85);
+    s.floatTexts.push({ id: uid(), text: '波次完成！選擇強化', x: s.w / 2, y: s.battleH * .45, vy: -6, life: 1.1, color: '#fff4b8', size: 30, glow: true });
+    setUi(v => ({ ...v, upgrading: true, upgradeOptions: s.upgradeOptions, waveState: s.waveState, nodeIndex: s.nodeIndex || 0, swordUpgrades: { ...(s.swordUpgrades || {}) } }));
+  };
+
   const buyHeal = () => {
     const s = stateRef.current;
     if (!s) return;
@@ -833,19 +960,26 @@ function App() {
 
   const continueAfterUpgrade = (option = null) => {
     const s = stateRef.current;
-    if (s && option?.boost) {
+    if (!s) return;
+    if (option?.kind === 'swordUpgrade') {
+      s.swordUpgrades = { ...(s.swordUpgrades || {}), [option.id]: true };
+      s.floatTexts.push({ id: uid(), text: `習得：${option.title}`, x: s.w / 2, y: s.battleH * .45, vy: -10, life: 1.1, color: option.branch === 'DEX' ? '#93c5fd' : '#fca5a5', size: 28, glow: true });
+    } else if (option?.boost) {
       for (const key of STAT_KEYS) s.stats[key] = (s.stats[key] || 0) + (option.boost[key] || 0);
       s.floatTexts.push({ id: uid(), text: '素質提升！', x: s.w / 2, y: s.battleH * .45, vy: -10, life: 1.1, color: '#fff3a3', size: 28, glow: true });
     }
-    if (s) {
-      s.upgrading = false;
-      s.upgradeOptions = [];
-      if (s.tutorialActive && s.tutorialStep === 5) {
-        s.tutorialStep = 6;
-        syncTutorialUi(6);
-      }
-      setUi(v => ({ ...v, upgrading: false, upgradeOptions: [], level: s.level, exp: s.exp, expNeed: s.level * 80, stats: { ...s.stats }, tutorialStep: s.tutorialStep || v.tutorialStep, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight, nodeIndex: s.nodeIndex || 0, shopOpen: s.shopOpen || false, shopItems: s.shopItems || [], shopMessage: s.shopMessage || '', replaceOffer: s.replaceOffer || null, shopBoughtFx: s.shopBoughtFx || 0 }));
+    s.upgrading = false;
+    s.upgradeOptions = [];
+    if (s.pendingWaveEndUpgrade) {
+      s.pendingWaveEndUpgrade = false;
+      finishWaveAdvance(s);
+      return;
     }
+    if (s.tutorialActive && s.tutorialStep === 5) {
+      s.tutorialStep = 6;
+      syncTutorialUi(6);
+    }
+    setUi(v => ({ ...v, upgrading: false, upgradeOptions: [], level: s.level, exp: s.exp, expNeed: s.level * 80, stats: { ...s.stats }, swordUpgrades: { ...(s.swordUpgrades || {}) }, tutorialStep: s.tutorialStep || v.tutorialStep, tutorialText: tutorialTexts[s.tutorialStep]?.text || v.tutorialText, tutorialHighlight: tutorialTexts[s.tutorialStep]?.highlight || v.tutorialHighlight, nodeIndex: s.nodeIndex || 0, shopOpen: s.shopOpen || false, shopItems: s.shopItems || [], shopMessage: s.shopMessage || '', replaceOffer: s.replaceOffer || null, shopBoughtFx: s.shopBoughtFx || 0 }));
   };
 
 
@@ -857,9 +991,9 @@ function App() {
       wave: 0, nodeIndex: 0, waveState: 'rest', restTime: 5, restDuration: 5, waveSpawnTimer: 0, waveSpawned: 0, waveTotal: 0, shopOpen: false, shopItems: [], shopMessage: '', replaceOffer: null, shopBoughtFx: 0, bannerLife: 1.5,
       berserkActive: false, berserkScheduled: false, berserkTriggered: false, berserkAt: 0, waveElapsed: 0,
       allies: [], enemies: [], weapons: [], shieldShots: [], slashes: [], hitEffects: [], particles: [], floatTexts: [], path: [], isDrawing: false, drawTime: 0,
-      allyHp: 100, weaponEnergy: 0, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', baseRegenTimer: 0, pointerId: null, animTime: 0, sfxCooldowns: {},
+      allyHp: 100, weaponEnergy: 0, kills: 0, level: 1, exp: 0, upgrading: false, upgradeOptions: [], gameOver: '', swordUpgrades: {}, pendingWaveEndUpgrade: false, baseRegenTimer: 0, pointerId: null, animTime: 0, sfxCooldowns: {},
       classChosen: true, playerClass: WARRIOR.name, stats: { ...WARRIOR.stats }, bag: [...WARRIOR.initialBag], bagCapacity: WARRIOR.bagCapacity, showBag: false,
-      tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialPracticeType: '', tutorialIntroSpawned: false, tutorialStepTimer: 0, tutorialSpawned: false,
+      tutorialActive: true, tutorialStep: 0, tutorialWeaponPicked: false, tutorialHighlight: 'battle', tutorialPracticeType: '', tutorialIntroSpawned: false, tutorialStepTimer: 0, tutorialSpawned: false, swordUpgrades: {}, pendingWaveEndUpgrade: false,
     };
     bagRef.current = [...WARRIOR.initialBag];
     queueRef.current = [];
@@ -1182,9 +1316,17 @@ function App() {
       if (!item) return;
       const base = WEAPONS[item.type];
       const stats = { ...(s.stats || {}) };
-      const depth = base.slashDepth || 300;
+      if (!s.activeSwordCastId) { s.activeSwordCastId = uid(); s.swordCastSlashCount = 0; s.crueltyStacks = 0; }
+      s.swordCastSlashCount = (s.swordCastSlashCount || 0) + 1;
+      const slashIndex = s.swordCastSlashCount;
+      let depth = base.slashDepth || 300;
+      if (slashIndex === 1 && swordUpgradeActive(s, 'focus_range')) depth += 100;
       const top = Math.max(0, s.battleH - depth);
-      const dmg = weaponBaseDamage(item.type, stats) * tierInfo.power;
+      let dmg = weaponBaseDamage(item.type, stats) * tierInfo.power;
+      if (swordUpgradeActive(s, 'focus_base')) {
+        if (slashIndex === 1) dmg *= swordUpgradeActive(s, 'focus_power') ? 3 : 2;
+        else dmg *= 0.7;
+      }
       const color = tierEffectColor(item.type, tierInfo.tier);
       const y = top + depth * 0.5;
       const slashSpeed = clamp(620 + speedX * 760, 680, 1550);
@@ -1195,7 +1337,7 @@ function App() {
         id: uid(), x: startX, y, top, depth, direction, vx,
         age: 0, life: (s.w + 160) / slashSpeed,
         color, tier: tierInfo.tier, type: item.type,
-        damage: dmg, stats, hitIds: [], firstHitBonus: item.type === 'muramasa', firstHitUsed: false
+        damage: dmg, stats, hitIds: [], firstHitBonus: item.type === 'muramasa', firstHitUsed: false, castId: s.activeSwordCastId, slashIndex
       });
       const label = direction > 0 ? '右斬！' : '左斬！';
       s.floatTexts.push({ id: uid(), text: label, x: s.w/2, y: top + 24, vy: -22, life: .35, color, size: speedX > 0.9 ? 17 : 14, glow: true });
@@ -1264,7 +1406,8 @@ function App() {
       const s = stateRef.current, item = selectedRef.current; if (!item || s.path.length < 1) return;
       const base = WEAPONS[item.type]; const tierInfo = getTierInfo(item);
       if (base.aim) { launchBowAttack(s, item, tierInfo); return; }
-      if (base.swipeSlash || base.shieldClick) { s.path = []; s.multiPaths = []; consumeSelectedWeapon(item, tierInfo); return; }
+      if (base.swipeSlash) { s.path = []; s.multiPaths = []; applySwordCastEndEffects(s, item, tierInfo); consumeSelectedWeapon(item, tierInfo); return; }
+      if (base.shieldClick) { s.path = []; s.multiPaths = []; consumeSelectedWeapon(item, tierInfo); return; }
       const paths = base.multiLine ? (s.multiPaths || []).filter(path => path.length >= 2) : [s.path].filter(path => path.length >= 2);
       if (!paths.length) return;
       const stats = { ...(s.stats || {}) };
@@ -1796,9 +1939,77 @@ function App() {
       }
     }
 
+    function swordUpgradeActive(s, id) { return !!(s?.swordUpgrades || {})[id]; }
+    function swordCritBonus(s, weapon) {
+      if (!weapon || !SWORD_TYPES.has(weapon.type)) return 0;
+      let bonus = 0;
+      if (weapon.aftershock && swordUpgradeActive(s, 'aftershock_crit')) bonus += 0.20;
+      if (weapon.swordwave && swordUpgradeActive(s, 'swordwave_crit')) bonus += 0.20;
+      if (weapon.slashIndex === 1 && swordUpgradeActive(s, 'focus_crit')) bonus += 0.30;
+      return bonus;
+    }
+    function maybeCreateSwordBlock(s, branch = 'STR', source = 'hit', isBoss = false) {
+      const stats = s.stats || {};
+      const isDex = branch === 'DEX';
+      const baseId = isDex ? 'frenzy_dex_base' : 'frenzy_str_base';
+      if (!swordUpgradeActive(s, baseId)) return;
+      let chance = isDex ? ((stats.DEX || 0) / 20) / 100 : ((stats.STR || 0) / 15) / 100;
+      if (isDex && swordUpgradeActive(s, 'frenzy_dex_chance')) chance *= 1.3;
+      if (!isDex && swordUpgradeActive(s, 'frenzy_str_chance')) chance *= 1.3;
+      if (isDex && isBoss && swordUpgradeActive(s, 'frenzy_dex_boss')) chance += 0.15;
+      if (!isDex && isBoss && !swordUpgradeActive(s, 'frenzy_str_boss')) return;
+      if (Math.random() >= Math.min(.85, chance)) return;
+      let tier = 2;
+      const t3Chance = isDex ? ((stats.DEX || 0) / 15) / 100 : ((stats.STR || 0) / 15) / 100;
+      if ((isDex && swordUpgradeActive(s, 'frenzy_dex_t3')) || (!isDex && swordUpgradeActive(s, 'frenzy_str_t3'))) {
+        if (Math.random() < Math.min(.85, t3Chance)) tier = 3;
+      }
+      addSpecificWeaponBlock('sword', tier, tier === 3 ? '狂躁：三階劍' : '狂躁：二階劍');
+      if (!isDex && swordUpgradeActive(s, 'frenzy_str_gain') && Math.random() < .30) { s.stats.STR = (s.stats.STR || 0) + 1; }
+      if (isDex && swordUpgradeActive(s, 'frenzy_dex_gain') && Math.random() < .05) { s.stats.DEX = (s.stats.DEX || 0) + 1; }
+    }
+    function triggerSwordWave(s, e, baseDamage, color, weapon) {
+      if (!weapon || !SWORD_TYPES.has(weapon.type) || !swordUpgradeActive(s, 'swordwave_base') || weapon.swordwave || weapon.aftershock) return;
+      const DEX = (weapon.stats || s.stats || {}).DEX || 0;
+      if (Math.random() >= Math.min(.85, (DEX / 3) / 100)) return;
+      let pct = swordUpgradeActive(s, 'swordwave_combo') && (s.swordCastSlashCount || 0) >= 5 ? .40 : .20;
+      const waveWeapon = { ...weapon, swordwave: true, noSpecial: false, ignoreDefenseRatio: swordUpgradeActive(s, 'swordwave_pierce') ? 1 : 0 };
+      for (const target of [...s.enemies]) {
+        if (target.hp > 0) damageEnemy(s, target, baseDamage * pct / Math.max(globalDamageMultiplier(weapon.stats || s.stats || {}), .01), '#93c5fd', waveWeapon);
+      }
+      if (swordUpgradeActive(s, 'swordwave_double') && Math.random() < Math.min(.85, (DEX / 5) / 100)) {
+        for (const target of [...s.enemies]) {
+          if (target.hp > 0) damageEnemy(s, target, baseDamage * pct / Math.max(globalDamageMultiplier(weapon.stats || s.stats || {}), .01), '#bfdbfe', { ...waveWeapon, noSpecial: true });
+        }
+      }
+      s.floatTexts.push({ id: uid(), text: '劍氣橫掃！', x: s.w/2, y: 116, vy: -18, life: .65, color:'#93c5fd', size:20, glow:true });
+    }
+    function applySwordCastEndEffects(s, item, tierInfo) {
+      if (!item || !SWORD_TYPES.has(item.type)) return;
+      const slashCount = s.swordCastSlashCount || 0;
+      if (swordUpgradeActive(s, 'aftershock_base')) {
+        const stats = { ...(s.stats || {}) };
+        let dmg = weaponBaseDamage(item.type, stats) * (tierInfo?.power || 1);
+        if (swordUpgradeActive(s, 'aftershock_single') && slashCount <= 1) dmg *= 1.2;
+        const weapon = { type: item.type, combo: tierInfo?.tier || 1, stats, aftershock: true, ignoreDefenseRatio: swordUpgradeActive(s, 'aftershock_pierce') ? .5 : 0 };
+        for (const e of [...s.enemies]) if (e.hp > 0) damageEnemy(s, e, dmg, '#fca5a5', weapon);
+        if (swordUpgradeActive(s, 'aftershock_repeat') && Math.random() < Math.min(.85, ((stats.STR || 0) / 3) / 100)) {
+          for (const e of [...s.enemies]) if (e.hp > 0) damageEnemy(s, e, dmg, '#fecaca', { ...weapon, noSpecial: true });
+        }
+        s.floatTexts.push({ id: uid(), text: '餘震！全屏斬擊', x: s.w/2, y: 128, vy: -10, life: .9, color:'#fca5a5', size:22, glow:true });
+      }
+      s.activeSwordCastId = null;
+      s.swordCastSlashCount = 0;
+      s.crueltyStacks = 0;
+    }
+
     function damageEnemy(s, e, dmg, color, weapon = null) {
       const stats = weapon?.stats || s.stats || {};
       let finalDmg = dmg * globalDamageMultiplier(stats);
+      if (weapon?.type && SWORD_TYPES.has(weapon.type) && swordUpgradeActive(s, 'cruelty_base')) {
+        const perStack = swordUpgradeActive(s, 'cruelty_power') ? 0.007 : 0.005;
+        finalDmg *= 1 + (s.crueltyStacks || 0) * perStack;
+      }
       let crit = false;
       if (weapon?.type && SHIELD_TYPES.has(weapon.type) && !weapon.noSpecial) stunEnemyByShield(s, e, weapon.type === 'holyshield' ? 2 : 1);
       if (e.type === 'CHARGER' && !e.chargeInterrupted && (e.chargeState === 'moving' || e.chargeState === 'charging')) {
@@ -1808,7 +2019,7 @@ function App() {
       if (e.boss) {
         const isBroken = (e.brokenTimer || 0) > 0;
         if (isBroken) finalDmg *= 1.5;
-        const defense = Math.max(0, (e.defense || 0) * (isBroken ? 0.5 : 1));
+        const defense = Math.max(0, (e.defense || 0) * (isBroken ? 0.5 : 1) * (1 - clamp(weapon?.ignoreDefenseRatio || 0, 0, 1)));
         if (defense > 0) {
           finalDmg = Math.max(0, finalDmg - defense);
           s.floatTexts.push({ id: uid(), text: `防禦 -${Math.round(defense)}`, x: e.x + rand(-8,8), y: e.y - 56, vy: -34, life: .5, color:'#9ca3af', size:14, glow:true });
@@ -1834,7 +2045,8 @@ function App() {
         finalDmg += e.maxHp * (e.boss ? 0.03 : 0.25);
       }
       const critInfo = critSpec(weapon?.type, stats);
-      if (!crit && critInfo.chance > 0 && Math.random() < critInfo.chance) { finalDmg *= critInfo.mult; crit = true; }
+      const extraCritChance = swordCritBonus(s, weapon);
+      if (!crit && (critInfo.chance + extraCritChance) > 0 && Math.random() < Math.min(.95, critInfo.chance + extraCritChance)) { finalDmg *= critInfo.mult || 2; crit = true; }
 
       let displayStages = null;
       let totalDmg = finalDmg;
@@ -1860,6 +2072,7 @@ function App() {
         displayStages = stages.length > 1 ? stages : null;
       }
 
+      const hpBefore = e.hp;
       e.hp -= totalDmg; e.flash = .08;
       if (e.boss) { addWeaponCharge(s, 5); playSfxCooldown(s, 'bossHit', 90, 0.85); }
       if (weapon?.type) {
@@ -1868,6 +2081,24 @@ function App() {
         else if (SHOOT_TYPES.has(weapon.type)) playSfxCooldown(s, 'shoot', 55, 0.75);
       }
       applyWeaponSpecialOnHit(s, e, weapon, totalDmg);
+      if (weapon?.type && SWORD_TYPES.has(weapon.type) && !weapon.noSpecial) {
+        if (swordUpgradeActive(s, 'cruelty_base')) {
+          const add = swordUpgradeActive(s, 'cruelty_stack') ? 2 : 1;
+          const cap = swordUpgradeActive(s, 'cruelty_cap') ? 150 : 100;
+          s.crueltyStacks = Math.min(cap, (s.crueltyStacks || 0) + add);
+          if (swordUpgradeActive(s, 'cruelty_extra') && (s.crueltyStacks || 0) > 80) damageEnemy(s, e, totalDmg * .10 / Math.max(globalDamageMultiplier(stats), .01), '#f0abfc', { ...weapon, noSpecial: true });
+        }
+        triggerSwordWave(s, e, totalDmg, color, weapon);
+        const killedByHit = hpBefore > 0 && e.hp <= 0 && !e.boss;
+        const oneShotKilled = killedByHit && totalDmg >= hpBefore;
+        if (oneShotKilled) maybeCreateSwordBlock(s, 'STR', 'kill', false);
+        if (e.boss && swordUpgradeActive(s, 'frenzy_str_boss')) maybeCreateSwordBlock(s, 'STR', 'boss', true);
+        if (swordUpgradeActive(s, 'frenzy_dex_base')) maybeCreateSwordBlock(s, 'DEX', 'hit', !!e.boss);
+        if (weapon.slashIndex === 1 && swordUpgradeActive(s, 'focus_execute') && e.hp > 0 && e.hp < (e.maxHp || 1) * .10 && !e.boss) {
+          e.hp = 0;
+          s.floatTexts.push({ id: uid(), text: '斬殺', x: e.x, y: e.y - 60, vy: -30, life: .55, color:'#fca5a5', size:18, glow:true });
+        }
+      }
       if (e.finalBoss) e.hurtAnim = .18;
       const isTierColor = color === '#c084fc' || color === '#ffd76a';
       const floatLife = displayStages ? .95 : (isTierColor ? .82 : .65);
@@ -2066,7 +2297,7 @@ function App() {
             spawnEnemy(s);
             s.waveSpawnTimer -= cfg.interval;
           }
-          if (s.waveSpawned >= s.waveTotal && s.enemies.length === 0) enterRest(s);
+          if (s.waveSpawned >= s.waveTotal && s.enemies.length === 0) openWaveEndUpgrade(s);
         }
       }
 
@@ -2231,7 +2462,7 @@ function App() {
         for (const e of s.enemies) {
           if (e.hp <= 0 || sl.hitIds?.includes(e.id)) continue;
           if (e.y >= sl.top && e.y <= s.battleH - 8 && Math.abs(e.x - sl.x) <= slashHitWidth + (e.boss ? 16 : 0)) {
-            const slashWeapon = { type: sl.type, combo: sl.tier, stats: sl.stats, firstHitBonus: sl.firstHitBonus, firstHitUsed: sl.firstHitUsed };
+            const slashWeapon = { type: sl.type, combo: sl.tier, stats: sl.stats, firstHitBonus: sl.firstHitBonus, firstHitUsed: sl.firstHitUsed, castId: sl.castId, slashIndex: sl.slashIndex };
             damageEnemy(s, e, sl.damage, sl.color, slashWeapon);
             sl.firstHitUsed = slashWeapon.firstHitUsed;
             sl.hitIds.push(e.id);
@@ -2663,9 +2894,16 @@ function App() {
         <h2>Level Up！</h2>
         <div className="upgradeChoices">
           {(ui.upgradeOptions?.length ? ui.upgradeOptions : [{id:'a'}, {id:'b'}, {id:'c'}]).slice(0,3).map((opt, idx) =>
-            <button key={opt.id || idx} className="upgradeChoice" onClick={() => continueAfterUpgrade(opt)} aria-label={`upgrade option ${idx + 1}`}>
+            <button key={opt.id || idx} className={`upgradeChoice ${opt.kind === 'swordUpgrade' ? 'swordUpgradeChoice' : ''} ${opt.branch === 'DEX' ? 'dexChoice' : opt.branch === 'STR' ? 'strChoice' : ''}`} onClick={() => continueAfterUpgrade(opt)} aria-label={`upgrade option ${idx + 1}`}>
               <span className="choiceIndex">{idx + 1}</span>
-              <div className="upgradeStats">{renderUpgradeSummary(opt.boost || {})}</div>
+              {opt.kind === 'swordUpgrade' ? <div className="upgradeTextBlock">
+                <b>{opt.title}</b>
+                <small>{opt.subtitle}</small>
+                <p>{opt.desc}</p>
+              </div> : <>
+                <div className="upgradeStats">{renderUpgradeSummary(opt.boost || {})}</div>
+                {opt.title && <div className="upgradeTextBlock"><b>{opt.title}</b><small>{opt.subtitle}</small><p>{opt.desc}</p></div>}
+              </>}
             </button>
           )}
         </div>
